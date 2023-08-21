@@ -42,3 +42,7 @@ build/
 
 # Windows
 Thumbs.db
+
+
+gradlew
+gradlew.bat
