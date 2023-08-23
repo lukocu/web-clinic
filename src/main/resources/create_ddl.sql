@@ -92,7 +92,7 @@ CREATE TABLE prescriptions (
                                prescription_id serial PRIMARY KEY,
                                medication_id int NOT NULL,
                                prescription_date TIMESTAMP NOT NULL,
-                               prescrpition_date_end TIMESTAMP,
+                               prescription_date_end TIMESTAMP,
                                prescription_available BOOLEAN NOT NULL,
                                FOREIGN KEY (medication_id) REFERENCES medications(medication_id)
 );
@@ -101,23 +101,23 @@ CREATE TABLE diseases (
                           disease_name TEXT NOT NULL,
                           disease_description TEXT
 );
-CREATE TABLE patient_disease (
-                                 patient_disease_id serial PRIMARY KEY,
-                                 patient_id int NOT NULL,
-                                 disease_id int NOT NULL,
-                                 FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
-                                 FOREIGN KEY (disease_id) REFERENCES diseases(disease_id)
-);
+
 CREATE TABLE patient_card (
                               patient_card_id serial PRIMARY KEY,
                               diagnosis_date TIMESTAMP,
                               diagnosis_note TEXT,
                               patient_id int NOT NULL,
                               doctor_id int NOT NULL,
-                              patient_disease_id INT,
                               prescription_id INT,
                               FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
                               FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id),
-                              FOREIGN KEY (patient_disease_id) REFERENCES patient_disease(patient_disease_id),
                               FOREIGN KEY (prescription_id) REFERENCES prescriptions(prescription_id)
+);
+
+CREATE TABLE patient_disease (
+                                 patient_disease_id serial PRIMARY KEY,
+                                 patient_card_id int NOT NULL,
+                                 disease_id int NOT NULL,
+                                 FOREIGN KEY (patient_card_id) REFERENCES patient_card(patient_card_id),
+                                 FOREIGN KEY (disease_id) REFERENCES diseases(disease_id)
 );

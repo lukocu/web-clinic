@@ -62,21 +62,21 @@ VALUES (1, 'Flu', 'Respiratory illness caused by influenza virus'),
        (2, 'Hypertension', 'High blood pressure condition');
 
 -- Przykładowe dane dla tabeli patient_disease
-INSERT INTO patient_disease (patient_disease_id, patient_id, disease_id)
-VALUES (1, 1, 1), -- Alice has Flu
-       (2, 2, 2); -- Bob has Hypertension
-
--- Przykładowe dane dla tabeli prescriptions
 INSERT INTO prescriptions (prescription_id, medication_id, prescription_date, prescrpition_date_end,
                            prescription_available)
 VALUES (1, 1, '2023-08-01', '2023-08-07', true), -- Prescription for Aspirin
        (2, 2, '2023-08-03', '2023-08-10', true); -- Prescription for Ibuprofen
 
--- Przykładowe dane dla tabeli patient_card
-INSERT INTO patient_card (patient_card_id, diagnosis_date, diagnosis_note, patient_id, doctor_id, patient_disease_id,
+-- Przykładowe dane dla tabeli prescriptions
+INSERT INTO patient_card (patient_card_id, diagnosis_date, diagnosis_note, patient_id, doctor_id,
                           prescription_id)
-VALUES (1, '2023-08-05', 'Diagnosed with Flu', 1, 1, 1, 1), -- Alice diagnosed by Doctor 1 with Flu
-       (2, '2023-08-07', 'Diagnosed with Hypertension', 2, 2, 2, 2); -- Bob diagnosed by Doctor 2 with Hypertension
+VALUES (1, '2023-08-05', 'Diagnosed with Flu', 1, 1, 1), -- Alice diagnosed by Doctor 1 with Flu
+       (2, '2023-08-07', 'Diagnosed with Hypertension', 2, 2, 2); -- Bob diagnosed by Doctor 2 with Hypertension
+
+-- Przykładowe dane dla tabeli patient_card
+INSERT INTO patient_disease (patient_disease_id, patient_card_id, disease_id)
+VALUES (1, 1, 1), -- Alice has Flu
+       (2, 2, 2); -- Bob has Hypertension
 
 -- Przykładowe dane dla tabeli office_doctor_availability
 INSERT INTO office_doctor_availability (office_availability_id, office_id, date, start_time, end_time,
