@@ -35,7 +35,7 @@ public class PatientCardEntity {
     @JoinColumn(name = "doctor_id")
     private DoctorsEntity doctor;
 
-    @ManyToMany(mappedBy = "patientCards")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "patientCards")
     private Set<DiseasesEntity> diseases;
 
     @OneToOne(fetch = FetchType.LAZY)

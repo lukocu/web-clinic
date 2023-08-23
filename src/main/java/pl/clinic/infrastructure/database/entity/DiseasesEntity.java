@@ -26,7 +26,7 @@ public class DiseasesEntity {
     @Column( name = "disease_description")
     private String diseaseDescription;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinTable(
             name = "patient_disease",
             joinColumns = @JoinColumn(name = "disease_id"),

@@ -42,9 +42,9 @@ public class UserEntity {
     )
     private Set<RoleEntity> roles;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "user")
     private PatientsEntity patient;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "user")
     private DoctorsEntity doctors;
 }
