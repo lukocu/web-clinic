@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "appointmentId")
-@ToString(of = {"probableStartTime","actualEndTime","appointmentTakenDate"})
+@ToString(of = {"appointmentId","probableStartTime","actualEndTime","appointmentTakenDate"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

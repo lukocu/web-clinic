@@ -8,7 +8,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "specializationId")
-@ToString(of = "specializationName")
+@ToString(of = {"specializationId", "specializationName"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +31,6 @@ public class SpecializationEntity {
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
     )
     private Set<DoctorsEntity> doctors;
-
 
 
 }

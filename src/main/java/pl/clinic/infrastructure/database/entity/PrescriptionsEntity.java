@@ -8,8 +8,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"prescriptionDate","prescriptionDateEnd","prescriptionAvailable"})
-@ToString(of = {})
+@EqualsAndHashCode(of = "prescriptionId")
+@ToString(of = {"prescriptionId", "prescriptionDate", "prescriptionDateEnd", "prescriptionAvailable"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

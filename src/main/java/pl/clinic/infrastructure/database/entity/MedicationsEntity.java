@@ -7,8 +7,8 @@ import java.time.Duration;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"medicationName","dosage","frequency","duration"})
-@ToString(of = {})
+@EqualsAndHashCode(of = "medicationId")
+@ToString(of = {"medicationName","dosage","frequency","duration"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

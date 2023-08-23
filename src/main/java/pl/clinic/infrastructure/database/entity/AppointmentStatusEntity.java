@@ -5,8 +5,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = "status")
-@ToString(of = {})
+@EqualsAndHashCode(of = "appointmentStatusId")
+@ToString(of = {"appointmentStatusId","status"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

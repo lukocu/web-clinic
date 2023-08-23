@@ -8,7 +8,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "userId")
-@ToString(of = {"username","email","password","active"})
+@ToString(of = {"userId", "username", "email", "password", "active"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -7,8 +7,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"diseaseName","diseaseDescription"})
-@ToString(of = {})
+@EqualsAndHashCode(of = {"diseaseId"})
+@ToString(of = {"diseaseId","diseaseName","diseaseDescription"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

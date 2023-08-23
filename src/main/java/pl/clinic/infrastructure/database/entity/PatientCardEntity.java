@@ -8,8 +8,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of ={ "diagnosisDate","diagnosisNote"})
-@ToString(of = {})
+@EqualsAndHashCode(of = "patientCardId")
+@ToString(of = {"patientCardId", "diagnosisDate", "diagnosisNote"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class PatientCardEntity {
     private Integer patientCardId;
     @Column(name = "diagnosis_date")
     private OffsetDateTime diagnosisDate;
-    @Column(name ="diagnosis_note" )
+    @Column(name = "diagnosis_note")
     private String diagnosisNote;
 
 

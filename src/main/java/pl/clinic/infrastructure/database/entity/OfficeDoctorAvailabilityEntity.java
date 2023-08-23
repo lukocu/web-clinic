@@ -8,8 +8,8 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"date","startTime","endTime","availabilityStatus","office"})
-@ToString(of = {})
+@EqualsAndHashCode(of = {"officeAvailabilityId"})
+@ToString(of = {"officeAvailabilityId", "date", "startTime", "endTime", "availabilityStatus", "office"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

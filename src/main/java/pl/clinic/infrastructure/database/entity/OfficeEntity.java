@@ -8,8 +8,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"firstConsultationFee","followupConsultationFee"})
-@ToString(of = {})
+@EqualsAndHashCode(of = "officeId")
+@ToString(of = {"firstConsultationFee", "followupConsultationFee"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,10 +31,10 @@ public class OfficeEntity {
     @JoinColumn(name = "doctor_id")
     private DoctorsEntity doctor;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "office",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "office", cascade = CascadeType.ALL)
     Set<OfficeDoctorAvailabilityEntity> officeDoctorAvailabilities;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "office")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "office")
     Set<AppointmentsEntity> appointments;
 
 }
