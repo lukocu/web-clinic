@@ -62,7 +62,7 @@ VALUES (1, 'Flu', 'Respiratory illness caused by influenza virus'),
        (2, 'Hypertension', 'High blood pressure condition');
 
 -- Przykładowe dane dla tabeli patient_disease
-INSERT INTO prescriptions (prescription_id, medication_id, prescription_date, prescrpition_date_end,
+INSERT INTO prescriptions (prescription_id, medication_id, prescription_date, prescription_date_end,
                            prescription_available)
 VALUES (1, 1, '2023-08-01', '2023-08-07', true), -- Prescription for Aspirin
        (2, 2, '2023-08-03', '2023-08-10', true); -- Prescription for Ibuprofen
