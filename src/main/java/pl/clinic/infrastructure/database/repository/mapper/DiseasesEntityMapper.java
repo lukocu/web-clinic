@@ -8,6 +8,6 @@ import pl.clinic.infrastructure.database.entity.DiseasesEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DiseasesEntityMapper {
-    @Mapping(target = "patientsCards", ignore = true)
+    @Mapping(target = "patientCards", ignore = true)
     Diseases mapFromEntity(DiseasesEntity entity);
 }
