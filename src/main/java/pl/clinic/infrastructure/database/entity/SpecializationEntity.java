@@ -18,7 +18,7 @@ public class SpecializationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "specialization_id")
-    private String specializationId;
+    private Integer specializationId;
 
     @Column(name = "specialization_name")
     private String specializationName;

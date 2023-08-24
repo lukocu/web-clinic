@@ -19,7 +19,7 @@ public class MedicationsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medication_id")
-    private String medicationId;
+    private Integer medicationId;
     
     @Column(name = "medication_name")
     private String medicationName;

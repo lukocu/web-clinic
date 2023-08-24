@@ -21,11 +21,12 @@ public class PatientCardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patient_card_id")
     private Integer patientCardId;
+
     @Column(name = "diagnosis_date")
     private OffsetDateTime diagnosisDate;
+
     @Column(name = "diagnosis_note")
     private String diagnosisNote;
-
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")

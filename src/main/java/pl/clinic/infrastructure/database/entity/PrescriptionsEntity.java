@@ -19,7 +19,7 @@ public class PrescriptionsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prescription_id")
-    private OffsetDateTime prescriptionId;
+    private Integer prescriptionId;
 
     @Column(name = "prescription_date")
     private OffsetDateTime prescriptionDate;
