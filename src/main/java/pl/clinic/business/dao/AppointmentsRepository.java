@@ -13,13 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 public class AppointmentsRepository  {
 
-    private final AppointmentsJpaRepository appointmentsJpaRepository;
-    private final AppointmentsEntityMapper appointmentsEntityMapper;
+/*    private final AppointmentsJpaRepository appointmentsJpaRepository;
+    private final AppointmentsEntityMapper appointmentsEntityMapper;*/
 
 
-    public List<Appointments> findByOfficeDoctorAvailabilityDate(LocalDate date) {
-        return appointmentsJpaRepository.findByOfficeDoctorAvailabilityDate(date).stream()
-                .map(appointmentsEntityMapper::mapFromEntity)
-                .toList();
-    }
+
 }

@@ -9,8 +9,5 @@ import java.util.Optional;
 @Repository
 public interface PatientsJpaRepository extends JpaRepository<PatientsEntity,Integer> {
 
-    @SuppressWarnings("NullableProblems")
-    Optional<PatientsEntity> findById(Integer id);
-    Optional<PatientsEntity> findByNameAndSurname(String name,String surname);
-    Optional<PatientsEntity> findByUserId(Integer userId);
+
 }

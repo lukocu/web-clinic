@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @AllArgsConstructor
-public class SpecializationJpaRepository  {
+public class SpecializationRepository  {
 
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "patientId")
-@ToString(of = {"patientId", "name", "birthDate", "address", "phone"})
+@ToString(of = {"patientId", "name","surname","pesel", "birthDate", "address", "phone"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +26,9 @@ public class PatientsEntity {
 
     @Column(name = "surname")
     private String surname;
+
+    @Column(name = "pesel")
+    private String pesel;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;

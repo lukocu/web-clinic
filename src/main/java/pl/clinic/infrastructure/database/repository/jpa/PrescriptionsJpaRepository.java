@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface PrescriptionsJpaRepository extends JpaRepository<PrescriptionsEntity,Integer> {
-    List<PrescriptionsEntity> findByPatientCard(PatientCardEntity patientCard);
+
 }

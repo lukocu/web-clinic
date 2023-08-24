@@ -8,7 +8,7 @@ import java.util.Set;
 @With
 @Value
 @EqualsAndHashCode(of = "patientId")
-@ToString(of = {"patientId", "name", "birthDate", "address", "phone"})
+@ToString(of = {"patientId", "name","pesel", "birthDate", "address", "phone"})
 @Builder
 public class Patients {
 
@@ -17,6 +17,8 @@ public class Patients {
     String name;
 
     String surname;
+
+    String pesel;
 
     LocalDate birthDate;
 

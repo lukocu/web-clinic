@@ -26,9 +26,9 @@ VALUES (1, 'Cardiology'),
        (3, 'Pediatrics');
 
 -- Przykładowe dane dla tabeli doctors
-INSERT INTO doctors (doctor_id, name, surname, phone, user_id)
-VALUES (1, 'John', 'Smith', '123456789', 2), -- Doctor with ID 2 from clinic_user
-       (2, 'Emily', 'Johnson', '987654321', 3);-- Doctor with ID 2 from clinic_user
+INSERT INTO doctors (doctor_id, name, surname,pesel, phone, user_id)
+VALUES (1, 'John', 'Smith','88092556231', '123456789', 2), -- Doctor with ID 2 from clinic_user
+       (2, 'Emily', 'Johnson','78051523148','987654321', 3);-- Doctor with ID 2 from clinic_user
 
 -- Przykładowe dane dla tabeli doctor_specialization
 INSERT INTO doctor_specialization (doctor_specialization_id, doctor_id, specialization_id)
@@ -47,9 +47,9 @@ VALUES (1, 'Scheduled'),
        (3, 'Canceled');
 
 -- Przykładowe dane dla tabeli patients
-INSERT INTO patients (patient_id, name, surname, birth_date, address, phone, user_id)
-VALUES (1, 'Alice', 'Smith', '1990-05-15', '123 Main St', '555-1234', 4), -- Patient with ID 4 from clinic_user
-       (2, 'Bob', 'Johnson', '1985-10-20', '456 Elm St', '555-5678', 5);-- Patient with ID 5 from clinic_user
+INSERT INTO patients (patient_id, name, surname,pesel, birth_date, address, phone, user_id)
+VALUES (1, 'Alice', 'Smith','95011257943', '1990-05-15', '123 Main St', '555-1234', 4), -- Patient with ID 4 from clinic_user
+       (2, 'Bob', 'Johnson','99022878014', '1985-10-20', '456 Elm St', '555-5678', 5);-- Patient with ID 5 from clinic_user
 
 -- Przykładowe dane dla tabeli medications
 INSERT INTO medications (medication_id, medication_name, dosage, frequency, duration)

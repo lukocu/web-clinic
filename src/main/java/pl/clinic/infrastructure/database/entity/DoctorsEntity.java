@@ -8,7 +8,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "doctorId")
-@ToString(of = {"doctorId","name","surname","phone"})
+@ToString(of = {"doctorId","name","pesel","surname","phone"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +25,9 @@ public class DoctorsEntity {
 
     @Column(name = "surname")
     private String surname;
+
+    @Column(name = "pesel")
+    private String pesel;
 
     @Column(name = "phone")
     private String phone;

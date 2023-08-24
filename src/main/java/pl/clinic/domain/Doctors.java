@@ -7,7 +7,7 @@ import java.util.Set;
 @With
 @Value
 @EqualsAndHashCode(of = "doctorId")
-@ToString(of = {"doctorId","name","surname","phone"})
+@ToString(of = {"doctorId","name","surname","pesel","phone"})
 @Builder
 public class Doctors {
 
@@ -18,6 +18,8 @@ public class Doctors {
      String surname;
 
      String phone;
+
+     String pesel;
 
      Set<Specialization> specializations;
 
