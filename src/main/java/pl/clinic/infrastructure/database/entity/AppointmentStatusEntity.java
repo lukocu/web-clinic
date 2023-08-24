@@ -25,5 +25,5 @@ public class AppointmentStatusEntity {
     private Status status;
 
     @OneToOne(fetch = FetchType.LAZY,mappedBy = "appointmentStatus")
-    private AppointmentsEntity appointmentsEntity;
+    private AppointmentsEntity appointments;
 }
