@@ -1,4 +1,4 @@
-package pl.clinic.infrastructure.database.entity;
+package pl.clinic.domain;
 
 public enum Status {
     Scheduled,

@@ -2,6 +2,7 @@ package pl.clinic.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.clinic.domain.Status;
 
 @Getter
 @Setter
