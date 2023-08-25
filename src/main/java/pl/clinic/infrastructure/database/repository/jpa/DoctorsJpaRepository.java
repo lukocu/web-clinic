@@ -13,4 +13,5 @@ import java.util.Set;
 public interface DoctorsJpaRepository extends JpaRepository<DoctorsEntity,Integer> {
     DoctorsEntity findByNameAndSurname(String name, String surname);
 
+    DoctorsEntity findByPesel(String pesel);
 }

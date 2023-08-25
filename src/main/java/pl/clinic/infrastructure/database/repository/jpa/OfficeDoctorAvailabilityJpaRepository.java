@@ -14,6 +14,7 @@ import pl.clinic.infrastructure.database.entity.OfficeEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -31,4 +32,6 @@ public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<Off
             "AND doctors.name = :name " +
             "AND doctors.surname = :surname")
     List<OfficeDoctorAvailabilityEntity> findAvailableHoursForDoctor(@Param("name") String name, @Param("surname") String surname);
+
+    List<OfficeDoctorAvailabilityEntity> findByOfficeAndAvailabilityStatusIsTrue(Integer officeId);
 }

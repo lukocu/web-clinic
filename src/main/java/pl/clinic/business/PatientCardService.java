@@ -16,7 +16,7 @@ public class PatientCardService {
     public List<PatientCard> getMedicalHistoryForPatient(Patients patient) {
         return patientCardRepository.findByPatient(patient);
     }
-
+//tutaj zmien na pesel
 
 
 }

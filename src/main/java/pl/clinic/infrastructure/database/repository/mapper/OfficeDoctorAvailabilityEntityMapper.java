@@ -11,4 +11,6 @@ public interface OfficeDoctorAvailabilityEntityMapper  {
 
     @Mapping(target = "office",ignore = true)
     OfficeDoctorAvailability mapFromEntity(OfficeDoctorAvailabilityEntity entity);
+
+    OfficeDoctorAvailabilityEntity mapToEntity(OfficeDoctorAvailability availability);
 }

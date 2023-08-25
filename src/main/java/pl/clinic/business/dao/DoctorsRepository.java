@@ -20,4 +20,8 @@ public class DoctorsRepository {
     public Doctors findByNameAndSurname(String name, String surname) {
         return doctorsEntityMapper.mapFromEntity(doctorsJpaRepository.findByNameAndSurname(name, surname));
     }
+
+    public Doctors findByPesel(String pesel) {
+        return doctorsEntityMapper.mapFromEntity(doctorsJpaRepository.findByPesel(pesel));
+    }
 }
