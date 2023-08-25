@@ -14,4 +14,5 @@ public interface AppointmentsEntityMapper {
     @Mapping(target = "office", ignore = true)
     Appointments mapFromEntity(AppointmentsEntity entity);
 
+    AppointmentsEntity mapToEntity(Appointments appointment);
 }

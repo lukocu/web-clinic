@@ -6,16 +6,16 @@ import pl.clinic.domain.Appointments;
 import pl.clinic.infrastructure.database.repository.jpa.AppointmentsJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.AppointmentsEntityMapper;
 
-import java.time.LocalDate;
-import java.util.List;
-
 @Repository
 @AllArgsConstructor
-public class AppointmentsRepository  {
+public class AppointmentsRepository {
 
-/*    private final AppointmentsJpaRepository appointmentsJpaRepository;
-    private final AppointmentsEntityMapper appointmentsEntityMapper;*/
+    private final AppointmentsJpaRepository appointmentsJpaRepository;
+    private final AppointmentsEntityMapper appointmentsEntityMapper;
 
+    public void save(Appointments appointment) {
+        appointmentsJpaRepository.save(appointmentsEntityMapper.mapToEntity(appointment));
+    }
 
 
 }

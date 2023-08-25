@@ -14,7 +14,8 @@ public class OfficeRepository {
     private OfficeJpaRepository officeJpaRepository;
     private OfficeEntityMapper officeEntityMapper;
 
-    public Office findById(Integer officeId) {
-        return officeEntityMapper.mapFromEntity(officeJpaRepository.findById(officeId));
+    public Optional<Office> findById(Integer officeId) {
+        return officeJpaRepository.findById(officeId)
+                .map(entity -> officeEntityMapper.mapFromEntity(entity));
     }
 }

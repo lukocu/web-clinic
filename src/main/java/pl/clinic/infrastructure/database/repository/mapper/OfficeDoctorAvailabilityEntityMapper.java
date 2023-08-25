@@ -7,9 +7,9 @@ import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.infrastructure.database.entity.OfficeDoctorAvailabilityEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface OfficeDoctorAvailabilityEntityMapper  {
+public interface OfficeDoctorAvailabilityEntityMapper {
 
-    @Mapping(target = "office",ignore = true)
+    @Mapping(target = "office", ignore = true)
     OfficeDoctorAvailability mapFromEntity(OfficeDoctorAvailabilityEntity entity);
 
     OfficeDoctorAvailabilityEntity mapToEntity(OfficeDoctorAvailability availability);

@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "appointmentId")
-@ToString(of = {"appointmentId","probableStartTime","actualEndTime","appointmentTakenDate"})
+@ToString(of = {"appointmentId", "probableStartTime", "actualEndTime", "appointmentTakenDate"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,7 +39,7 @@ public class AppointmentsEntity {
     @JoinColumn(name = "office_id")
     private OfficeEntity office;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "appointment_status_id")
     private AppointmentStatusEntity appointmentStatus;
 }

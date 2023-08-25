@@ -7,8 +7,8 @@ import pl.clinic.domain.Prescriptions;
 import pl.clinic.infrastructure.database.entity.PatientsEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface PrescriptionsEntityMapper  {
+public interface PrescriptionsEntityMapper {
 
-    @Mapping(target = "medications",ignore = true)
+    @Mapping(target = "medications", ignore = true)
     Prescriptions mapFromEntity(PatientsEntity entity);
 }

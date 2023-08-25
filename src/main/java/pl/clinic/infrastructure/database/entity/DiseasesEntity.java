@@ -8,7 +8,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"diseaseId"})
-@ToString(of = {"diseaseId","diseaseName","diseaseDescription"})
+@ToString(of = {"diseaseId", "diseaseName", "diseaseDescription"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,10 +23,10 @@ public class DiseasesEntity {
     @Column(name = "disease_name")
     private String diseaseName;
 
-    @Column( name = "disease_description")
+    @Column(name = "disease_description")
     private String diseaseDescription;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "patient_disease",
             joinColumns = @JoinColumn(name = "disease_id"),

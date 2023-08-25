@@ -7,8 +7,8 @@ import pl.clinic.domain.Specialization;
 import pl.clinic.infrastructure.database.entity.SpecializationEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface SpecializationEntityMapper  {
+public interface SpecializationEntityMapper {
 
-    @Mapping(target = "doctors",ignore = true)
+    @Mapping(target = "doctors", ignore = true)
     Specialization mapFromEntity(SpecializationEntity entity);
 }

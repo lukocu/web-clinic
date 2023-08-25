@@ -9,8 +9,8 @@ import pl.clinic.infrastructure.database.entity.DoctorsEntity;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DoctorsEntityMapper {
 
-    @Mapping(target = "specializations",ignore = true)
-    @Mapping(target = "user",ignore = true)
-    @Mapping(target = "patientCards",ignore = true)
+    @Mapping(target = "specializations", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "patientCards", ignore = true)
     Doctors mapFromEntity(DoctorsEntity entity);
 }

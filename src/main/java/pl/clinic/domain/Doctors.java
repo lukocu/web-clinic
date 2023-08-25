@@ -7,25 +7,25 @@ import java.util.Set;
 @With
 @Value
 @EqualsAndHashCode(of = "doctorId")
-@ToString(of = {"doctorId","name","surname","pesel","phone"})
+@ToString(of = {"doctorId", "name", "surname", "pesel", "phone"})
 @Builder
 public class Doctors {
 
-     Integer doctorId;
+    Integer doctorId;
 
-     String name;
+    String name;
 
-     String surname;
+    String surname;
 
-     String phone;
+    String phone;
 
-     String pesel;
+    String pesel;
 
-     Set<Specialization> specializations;
+    Set<Specialization> specializations;
 
-     User user;
+    User user;
 
-     Set<Office> offices;
+    Set<Office> offices;
 
-     Set<PatientCard> patientCards;
+    Set<PatientCard> patientCards;
 }

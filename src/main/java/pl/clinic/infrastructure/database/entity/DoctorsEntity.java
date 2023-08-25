@@ -8,7 +8,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "doctorId")
-@ToString(of = {"doctorId","name","pesel","surname","phone"})
+@ToString(of = {"doctorId", "name", "pesel", "surname", "phone"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,9 +39,9 @@ public class DoctorsEntity {
     @JoinColumn(name = "user_id", unique = true)
     private UserEntity user;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "doctor",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)
     private Set<OfficeEntity> offices;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "doctor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor")
     private Set<PatientCardEntity> patientCards;
 }

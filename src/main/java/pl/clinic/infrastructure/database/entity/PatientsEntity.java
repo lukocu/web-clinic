@@ -9,7 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "patientId")
-@ToString(of = {"patientId", "name","surname","pesel", "birthDate", "address", "phone"})
+@ToString(of = {"patientId", "name", "surname", "pesel", "birthDate", "address", "phone"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

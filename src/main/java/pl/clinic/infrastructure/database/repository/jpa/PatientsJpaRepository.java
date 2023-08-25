@@ -7,7 +7,8 @@ import pl.clinic.infrastructure.database.entity.PatientsEntity;
 import java.util.Optional;
 
 @Repository
-public interface PatientsJpaRepository extends JpaRepository<PatientsEntity,Integer> {
+public interface PatientsJpaRepository extends JpaRepository<PatientsEntity, Integer> {
 
 
+    Optional<PatientsEntity> findByPesel(String pesel);
 }

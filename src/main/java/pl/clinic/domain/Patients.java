@@ -8,7 +8,7 @@ import java.util.Set;
 @With
 @Value
 @EqualsAndHashCode(of = "patientId")
-@ToString(of = {"patientId", "name","pesel", "birthDate", "address", "phone"})
+@ToString(of = {"patientId", "name", "pesel", "birthDate", "address", "phone"})
 @Builder
 public class Patients {
 

@@ -7,7 +7,7 @@ import pl.clinic.domain.Status;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "appointmentStatusId")
-@ToString(of = {"appointmentStatusId","status"})
+@ToString(of = {"appointmentStatusId", "status"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +24,6 @@ public class AppointmentStatusEntity {
     @Column(name = "status")
     private Status status;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "appointmentStatus")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "appointmentStatus")
     private AppointmentsEntity appointments;
 }

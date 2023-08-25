@@ -7,19 +7,19 @@ import java.time.Duration;
 @With
 @Value
 @EqualsAndHashCode(of = "medicationId")
-@ToString(of = {"medicationName","dosage","frequency","duration"})
+@ToString(of = {"medicationName", "dosage", "frequency", "duration"})
 @Builder
 public class Medications {
 
-     Integer medicationId;
+    Integer medicationId;
 
-     String medicationName;
+    String medicationName;
 
-     String dosage;
+    String dosage;
 
-     String frequency;
+    String frequency;
 
-     Duration duration;
-    
-    
+    Duration duration;
+
+
 }

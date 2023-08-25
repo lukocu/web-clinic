@@ -6,11 +6,9 @@ import org.mapstruct.ReportingPolicy;
 import pl.clinic.domain.Office;
 import pl.clinic.infrastructure.database.entity.OfficeEntity;
 
-import java.util.Optional;
-
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface OfficeEntityMapper  {
+public interface OfficeEntityMapper {
 
-    @Mapping(target = "appointments",ignore = true)
-    Office mapFromEntity(Optional<OfficeEntity> entity);
+    @Mapping(target = "appointments", ignore = true)
+    Office mapFromEntity(OfficeEntity entity);
 }

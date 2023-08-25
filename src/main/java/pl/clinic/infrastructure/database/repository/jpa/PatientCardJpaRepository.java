@@ -12,8 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PatientCardJpaRepository extends JpaRepository<PatientCardEntity,Integer> {
+public interface PatientCardJpaRepository extends JpaRepository<PatientCardEntity, Integer> {
     List<PatientCardEntity> findByPatient(Patients patient);
+
     Optional<PatientCardEntity> findByPatientAndDoctorAndDiagnosisDate(PatientsEntity patient, DoctorsEntity doctor, OffsetDateTime diagnosisDate);
+
     Optional<PatientCardEntity> findByPatientAndDiagnosisDate(PatientsEntity patient, OffsetDateTime diagnosisDate);
+
+
+    Optional<PatientCardEntity> findByPatientId(Integer patientId);
 }

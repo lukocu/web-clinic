@@ -8,7 +8,8 @@ import pl.clinic.infrastructure.database.entity.AppointmentStatusEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AppointmentStatusEntityMapper {
-    @Mapping(target = "appointments",ignore = true)
+    @Mapping(target = "appointments", ignore = true)
     AppointmentStatus mapFromEntity(AppointmentStatusEntity entity);
 
+    AppointmentStatusEntity mapToEntity(AppointmentStatus newStatus);
 }
