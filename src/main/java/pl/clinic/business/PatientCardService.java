@@ -28,11 +28,6 @@ public class PatientCardService {
     @Transactional
     public void addPatientCardEntry(PatientCard patientCard) {
 
-        Patients patient = patientsService.searchPatient(patientCard.getPatient().getPesel());
-
-        PatientCard existingPatientCard = patientCardRepository.findPatientCardById(patient.getPatientId())
-                .orElseThrow(() -> new NotFoundException("Patient's medical history not found"));
-
         // Utwórz nowy wpis na podstawie pól z formularza
         PatientCard newEntry = PatientCard.builder()
                 .diagnosisDate(patientCard.getDiagnosisDate())
@@ -44,7 +39,7 @@ public class PatientCardService {
 
         // Dodaj nowy wpis do istniejącej karty pacjenta
 
-        patientCardRepository.save(existingPatientCard);
+        patientCardRepository.save(newEntry);
     }
 
 
