@@ -2,6 +2,7 @@ package pl.clinic.business;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.AppointmentsRepository;
 import pl.clinic.domain.AppointmentStatus;
 import pl.clinic.domain.Appointments;
@@ -18,7 +19,7 @@ public class AppointmentsService {
     private AppointmentsRepository appointmentsRepository;
     private AppointmentStatusService appointmentStatusService;
 
-
+    @Transactional
     public void createScheduledAppointment(OfficeDoctorAvailability officeDoctorAvailability) {
         Appointments appointment = Appointments.builder()
                 .probableStartTime(OffsetDateTime.of(

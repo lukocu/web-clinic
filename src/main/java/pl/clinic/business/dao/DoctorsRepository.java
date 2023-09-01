@@ -6,6 +6,8 @@ import pl.clinic.domain.Doctors;
 import pl.clinic.infrastructure.database.repository.jpa.DoctorsJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.DoctorsEntityMapper;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,5 +25,17 @@ public class DoctorsRepository {
     public Optional<Doctors> findByPesel(String pesel) {
         return doctorsJpaRepository.findByPesel(pesel)
                 .map(entity -> doctorsEntityMapper.mapFromEntity(entity));
+    }
+
+    public List<Doctors> findAll() {
+        return doctorsJpaRepository.findAll().stream()
+                .map(entity -> doctorsEntityMapper.mapFromEntity(entity))
+                .toList();
+    }
+
+    public List<Doctors> findDoctorsAndOffice() {
+        return doctorsJpaRepository.findDoctorsAndOffice().stream()
+                .map(entity -> doctorsEntityMapper.mapFromEntity(entity))
+                .toList();
     }
 }
