@@ -1,6 +1,7 @@
 package pl.clinic.domain;
 
 import lombok.*;
+import pl.clinic.infrastructure.database.entity.OfficeEntity;
 
 import java.util.Set;
 
@@ -28,4 +29,6 @@ public class Doctors {
     Set<Office> offices;
 
     Set<PatientCard> patientCards;
+
+
 }

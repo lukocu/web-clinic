@@ -16,8 +16,8 @@ public class PatientCardRepository {
     private PatientCardEntityMapper patientCardEntityMapper;
 
 
-    public Optional<PatientCard> findPatientCardById(Integer patientId) {
-        return patientCardJpaRepository.findByPatientId(patientId)
+    public Optional<PatientCard> findPatientCardByPesel(String pesel) {
+        return patientCardJpaRepository.findByPatientPesel(pesel)
                 .map(entity -> patientCardEntityMapper.mapFromEntity(entity));
     }
 

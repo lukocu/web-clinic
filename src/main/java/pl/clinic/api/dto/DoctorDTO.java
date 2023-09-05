@@ -4,8 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.clinic.domain.Office;
+import pl.clinic.domain.PatientCard;
+import pl.clinic.domain.Specialization;
+import pl.clinic.domain.User;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Data
 @Builder
@@ -13,13 +18,18 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class DoctorDTO {
 
-    private String name;
-    private String surname;
-    private String phone;
-    private String specializationNames;
-    private String officeId; // office number in clinic
-    private BigDecimal firstConsultationFee;
-    private BigDecimal followupConsultationFee;
 
+    String name;
 
+    String surname;
+
+    String phone;
+
+    String pesel;
+
+    String specializationNames;
+
+    Set<Integer> offices;
+
+    // Set<PatientCardDTO> patientCards;
 }

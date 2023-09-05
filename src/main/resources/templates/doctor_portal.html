@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista Lekarzy</title>
-    <!-- Dodaj Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -16,9 +15,7 @@
             <th>Nazwisko</th>
             <th>Telefon</th>
             <th>Specjalizacje</th>
-            <th>Biuro ID</th>
-            <th>Pierwsza konsultacja</th>
-            <th>Kolejna konsultacja</th>
+            <th>Numery Biur lekarza</th>
         </tr>
         </thead>
         <tbody>
@@ -27,9 +24,8 @@
             <td th:text="${doctor.surname}"></td>
             <td th:text="${doctor.phone}"></td>
             <td th:text="${doctor.specializationNames}"></td>
-            <td th:text="${doctor.officeId}"></td>
-            <td th:text="${doctor.firstConsultationFee}"></td>
-            <td th:text="${doctor.followupConsultationFee}"></td>
+            <td th:text="${doctor.offices}"></td>
+
         </tr>
         </tbody>
     </table>

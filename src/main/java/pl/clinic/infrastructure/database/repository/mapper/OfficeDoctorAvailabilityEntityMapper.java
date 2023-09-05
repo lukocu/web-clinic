@@ -12,5 +12,10 @@ public interface OfficeDoctorAvailabilityEntityMapper {
     @Mapping(target = "office", ignore = true)
     OfficeDoctorAvailability mapFromEntity(OfficeDoctorAvailabilityEntity entity);
 
+    default OfficeDoctorAvailability mapFromEntityWithOffice(OfficeDoctorAvailabilityEntity entity){
+        return mapFromEntity(entity)
+                .withOffice(OfficeEntityMapper.INSTANCE.mapFromEntity(entity.getOffice()));
+    }
+
     OfficeDoctorAvailabilityEntity mapToEntity(OfficeDoctorAvailability availability);
 }

@@ -20,5 +20,5 @@ public interface PatientCardJpaRepository extends JpaRepository<PatientCardEntit
     Optional<PatientCardEntity> findByPatientAndDiagnosisDate(PatientsEntity patient, OffsetDateTime diagnosisDate);
 
 
-    Optional<PatientCardEntity> findByPatientId(Integer patientId);
+    Optional<PatientCardEntity> findByPatientPesel(String patientPesel);
 }

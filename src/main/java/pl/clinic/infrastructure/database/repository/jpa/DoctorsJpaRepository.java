@@ -11,7 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface DoctorsJpaRepository extends JpaRepository<DoctorsEntity, Integer> {
-    @Query("SELECT d FROM DoctorsEntity d JOIN FETCH d.offices")
+    @Query("SELECT DISTINCT d FROM DoctorsEntity d " +
+            "LEFT JOIN FETCH d.specializations s " + // Pobierz specjalizacje doktora
+            "LEFT JOIN FETCH d.offices o " + // Pobierz biura doktora
+            "ORDER BY d.doctorId") // Opcjonalnie można dodać sortowanie
     List<DoctorsEntity> findDoctorsAndOffice();
 
     Optional<DoctorsEntity> findByNameAndSurname(String name, String surname);

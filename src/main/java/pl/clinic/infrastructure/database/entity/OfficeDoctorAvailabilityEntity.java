@@ -9,7 +9,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"officeAvailabilityId"})
-@ToString(of = {"officeAvailabilityId", "date", "startTime", "endTime", "availabilityStatus", "office"})
+@ToString(of = {"officeAvailabilityId", "date", "startTime", "endTime", "availabilityStatus"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

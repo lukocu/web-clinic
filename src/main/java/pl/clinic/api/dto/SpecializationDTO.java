@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DoctorsDTO {
+public class SpecializationDTO {
 
-    private List<DoctorDTO> doctors;
+    private Integer specializationId;
+    private String specializationName;
+
+    // Getters and setters (możesz użyć Lomboka do ich generowania)
+
 }

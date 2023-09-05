@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.clinic.api.dto.mapper.DoctorMapper;
+import pl.clinic.api.dto.mapper.OfficeMapper;
 import pl.clinic.business.DoctorsService;
 
 @Controller
@@ -14,12 +15,15 @@ public class DoctorController {
 
     private final DoctorsService doctorsService;
     private final DoctorMapper doctorMapper;
+    private final OfficeMapper officeMapper;
+
 
     @GetMapping(value =  DOCTOR)
     public String homePage(Model model){
        var doctors= doctorsService.getDoctorsAndOffice().stream()
                .map(doctorMapper::mapAdditionalFields)
                .toList();
+
 
        model.addAttribute("doctorsAndOffice",doctors);
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <!-- Dodaj napis "Appointments" w lewym górnym rogu -->
+    <h1>Appointments</h1>
+
+    <!-- Dodaj formularz do wprowadzania numeru biura -->
+    <form id="availabilityForm" th:action="@{'/appointment/check/' + officeNumber}" method="get">
+        <div class="form-group">
+            <label for="officeNumber">Enter Office Number:</label>
+            <input type="number" class="form-control" id="officeNumber" name="officeNumber">
+        </div>
+        <button type="submit" class="btn btn-primary">Check Availability</button>
+    </form>
+
+    <!-- Tabela dostępności biura (początkowo ukryta) -->
+    <div id="availabilityTable" style="display: none;">
+        <h2>Availability</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Availability Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Dane dostępności biura zostaną wygenerowane tutaj przez Thymeleaf -->
+            <tr th:each="availability : ${officeAvailableDTO}">
+                <td th:text="${availability.date}"></td>
+                <td th:text="${availability.startTime}"></td>
+                <td th:text="${availability.endTime}"></td>
+                <td th:text="${availability.availabilityStatus}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Funkcja obsługująca ukrywanie i wyświetlanie tabeli na podstawie odpowiedzi z serwera
+    function toggleAvailabilityTable(show) {
+        var availabilityTable = document.getElementById("availabilityTable");
+        availabilityTable.style.display = show ? "block" : "none";
+    }
+</script>
+</body>
+</html>

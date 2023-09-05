@@ -29,8 +29,8 @@ public class OfficeDoctorAvailabilityRepository {
     }
 
     public List<OfficeDoctorAvailability> findByOfficeAndAvailabilityStatusIsTrue(Integer officeId) {
-        return officeDoctorAvailabilityJpaRepository.findByOfficeAndAvailabilityStatusIsTrue(officeId).stream()
-                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntity(entity))
+        return officeDoctorAvailabilityJpaRepository.findByOfficeIdAndAvailabilityStatusIsTrue(officeId).stream()
+                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
                 .toList();
     }
 

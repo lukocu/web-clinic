@@ -28,5 +28,6 @@ public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<Off
             "AND doctors.surname = :surname")
     List<OfficeDoctorAvailabilityEntity> findAvailableHoursForDoctor(@Param("name") String name, @Param("surname") String surname);
 
-    List<OfficeDoctorAvailabilityEntity> findByOfficeAndAvailabilityStatusIsTrue(Integer officeId);
+    @Query("SELECT oda FROM OfficeDoctorAvailabilityEntity oda WHERE oda.office.officeId = :officeId AND oda.availabilityStatus = true")
+    List<OfficeDoctorAvailabilityEntity> findByOfficeIdAndAvailabilityStatusIsTrue(Integer officeId);
 }

@@ -32,14 +32,14 @@ public class DoctorsEntity {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToMany(mappedBy = "doctors")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "doctors")
     private Set<SpecializationEntity> specializations;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", unique = true)
     private UserEntity user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = CascadeType.ALL)
     private Set<OfficeEntity> offices;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor")

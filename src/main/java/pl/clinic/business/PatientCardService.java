@@ -20,7 +20,7 @@ public class PatientCardService {
     public PatientCard getMedicalPatientHistory(String pesel) {
         Patients patient = patientsService.searchPatient(pesel);
 
-        return patientCardRepository.findPatientCardById(patient.getPatientId())
+        return patientCardRepository.findPatientCardByPesel(patient.getPesel())
                 .orElseThrow(() -> new NotFoundException("Patient medical History not found"));
 
     }

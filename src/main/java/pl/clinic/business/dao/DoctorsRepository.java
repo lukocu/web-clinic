@@ -35,7 +35,7 @@ public class DoctorsRepository {
 
     public List<Doctors> findDoctorsAndOffice() {
         return doctorsJpaRepository.findDoctorsAndOffice().stream()
-                .map(entity -> doctorsEntityMapper.mapFromEntity(entity))
+                .map(entity -> doctorsEntityMapper.mapFromEntityWithSpecializationsAndOffices(entity))
                 .toList();
     }
 }
