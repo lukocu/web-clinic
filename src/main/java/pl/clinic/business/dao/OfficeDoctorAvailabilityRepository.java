@@ -40,7 +40,7 @@ public class OfficeDoctorAvailabilityRepository {
 
     public Optional<OfficeDoctorAvailability> findById(Integer officeAvailabilityId) {
         return officeDoctorAvailabilityJpaRepository.findById(officeAvailabilityId)
-                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntity(entity));
+                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
     }
 
 

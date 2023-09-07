@@ -20,8 +20,6 @@ public class AppointmentStatusService {
                 .status(Status.Scheduled)
                 .build();
 
-        appointmentStatusRepository.save(newStatus);
-
         return newStatus;
     }
 

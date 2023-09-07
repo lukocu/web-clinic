@@ -31,22 +31,21 @@
             </thead>
             <tbody>
 
-            <tr th:each="availability : ${availableList}">
+            <tr th:each="availability, rowStat : ${availableList}">
                 <td th:text="${availability.date}"></td>
                 <td th:text="${availability.startTime}"></td>
                 <td th:text="${availability.endTime}"></td>
                 <td th:text="${availability.availabilityStatus} ? 'Dostępny' : 'Niedostępny'"></td>
                 <td>
-                    <form th:action="@{'/appointment/' + ${availability.officeId}/add}" method="post"
-                          th:object="${availability}">
-                        <input type="hidden" th:field="*{officeAvailabilityId}"/>
-                        <input type="hidden" th:field="*{date}"/>
-                        <input type="hidden" th:field="*{startTime}"/>
-                        <input type="hidden" th:field="*{endTime}"/>
-                        <input type="hidden" th:field="*{availabilityStatus}"/>
-                        <input type="hidden" th:field="*{officeId}"/>
+                    <form th:action="@{'/appointment/' + ${availability.officeId}+'/add'}" method="post" th:object="${availability}">
+                        <input type="hidden" name="officeAvailabilityId" th:value="${availability.officeAvailabilityId}" />
+                        <input type="hidden" name="date" th:value="${availability.date}" />
+                        <input type="hidden" name="startTime" th:value="${availability.startTime}" />
+                        <input type="hidden" name="endTime" th:value="${availability.endTime}" />
+                        <input type="hidden" name="availabilityStatus" th:value="${availability.availabilityStatus}" />
                         <button type="submit" class="btn btn-success">Zarezerwuj wizytę</button>
                     </form>
+
                 </td>
             </tr>
             </tbody>

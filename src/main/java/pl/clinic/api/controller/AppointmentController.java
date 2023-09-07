@@ -9,6 +9,8 @@ import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.api.dto.mapper.OfficeDoctorAvailabilityMapper;
 import pl.clinic.business.OfficeDoctorAvailabilityService;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -18,7 +20,7 @@ public class AppointmentController {
     public static final String APPOINTMENT = "/appointment";
     public static final String APPOINTMENT_LIST = "/appointment/{officeId}";
 
-    public static final String APPOINTMENT_ADD = "{/appointment/{officeId}/add";
+    public static final String APPOINTMENT_ADD = "/appointment/{officeId}/add";
 
     private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
     private OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
@@ -37,13 +39,17 @@ public class AppointmentController {
     @PostMapping(value = APPOINTMENT_ADD)
     public String reserveAppointment(
             @PathVariable Integer officeId,
+            @RequestParam("officeAvailabilityId") Integer officeAvailabilityId,
+            @RequestParam("date") LocalDate date,
+            @RequestParam("startTime") LocalTime startTime,
+            @RequestParam("endTime") LocalTime endTime,
+            @RequestParam("availabilityStatus") Boolean availabilityStatus,
             @ModelAttribute("availability") OfficeDoctorAvailabilityDTO availability,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes)  {
 
-        Integer officeAvailabilityId = availability.getOfficeAvailabilityId();
 
         // Przykład:
-        officeDoctorAvailabilityService.reserveOfficeAvailability(officeAvailabilityId);
+        officeDoctorAvailabilityService.reservedAppointment(officeAvailabilityId);
 
         redirectAttributes.addFlashAttribute("availability", availability);
         return "redirect:/success";
@@ -62,4 +68,3 @@ public class AppointmentController {
     }
 
 }
-//TODO W APPOINTMENT POPRAW PRZYCISK I DODAJ TUTAJ @POST Noi obejrzyj bykowskiego

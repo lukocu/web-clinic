@@ -13,6 +13,7 @@ import pl.clinic.domain.exception.SlotNotAvailableException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -61,7 +62,7 @@ public class OfficeDoctorAvailabilityService {
         if (availability.getAvailabilityStatus()) {
             OfficeDoctorAvailability officeDoctorAvailability =
                     availability.withAvailabilityStatus(false);// Zmiana statusu dostępności na zarezerwowany
-            officeDoctorAvailabilityRepository.save(officeDoctorAvailability);
+            officeDoctorAvailabilityRepository.save(availability);
 
             appointmentsService.createScheduledAppointment(officeDoctorAvailability);
 
@@ -82,8 +83,5 @@ public class OfficeDoctorAvailabilityService {
             officeDoctorAvailabilityRepository.save(updatedAvailability);
         }
     }
-    @Transactional
-    public void reserveOfficeAvailability(Integer officeAvailabilityId) {
 
-    }
 }
