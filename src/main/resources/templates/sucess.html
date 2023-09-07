@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sukces</title>
+    <!-- Dodaj link do Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4">Gratulacje! Rezerwacja się udała!</h1>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <p class="lead">Oto dane Twojej rezerwacji:</p>
+            <ul class="list-group">
+                <li class="list-group-item">Data: <span th:text="${availability.date}"></span></li>
+                <li class="list-group-item">Godzina rozpoczęcia: <span th:text="${availability.startTime}"></span></li>
+                <li class="list-group-item">Godzina zakończenia: <span th:text="${availability.endTime}"></span></li>
+                <li class="list-group-item">Status dostępności: <span th:text="${availability.availabilityStatus ? 'Dostępny' : 'Niedostępny'}"></span></li>
+                <li class="list-group-item">Numer biura: <span th:text="${availability.officeId}"></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

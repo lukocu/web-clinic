@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class OfficeDoctorAvailabilityDTO {
 
-
+   private Integer officeAvailabilityId;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;

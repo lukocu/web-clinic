@@ -82,4 +82,8 @@ public class OfficeDoctorAvailabilityService {
             officeDoctorAvailabilityRepository.save(updatedAvailability);
         }
     }
+    @Transactional
+    public void reserveOfficeAvailability(Integer officeAvailabilityId) {
+
+    }
 }

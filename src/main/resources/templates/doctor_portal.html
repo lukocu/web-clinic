@@ -8,14 +8,14 @@
 <body>
 <div class="container">
     <h1 class="mt-5 mb-4">Lista Lekarzy</h1>
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
         <tr>
-            <th>Imię</th>
-            <th>Nazwisko</th>
-            <th>Telefon</th>
-            <th>Specjalizacje</th>
-            <th>Numery Biur lekarza</th>
+            <th scope="col">Imię</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">Telefon</th>
+            <th scope="col">Specjalizacje</th>
+            <th scope="col">Numery Biur lekarza</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +25,6 @@
             <td th:text="${doctor.phone}"></td>
             <td th:text="${doctor.specializationNames}"></td>
             <td th:text="${doctor.offices}"></td>
-
         </tr>
         </tbody>
     </table>

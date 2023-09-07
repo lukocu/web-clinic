@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Strona z Dostępnością</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Strona z Dostępnością Biura</h1>
+<div class="container">
+    <h1 class="mt-5 mb-4">Strona z Dostępnością Biura</h1>
 
+    <form th:action="@{'/appointment/' + officeId}" method="get" class="mb-4">
+        <div class="form-group">
+            <label for="officeId">Podaj numer biura:</label>
+            <input type="number" id="officeId" name="officeId" required class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Zobacz dostępność</button>
+    </form>
 
-<form th:action="@{'/appointment/' + officeId}" method="get">
-    <label for="officeId">Podaj numer biura:</label>
-    <input type="number" id="officeId" name="officeId" required>
-    <button type="submit">Zobacz dostępność</button>
-</form>
+    <div th:if="${availableList != null}">
+        <h2>Dostępność biura:</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Godzina rozpoczęcia</th>
+                <th>Godzina zakończenia</th>
+                <th>Status dostępności</th>
+                <th>Zarezerwuj</th>
+            </tr>
+            </thead>
+            <tbody>
 
-
-<div th:if="${availableList != null}">
-    <h2>Dostępność biura:</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Data</th>
-            <th>Godzina rozpoczęcia</th>
-            <th>Godzina zakończenia</th>
-            <th>Status dostępności</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr th:each="availability : ${availableList}">
-            <td th:text="${availability.date}"></td>
-            <td th:text="${availability.startTime}"></td>
-            <td th:text="${availability.endTime}"></td>
-            <td th:text="${availability.availabilityStatus} ? 'Dostępny' : 'Niedostępny'"></td>
-        </tr>
-        </tbody>
-    </table>
+            <tr th:each="availability : ${availableList}">
+                <td th:text="${availability.date}"></td>
+                <td th:text="${availability.startTime}"></td>
+                <td th:text="${availability.endTime}"></td>
+                <td th:text="${availability.availabilityStatus} ? 'Dostępny' : 'Niedostępny'"></td>
+                <td>
+                    <form th:action="@{'/appointment/' + ${availability.officeId}/add}" method="post"
+                          th:object="${availability}">
+                        <input type="hidden" th:field="*{officeAvailabilityId}"/>
+                        <input type="hidden" th:field="*{date}"/>
+                        <input type="hidden" th:field="*{startTime}"/>
+                        <input type="hidden" th:field="*{endTime}"/>
+                        <input type="hidden" th:field="*{availabilityStatus}"/>
+                        <input type="hidden" th:field="*{officeId}"/>
+                        <button type="submit" class="btn btn-success">Zarezerwuj wizytę</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
