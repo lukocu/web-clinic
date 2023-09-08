@@ -28,6 +28,6 @@ public class DoctorController {
        model.addAttribute("doctorsAndOffice",doctors);
 
 
-        return "doctor_portal";
+        return "doctor_list";
     }
 }

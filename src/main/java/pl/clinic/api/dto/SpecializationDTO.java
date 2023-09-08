@@ -14,6 +14,6 @@ public class SpecializationDTO {
     private Integer specializationId;
     private String specializationName;
 
-    // Getters and setters (możesz użyć Lomboka do ich generowania)
+
 
 }

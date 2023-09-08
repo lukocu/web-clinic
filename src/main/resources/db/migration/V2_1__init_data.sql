@@ -6,18 +6,19 @@ VALUES (1, 'ADMIN'),
 
 -- Przykładowe dane dla tabeli clinic_user
 INSERT INTO clinic_user (user_id, username, email, password, active)
-VALUES (1, 'admin123', 'admin@example.com', 'hashed_password', true),
-       (2, 'doctor456', 'doctor@example.com', 'hashed_password', true),
-       (3, 'doctor2', 'doctor2@example.com', 'hashed_password', true),
-       (4, 'patient789', 'patient@example.com', 'hashed_password', true),
-       (5, 'patient11', 'patient11@example.com', 'hashed_password', true);
+VALUES (1, 'admin123', 'admin@example.com', '$2a$12$FCAlDbUksXTRONN7F8R/nuItbH4EGIpiVrCYiWDW8Tp3WhDBl/rxO', true),
+       (2, 'doctor1', 'doctor1@example.com', '$2a$12$FCAlDbUksXTRONN7F8R/nuItbH4EGIpiVrCYiWDW8Tp3WhDBl/rxO', true),
+       (3, 'doctor2', 'doctor2@example.com', '$2a$12$FCAlDbUksXTRONN7F8R/nuItbH4EGIpiVrCYiWDW8Tp3WhDBl/rxO', true),
+       (4, 'patient1', 'patient1@example.com', '$2a$12$FCAlDbUksXTRONN7F8R/nuItbH4EGIpiVrCYiWDW8Tp3WhDBl/rxO', true),
+       (5, 'patient2', 'patient2@example.com', '$2a$12$FCAlDbUksXTRONN7F8R/nuItbH4EGIpiVrCYiWDW8Tp3WhDBl/rxO', true);
 
 -- Przykładowe dane dla tabeli clinic_user_role
 INSERT INTO clinic_user_role (clinic_user_role_id, user_id, role_id)
 VALUES (1, 1, 1), -- admin ma rolę ADMIN
        (2, 2, 2), -- doctor ma rolę DOCTOR
-       (3, 3, 3);
--- patient ma rolę PATIENT
+       (3, 3, 2), -- doctor ma rolę DOCTOR
+       (4, 4, 3), -- patient ma rolę PATIENT
+       (5, 5, 3); -- patient ma rolę PATIENT
 
 -- Przykładowe dane dla tabeli specialization
 INSERT INTO specialization (specialization_id, specialization_name)
