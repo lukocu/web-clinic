@@ -1,7 +1,9 @@
 package pl.clinic.business;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.clinic.business.dao.UserRepository;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.User;
 
@@ -9,7 +11,14 @@ import pl.clinic.domain.User;
 @AllArgsConstructor
 public class UserService {
 
-    public void registerNewUser(User patientUser, Patients patient) {
+    private UserRepository userRepository;
+
+
+    @Transactional
+    public void registerNewPatientUser(User patientUser, Patients patient) {
+
+        userRepository.saveNewPatientUser(patientUser.withPatient(patient));
+
 
     }
 }

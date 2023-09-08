@@ -44,7 +44,7 @@ public class RegistrationController {
         User patientUser = userRegistrationMapper.mapFromDto(registrationDto);
         Patients patient = patientsMapper.mapFromDtoWithoutAppointment(patientsDTO);
 
-        userService.registerNewUser(patientUser,patient);
+        userService.registerNewPatientUser(patientUser,patient);
         return "redirect:/login"; // Przekierowanie na stronę logowania po zarejestrowaniu użytkownika
     }
 }

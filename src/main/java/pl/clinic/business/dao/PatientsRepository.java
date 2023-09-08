@@ -20,5 +20,9 @@ public class PatientsRepository {
             .map(entity->patientsEntityMapper.mapFromEntity(entity));
 
     }
+    public void save(Patients pesel) {
+    patientsEntityMapper.mapToEntity(pesel);
+
+    }
 
 }

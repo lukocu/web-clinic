@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.infrastructure.database.entity.RoleEntity;
 import pl.clinic.infrastructure.database.entity.UserEntity;
+import pl.clinic.infrastructure.database.repository.jpa.UserJpaRepository;
 
 import java.util.List;
 import java.util.Set;

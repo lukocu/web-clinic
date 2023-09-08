@@ -7,10 +7,10 @@ import java.util.Set;
 
 @With
 @Value
-@EqualsAndHashCode(of = {"doctorId", "pesel"})
+@EqualsAndHashCode(of = { "doctorId","pesel"})
 @ToString(of = {"doctorId", "name", "surname", "pesel", "phone"})
 @Builder
-public class Doctors extends User{
+public class Doctors {
 
     Integer doctorId;
 

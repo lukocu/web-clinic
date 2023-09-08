@@ -4,17 +4,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import pl.clinic.domain.Doctors;
-import pl.clinic.domain.Office;
-import pl.clinic.domain.Specialization;
 import pl.clinic.infrastructure.database.entity.DoctorsEntity;
 
-import java.util.Collections;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DoctorsEntityMapper {
-
 
   @Mapping(target = "specializations", ignore = true)
   @Mapping(target = "user", ignore = true)
