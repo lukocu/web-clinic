@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Dashboard</title>
+    <!-- Dodaj linki do Bootstrap CSS i JavaScript -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Patient Dashboard</h1>
+    <div class="card">
+        <div class="card-body">
+            <!-- Wyświetlanie danych pacjenta -->
+            <h5 class="card-title">Patient Information</h5>
+            <p><strong>Name:</strong> <span th:text="${patient.name}"></span></p>
+            <p><strong>Surname:</strong> <span th:text="${patient.surname}"></span></p>
+            <p><strong>Pesel:</strong> <span th:text="${patient.pesel}"></span></p>
+            <p><strong>Birth Date:</strong> <span th:text="${patient.birthDate}"></span></p>
+            <p><strong>Address:</strong> <span th:text="${patient.address}"></span></p>
+            <p><strong>Phone:</strong> <span th:text="${patient.phone}"></span></p>
+
+            <!-- Przycisk do karty pacjenta -->
+            <form th:action="@{/patient_card}" method="get">
+                <input type="hidden" name="patientId" th:value="${patient.patientId}" />
+                <button type="submit" class="btn btn-primary">Go to the patient's card</button>
+            </form>
+
+            <!-- Wyświetlanie terminów wizyt -->
+            <h5 class="card-title mt-3">Appointments</h5>
+            <ul th:if="${patient.appointments}" th:each="appointment : ${patient.appointments}">
+                <li th:text="${appointment.date} + ' - ' + ${appointment.description}"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

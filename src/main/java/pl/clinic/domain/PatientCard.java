@@ -26,4 +26,6 @@ public class PatientCard {
     Set<Diseases> diseases;
 
     Prescriptions prescription;
+
+
 }

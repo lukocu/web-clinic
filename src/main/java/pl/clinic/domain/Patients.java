@@ -30,4 +30,5 @@ public class Patients {
 
     Set<Appointments> appointments;
 
+    PatientCard patientCard;
 }

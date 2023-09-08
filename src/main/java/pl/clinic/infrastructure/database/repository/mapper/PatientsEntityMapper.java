@@ -16,7 +16,6 @@ public interface PatientsEntityMapper {
     @Mapping(target = "appointments", ignore = true)
     @Mapping(target = "patientCard",ignore = true)
     Patients mapFromEntity(PatientsEntity entity);
-
     @InheritInverseConfiguration
     PatientsEntity mapToEntity(Patients patient);
 }

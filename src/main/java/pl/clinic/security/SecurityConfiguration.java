@@ -11,10 +11,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -40,20 +45,23 @@ public class SecurityConfiguration {
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.configure(http))
                 .authorizeHttpRequests()
-                .requestMatchers("/login", "/error").permitAll()
-                .requestMatchers("/patient_portal/**", "/appointment/**").hasAnyAuthority("PATIENT")
-                .requestMatchers("/doctor_portal/**").hasAnyAuthority("DOCTOR")
-                .requestMatchers("/", "/doctor_list/**").hasAnyAuthority("PATIENT", "DOCTOR")
+                    .requestMatchers("/", "/login", "/error", "/registration").permitAll()
+                    .requestMatchers("/patient_portal/**", "/appointment/**").hasAnyAuthority("PATIENT")
+                    .requestMatchers("/doctor_portal/**").hasAnyAuthority("DOCTOR")
+                    .requestMatchers("/doctor_list/**").hasAnyAuthority("PATIENT", "DOCTOR")
                 // .requestMatchers("/api/**").hasAnyAuthority("REST_API")
-                .and()
+                    .and()
                 .formLogin()
-                .permitAll()
-                .and()
+                    .loginPage("/login.html") // Określ niestandardową stronę logowania
+                    .loginProcessingUrl("/login")
+                    .successHandler(myAuthenticationSuccessHandler())
+                    .permitAll()
+                    .and()
                 .logout()
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
+                    .logoutSuccessUrl("/login")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll();
 
         return http.build();
     }
