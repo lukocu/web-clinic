@@ -3,6 +3,7 @@ package pl.clinic.infrastructure.database.repository.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import org.mapstruct.factory.Mappers;
 import pl.clinic.domain.Doctors;
 import pl.clinic.infrastructure.database.entity.DoctorsEntity;
 
@@ -10,6 +11,9 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DoctorsEntityMapper {
+
+
+  DoctorsEntityMapper INSTANCE= Mappers.getMapper(DoctorsEntityMapper.class);
 
   @Mapping(target = "specializations", ignore = true)
   @Mapping(target = "user", ignore = true)

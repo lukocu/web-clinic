@@ -7,11 +7,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -40,28 +42,31 @@ public class SecurityConfiguration {
                 .build();
     }
 
+
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
-        http.csrf((csrf) -> csrf.configure(http))
-                .authorizeHttpRequests()
-                    .requestMatchers("/", "/login", "/error", "/registration").permitAll()
-                    .requestMatchers("/patient_portal/**", "/appointment/**").hasAnyAuthority("PATIENT")
-                    .requestMatchers("/doctor_portal/**").hasAnyAuthority("DOCTOR")
-                    .requestMatchers("/doctor_list/**").hasAnyAuthority("PATIENT", "DOCTOR")
-                // .requestMatchers("/api/**").hasAnyAuthority("REST_API")
-                    .and()
-                .formLogin()
-                    .loginPage("/login.html") // Określ niestandardową stronę logowania
-                    .loginProcessingUrl("/login")
-                    .successHandler(myAuthenticationSuccessHandler())
-                    .permitAll()
-                    .and()
-                .logout()
-                    .logoutSuccessUrl("/login")
-                    .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
-                    .permitAll();
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((authorize) ->
+                                authorize.requestMatchers("/", "/login", "/error", "/registration").permitAll()
+                                        .requestMatchers("/patient_portal/**", "/appointment/**").hasAnyAuthority("PATIENT")
+                                        .requestMatchers("/doctor_portal/**").hasAnyAuthority("DOCTOR")
+                                        .requestMatchers("/doctor_list/**").hasAnyAuthority("PATIENT", "DOCTOR")
+                        // .requestMatchers("/api/**").hasAnyAuthority("REST_API")
+                ).formLogin(
+                        form -> form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .successHandler(myAuthenticationSuccessHandler())
+                                .permitAll()
+                ).logout(
+                        logout -> logout.
+                                logoutSuccessUrl("/login")
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                                .permitAll()
+                );
 
         return http.build();
     }

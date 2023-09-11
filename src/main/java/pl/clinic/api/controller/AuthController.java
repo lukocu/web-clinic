@@ -16,14 +16,22 @@ import pl.clinic.api.dto.mapper.UserRegistrationMapper;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.User;
 
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
-public class RegistrationController {
+public class AuthController {
 
     private UserService userService;
     private UserRegistrationMapper userRegistrationMapper;
     private PatientsMapper patientsMapper;
-    @GetMapping("/register")
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
         model.addAttribute("registrationUserDto", new UserRegistrationDto());
         model.addAttribute("registrationPatientDto", new PatientsDTO());
@@ -47,4 +55,16 @@ public class RegistrationController {
         userService.registerNewPatientUser(patientUser,patient);
         return "redirect:/login"; // Przekierowanie na stronę logowania po zarejestrowaniu użytkownika
     }
+
+    @GetMapping("/users")
+    public String users(Model model){
+
+        List<UserRegistrationDto> users = userService.findAllUsers().stream()
+                .map(user -> userRegistrationMapper.mapToDto(user))
+                .toList();
+        model.addAttribute("users", users);
+        return "users";
+    }
+
+
 }

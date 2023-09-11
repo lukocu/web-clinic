@@ -35,4 +35,6 @@ public class UserRegistrationDto {
     String confirmPassword;
 
     String role;
+
+    Boolean active;
 }
