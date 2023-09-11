@@ -20,7 +20,7 @@ public class AppointmentsService {
     @Transactional
     public void createScheduledAppointment(OfficeDoctorAvailability officeDoctorAvailability, Patients patient) {
 
-        AppointmentStatus appointmentStatus = appointmentStatusService.findByStatus(Status.Scheduled);
+
 
         Appointments appointment = Appointments.builder()
                 .probableStartTime(OffsetDateTime.of(

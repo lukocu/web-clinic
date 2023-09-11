@@ -41,11 +41,7 @@ INSERT INTO office (office_id, doctor_id, first_consultation_fee, followup_consu
 VALUES (1, 1, 100.00, 50.00), -- Office of Doctor 1
        (2, 2, 150.00, 75.00); -- Office of Doctor 2
 
--- Przykładowe dane dla tabeli appointment_status
-INSERT INTO appointment_status (appointment_status_id, status)
-VALUES (1, 'Scheduled'),
-       (2, 'Completed'),
-       (3, 'Canceled');
+
 
 -- Przykładowe dane dla tabeli patients
 INSERT INTO patients (patient_id, name, surname,pesel, birth_date, address, phone, user_id)
@@ -96,5 +92,9 @@ VALUES (1, 1, '2023-08-15', '08:00:00', '12:00:00', true), -- Office 1 availabil
  --      (2, 2, 2, '2023-08-22 15:30:00', NULL, 1, '2023-08-18');
 
 
-
+-- Przykładowe dane dla tabeli appointment_status
+--INSERT INTO appointment_status (appointment_status_id, status)
+--VALUES (1, 'Scheduled'),
+--       (2, 'Completed'),
+--       (3, 'Canceled');
 
