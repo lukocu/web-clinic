@@ -1,6 +1,8 @@
 package pl.clinic.api.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.api.dto.mapper.OfficeDoctorAvailabilityMapper;
 import pl.clinic.business.OfficeDoctorAvailabilityService;
+import pl.clinic.business.PatientsService;
+import pl.clinic.business.UserService;
+import pl.clinic.domain.Patients;
+import pl.clinic.security.IAuthenticationFacade;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,10 +26,14 @@ public class AppointmentController {
     public static final String APPOINTMENT = "/appointment";
     public static final String APPOINTMENT_LIST = "/appointment/{officeId}";
 
-    public static final String APPOINTMENT_ADD = "/appointment/{officeId}/add";
+    public static final String APPOINTMENT_BOOK = "/appointment/{officeId}/book";
 
     private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
     private OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
+    private PatientsService patientsService;
+    private UserService userService;
+
+    private IAuthenticationFacade authenticationFacade;
 
     @GetMapping(value = APPOINTMENT_LIST)
     public String showAvailableList(@RequestParam("officeId") Integer officeId, Model model) {
@@ -36,7 +46,7 @@ public class AppointmentController {
         return "appointment";
     }
 
-    @PostMapping(value = APPOINTMENT_ADD)
+    @PostMapping(value = APPOINTMENT_BOOK)
     public String reserveAppointment(
             @PathVariable Integer officeId,
             @RequestParam("officeAvailabilityId") Integer officeAvailabilityId,
@@ -45,14 +55,22 @@ public class AppointmentController {
             @RequestParam("endTime") LocalTime endTime,
             @RequestParam("availabilityStatus") Boolean availabilityStatus,
             @ModelAttribute("availability") OfficeDoctorAvailabilityDTO availability,
-            RedirectAttributes redirectAttributes)  {
+            RedirectAttributes redirectAttributes) {
+
+        Authentication authentication = authenticationFacade.getAuthentication();
 
 
-        // Przykład:
-        officeDoctorAvailabilityService.reservedAppointment(officeAvailabilityId);
+        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
 
+            var user = userService.findByUsername(userDetails.getUsername());
+
+
+            officeDoctorAvailabilityService.reservedAppointment(officeAvailabilityId, user.getPatient());
+
+        }
         redirectAttributes.addFlashAttribute("availability", availability);
         return "redirect:/success";
+
     }
 
     @GetMapping("/success")

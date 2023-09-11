@@ -37,7 +37,7 @@
                 <td th:text="${availability.endTime}"></td>
                 <td th:text="${availability.availabilityStatus} ? 'Dostępny' : 'Niedostępny'"></td>
                 <td>
-                    <form th:action="@{'/appointment/' + ${availability.officeId}+'/add'}" method="post" th:object="${availability}">
+                    <form th:action="@{'/appointment/' + ${availability.officeId}+'/book'}" method="post" th:object="${availability}">
                         <input type="hidden" name="officeAvailabilityId" th:value="${availability.officeAvailabilityId}" />
                         <input type="hidden" name="date" th:value="${availability.date}" />
                         <input type="hidden" name="startTime" th:value="${availability.startTime}" />

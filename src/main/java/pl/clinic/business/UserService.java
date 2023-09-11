@@ -7,6 +7,7 @@ import pl.clinic.api.dto.UserRegistrationDto;
 import pl.clinic.business.dao.UserRepository;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.User;
+import pl.clinic.domain.exception.NotFoundException;
 
 import java.util.List;
 
@@ -25,7 +26,14 @@ public class UserService {
 
     }
 
+    @Transactional
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Transactional
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("user not found"));
     }
 }

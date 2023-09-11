@@ -90,10 +90,10 @@ VALUES (1, 1, '2023-08-15', '08:00:00', '12:00:00', true), -- Office 1 availabil
 
 
 -- Przykładowe dane dla tabeli appointments
-INSERT INTO appointments (appointment_id, patient_id, office_id, probable_start_time, actual_end_time,
-                          appointment_status_id, appointment_taken_date)
-VALUES (1, 1, 1, '2023-08-20 10:00:00', NULL, 1, '2023-08-15'),
-       (2, 2, 2, '2023-08-22 15:30:00', NULL, 1, '2023-08-18');
+--INSERT INTO appointments (appointment_id, patient_id, office_id, probable_start_time, actual_end_time,
+ --                         appointment_status_id, appointment_taken_date)
+--VALUES (1, 1, 1, '2023-08-20 10:00:00', NULL, 1, '2023-08-15'),
+ --      (2, 2, 2, '2023-08-22 15:30:00', NULL, 1, '2023-08-18');
 
 
 

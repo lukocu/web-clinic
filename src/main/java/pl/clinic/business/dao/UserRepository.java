@@ -7,6 +7,7 @@ import pl.clinic.infrastructure.database.repository.jpa.UserJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.UserEntityMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -25,4 +26,8 @@ public class UserRepository {
                 .toList();
     }
 
+    public Optional<User> findByUsername(String username) {
+        return userJpaRepository.findByUsername(username)
+                .map(userEntityMapper::mapFromEntity);
+    }
 }

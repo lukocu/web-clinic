@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.AppointmentsRepository;
-import pl.clinic.domain.AppointmentStatus;
-import pl.clinic.domain.Appointments;
-import pl.clinic.domain.OfficeDoctorAvailability;
+import pl.clinic.domain.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -20,7 +18,10 @@ public class AppointmentsService {
     private AppointmentStatusService appointmentStatusService;
 
     @Transactional
-    public void createScheduledAppointment(OfficeDoctorAvailability officeDoctorAvailability) {
+    public void createScheduledAppointment(OfficeDoctorAvailability officeDoctorAvailability, Patients patient) {
+
+        AppointmentStatus appointmentStatus = appointmentStatusService.findByStatus(Status.Scheduled);
+
         Appointments appointment = Appointments.builder()
                 .probableStartTime(OffsetDateTime.of(
                         officeDoctorAvailability.getDate(),
@@ -28,15 +29,16 @@ public class AppointmentsService {
                         ZoneOffset.UTC))
                 .appointmentTakenDate(LocalDate.now())
                 .office(officeDoctorAvailability.getOffice()) // Przypisanie biura
-                .appointmentStatus(createAppointmentStatus()) // Tworzenie statusu rezerwacji
+                .appointmentStatus(AppointmentStatus.builder()
+                        .status(Status.Scheduled)
+                        .build()) // Tworzenie statusu rezerwacji
+                .patient(patient)
                 .build();
 
         appointmentsRepository.save(appointment);
     }
 
-    private AppointmentStatus createAppointmentStatus() {
-        return appointmentStatusService.createAppointmentStatus();
-    }
+
 
 
 }

@@ -7,13 +7,13 @@ import pl.clinic.business.dao.OfficeDoctorAvailabilityRepository;
 import pl.clinic.business.dao.OfficeRepository;
 import pl.clinic.domain.Office;
 import pl.clinic.domain.OfficeDoctorAvailability;
+import pl.clinic.domain.Patients;
 import pl.clinic.domain.exception.NotFoundException;
 import pl.clinic.domain.exception.SlotNotAvailableException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -55,16 +55,16 @@ public class OfficeDoctorAvailabilityService {
     }
 
     @Transactional
-    public void reservedAppointment(Integer officeAvailabilityId) {
+    public void reservedAppointment(Integer officeAvailabilityId, Patients patient) {
         OfficeDoctorAvailability availability = officeDoctorAvailabilityRepository.findById(officeAvailabilityId)
                 .orElseThrow(() -> new NotFoundException("Slot not found"));
 
         if (availability.getAvailabilityStatus()) {
             OfficeDoctorAvailability officeDoctorAvailability =
                     availability.withAvailabilityStatus(false);// Zmiana statusu dostępności na zarezerwowany
-            officeDoctorAvailabilityRepository.save(availability);
+            officeDoctorAvailabilityRepository.save(officeDoctorAvailability);
 
-            appointmentsService.createScheduledAppointment(officeDoctorAvailability);
+            appointmentsService.createScheduledAppointment(officeDoctorAvailability, patient);
 
 
         } else {

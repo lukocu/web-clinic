@@ -1,5 +1,6 @@
 package pl.clinic.infrastructure.database.repository.mapper;
 
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -16,4 +17,6 @@ public interface OfficeEntityMapper {
     @Mapping(target = "officeDoctorAvailabilities", ignore = true)
     @Mapping(target = "doctor", ignore = true)
     Office mapFromEntity(OfficeEntity entity);
+    @InheritInverseConfiguration
+    OfficeEntity mapToEntity(Office office);
 }
