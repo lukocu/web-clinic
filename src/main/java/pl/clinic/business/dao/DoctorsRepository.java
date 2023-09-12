@@ -38,4 +38,9 @@ public class DoctorsRepository {
                 .map(entity -> doctorsEntityMapper.mapFromEntityWithSpecializationsAndOffices(entity))
                 .toList();
     }
+
+    public Optional<Doctors> findByUserId(Integer userId) {
+        return doctorsJpaRepository.findByUserId(userId)
+                .map(entity-> doctorsEntityMapper.mapFromEntityWithAllFields(entity));
+    }
 }

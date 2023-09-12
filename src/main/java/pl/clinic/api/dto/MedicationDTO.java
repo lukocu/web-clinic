@@ -19,6 +19,6 @@ public class MedicationDTO {
     private String frequency;
     private Duration duration;
 
-    // Getters and setters (możesz użyć Lomboka do ich generowania)
+
 
 }

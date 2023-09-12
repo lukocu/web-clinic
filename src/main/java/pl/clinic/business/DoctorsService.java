@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.DoctorsRepository;
-import pl.clinic.business.dao.PatientsRepository;
 import pl.clinic.domain.Doctors;
-import pl.clinic.domain.Patients;
 import pl.clinic.domain.exception.NotFoundException;
 
 import java.util.List;
@@ -29,5 +27,11 @@ public class DoctorsService {
     public List<Doctors> getDoctorsAndOffice() {
         List<Doctors> doctors = doctorsRepository.findDoctorsAndOffice();
         return doctors;
+    }
+
+    @Transactional
+    public Doctors findByUserId(Integer userId) {
+        return doctorsRepository.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("Doctor not found"));
     }
 }

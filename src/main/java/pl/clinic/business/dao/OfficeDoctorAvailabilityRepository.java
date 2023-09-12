@@ -34,14 +34,17 @@ public class OfficeDoctorAvailabilityRepository {
                 .toList();
     }
 
-    public void setOfficeAvailability(LocalDate date, LocalTime startTime, LocalTime endTime) {
-
+    public List<OfficeDoctorAvailability> findByOfficeAndAvailabilityStatusIsFalse(Integer officeId) {
+        return officeDoctorAvailabilityJpaRepository.findByOfficeIdAndAvailabilityStatusIsFalse(officeId).stream()
+                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
+                .toList();
     }
+
+
 
     public Optional<OfficeDoctorAvailability> findById(Integer officeAvailabilityId) {
         return officeDoctorAvailabilityJpaRepository.findById(officeAvailabilityId)
                 .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
     }
-
 
 }

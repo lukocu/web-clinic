@@ -21,7 +21,7 @@ public class PrescriptionsEntity {
     @Column(name = "prescription_id")
     private Integer prescriptionId;
 
-    @Column(name = "prescription_date")
+    @Column(name = "prescription_date", nullable = false)
     private OffsetDateTime prescriptionDate;
 
     @Column(name = "prescription_date_end")

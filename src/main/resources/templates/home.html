@@ -8,22 +8,66 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
           crossorigin="anonymous">
     <title>Clinic System Management</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .jumbotron {
+            background-color: #2980b9;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .btn-portal {
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        .btn-portal:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-doctor-portal {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+
+        .btn-doctor-portal:hover {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Clinic</h1>
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <a th:href="@{/appointment}" class="btn btn-info" role="button">Appointment Portal</a>
-            </div>
-            <div class="col-md-4">
-                <a th:href="@{/patient}" class="btn btn-info" role="button">Patient Portal</a>
-            </div>
-            <div class="col-md-4">
-                <a th:href="@{/doctor}" class="btn btn-info" role="button">Doctor Portal</a>
-            </div>
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Clinic System</h1>
+        <p class="lead">The Clinic Management System</p>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <a th:href="@{/appointment}" class="btn btn-primary btn-lg btn-block btn-portal" role="button">Appointment Portal</a>
         </div>
+        <div class="col-md-6">
+            <a th:href="@{/patient_dashboard}" class="btn btn-primary btn-lg btn-block btn-portal" role="button">Patient Dashboard</a>
+        </div>
+    </div>
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6">
+            <a th:href="@{/doctor_list}" class="btn btn-primary btn-lg btn-block btn-portal" role="button">Doctor List</a>
+        </div>
+        <div class="col-md-6">
+            <a th:href="@{/doctor_dashboard}" class="btn btn-doctor-portal btn-lg btn-block btn-portal" role="button">Doctor Dashboard</a>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

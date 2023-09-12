@@ -15,19 +15,14 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="#">Doctor Dashboard</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Appointments</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
@@ -39,9 +34,42 @@
 
 <!-- Treść strony -->
 <div class="container mt-4">
-    <h1>Welcome, Doctor!</h1>
-    <p>This is your dashboard.</p>
-    <!-- Dodaj resztę treści, tak jak to jest wymagane -->
+    <h1 class="display-4">Welcome, <span th:text="${doctorDTO.name}"></span> <span th:text="${doctorDTO.surname}"></span>!</h1>
+    <p class="lead">This is your dashboard.</p>
+    <h2 class="mt-4">Your data:</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Name:</strong> <span th:text="${doctorDTO.name}"></span></li>
+        <li class="list-group-item"><strong>Surname:</strong> <span th:text="${doctorDTO.surname}"></span></li>
+        <li class="list-group-item"><strong>Phone:</strong> <span th:text="${doctorDTO.phone}"></span></li>
+        <li class="list-group-item"><strong>Pesel:</strong> <span th:text="${doctorDTO.pesel}"></span></li>
+        <li class="list-group-item"><strong>Specializations:</strong> <span th:text="${doctorDTO.specializationNames}"></span></li>
+        <li class="list-group-item"><strong>Numbers of your offices:</strong> <span th:each="officeId : ${doctorDTO.offices}" th:text="${officeId} + ' '"></span></li>
+    </ul>
+    <h2 class="mt-4">See Upcoming Visits</h2>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Availability Status</th>
+            <th>Office Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="availability : ${sortedAvailabilities}">
+            <td th:text="${availability.date}"></td>
+            <td th:text="${availability.startTime}"></td>
+            <td th:text="${availability.endTime}"></td>
+            <td th:text="${availability.availabilityStatus ? 'Unreserved' : 'Reserved'}"></td>
+            <td th:text="${availability.officeId}"></td>
+            <td>
+                <a th:href="@{'/web-clinic/doctor_dashboard/visit/' + ${availability.officeAvailabilityId}}"
+                   class="btn btn-primary">Go to Visit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

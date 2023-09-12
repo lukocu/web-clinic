@@ -26,6 +26,7 @@ public interface OfficeDoctorAvailabilityMapper {
                 .startTime(officeDoctorAvailability.getStartTime())
                 .endTime(officeDoctorAvailability.getEndTime())
                 .availabilityStatus(officeDoctorAvailability.getAvailabilityStatus())
+                .officeId(officeDoctorAvailability.getOffice().getOfficeId())
                 .build();
     }
 }

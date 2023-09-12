@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit Details</title>
+    <!-- Dodaj linki do plików CSS Bootstrapa -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-- Pasek nawigacyjny Bootstrapa -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">Visit Details</a>
+    </div>
+</nav>
+
+<!-- Treść strony -->
+<div class="container mt-4">
+    <h1>Visit Details</h1>
+
+    <!-- Dane wizyty (OfficeDoctorAvailability) -->
+    <h2>Visit Information</h2>
+    <p>Date: <span th:text="${officeDoctorAvailability.date}"></span></p>
+    <p>Start Time: <span th:text="${officeDoctorAvailability.startTime}"></span></p>
+    <p>End Time: <span th:text="${officeDoctorAvailability.endTime}"></span></p>
+    <p>Status: <span th:text="${officeDoctorAvailability.availabilityStatus ? 'Unreserved' : 'Reserved'}"></span></p>
+
+    <!-- Dane pacjenta (Patients) -->
+    <h2>Patient Information</h2>
+    <p>Name: <span th:text="${patient.name}"></span></p>
+    <p>Surname: <span th:text="${patient.surname}"></span></p>
+    <p>Pesel: <span th:text="${patient.pesel}"></span></p>
+
+    <!-- Przycisk "Zobacz kartę pacjenta" -->
+    <a th:href="@{'/patient_card/' + ${patient.patientId}}"
+       class="btn btn-primary">Zobacz kartę pacjenta</a>
+
+    <!-- Przycisk "Powrót" -->
+    <a th:href="@{'/previous_page'}" class="btn btn-secondary">Powrót</a>
+
+    <!-- Formularz dodawania wpisu do karty pacjenta -->
+    <h2>Add Entry to Patient Card</h2>
+    <form action="/add_patient_card" method="POST">
+        <div class="form-group">
+            <label for="diagnosisDate">Diagnosis Date:</label>
+            <input type="datetime-local" class="form-control" id="diagnosisDate" name="diagnosisDate" required>
+        </div>
+        <div class="form-group">
+            <label for="diagnosisNote">Diagnosis Note:</label>
+            <textarea class="form-control" id="diagnosisNote" name="diagnosisNote" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="patientId">Patient:</label>
+            <select class="form-control" id="patientId" name="patientId" required>
+                <option value="">Select a patient</option>
+                <!-- Loop through patients to populate the dropdown -->
+                <th:block th:each="patient : ${patients}">
+                    <option th:value="${patient.patientId}" th:text="${patient.fullName}"></option>
+                </th:block>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="doctorId">Doctor:</label>
+            <select class="form-control" id="doctorId" name="doctorId" required>
+                <option value="">Select a doctor</option>
+                <!-- Loop through doctors to populate the dropdown -->
+                <th:block th:each="doctor : ${doctors}">
+                    <option th:value="${doctor.doctorId}" th:text="${doctor.fullName}"></option>
+                </th:block>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="diseaseIds">Diseases:</label>
+            <select class="form-control" id="diseaseIds" name="diseaseIds" multiple required>
+                <!-- Loop through diseases to populate the dropdown with multiple selections -->
+                <th:block th:each="disease : ${diseases}">
+                    <option th:value="${disease.diseaseId}" th:text="${disease.name}"></option>
+                </th:block>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="prescriptionId">Prescription:</label>
+            <select class="form-control" id="prescriptionId" name="prescriptionId" required>
+                <option value="">Select a prescription</option>
+                <!-- Loop through prescriptions to populate the dropdown -->
+                <th:block th:each="prescription : ${prescriptions}">
+                    <option th:value="${prescription.prescriptionId}" th:text="${prescription.name}"></option>
+                </th:block>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Add Patient Card</button>
+    </form>
+
+
+    <!-- Przycisk "Zakończ wizytę" -->
+    <form action="/finish_visit" method="POST">
+        <!-- Ukryte pole z identyfikatorem wizyty -->
+        <input type="hidden" name="officeAvailabilityId" value="${officeDoctorAvailability.officeAvailabilityId}">
+        <button type="submit" class="btn btn-danger">Zakończ wizytę</button>
+    </form>
+</div>
+</body>
+</html>

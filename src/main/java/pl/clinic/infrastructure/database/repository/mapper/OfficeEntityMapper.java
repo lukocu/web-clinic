@@ -36,6 +36,17 @@ public interface OfficeEntityMapper {
                 .build();
 
     }
+    default Office mapFromEntityWithoutDoctor(OfficeEntity entity) {
+        return Office.builder()
+                .officeId(entity.getOfficeId())
+                .firstConsultationFee(entity.getFirstConsultationFee())
+                .followupConsultationFee(entity.getFollowupConsultationFee())
+                .officeDoctorAvailabilities(entity.getOfficeDoctorAvailabilities().stream()
+                        .map(OfficeDoctorAvailabilityEntityMapper.INSTANCE::mapFromEntityWithOffice)
+                        .collect(Collectors.toSet()))
+                .build();
+
+    }
 
 
 }

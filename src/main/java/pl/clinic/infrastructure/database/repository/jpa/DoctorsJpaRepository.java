@@ -20,4 +20,7 @@ public interface DoctorsJpaRepository extends JpaRepository<DoctorsEntity, Integ
     Optional<DoctorsEntity> findByNameAndSurname(String name, String surname);
 
     Optional<DoctorsEntity> findByPesel(String pesel);
+
+    @Query("SELECT d FROM DoctorsEntity d WHERE d.user.userId= :userId")
+    Optional<DoctorsEntity> findByUserId(Integer userId);
 }

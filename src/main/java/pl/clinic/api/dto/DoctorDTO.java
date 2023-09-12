@@ -31,5 +31,5 @@ public class DoctorDTO {
 
     Set<Integer> offices;
 
-    // Set<PatientCardDTO> patientCards;
+     Set<PatientCardDTO> patientCards;
 }

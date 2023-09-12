@@ -46,6 +46,7 @@ public interface UserEntityMapper {
                 .collect(Collectors.toSet());
 
         return User.builder()
+                .userId(entity.getUserId())
                 .username(entity.getUsername())
                 .email(entity.getEmail())
                 .password(entity.getPassword())

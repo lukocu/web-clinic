@@ -3,7 +3,6 @@ package pl.clinic.business;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.clinic.api.dto.UserRegistrationDto;
 import pl.clinic.business.dao.UserRepository;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.User;
@@ -31,6 +30,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional
+    public User findByUsernameDoctor(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("user not found"));
+    }
     @Transactional
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)

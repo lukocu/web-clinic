@@ -24,6 +24,7 @@ public interface DoctorMapper {
                .name(doctor.getName())
                .surname(doctor.getSurname())
                .phone(doctor.getPhone())
+               .pesel(doctor.getPesel())
                .specializationNames(getSpecializations(doctor))
                .offices(getOffices(doctor))
                .build();
@@ -49,6 +50,7 @@ public interface DoctorMapper {
             return "";
         }
     }
+
 
 
 }

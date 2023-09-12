@@ -45,6 +45,11 @@ public class OfficeDoctorAvailabilityService {
     }
 
     @Transactional
+    public List<OfficeDoctorAvailability> getUnavailableOfficeHours(Integer officeId){
+        return officeDoctorAvailabilityRepository.findByOfficeAndAvailabilityStatusIsFalse(officeId);
+    }
+
+    @Transactional
     public List<OfficeDoctorAvailability> getAvailableHoursForOffice(Integer officeId) {
         return officeDoctorAvailabilityRepository.findByOfficeAndAvailabilityStatusIsTrue(officeId);
     }

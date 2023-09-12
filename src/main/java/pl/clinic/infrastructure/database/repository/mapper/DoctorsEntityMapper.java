@@ -32,4 +32,16 @@ public interface DoctorsEntityMapper {
                     .collect(Collectors.toSet()));
   }
 
+ default Doctors mapFromEntityWithAllFields(DoctorsEntity entity){
+    return mapFromEntity(entity)
+            .withSpecializations(entity.getSpecializations().stream()
+                    .map(SpecializationEntityMapper.INSTANCE::mapFromEntity)
+                    .collect(Collectors.toSet()))
+            .withOffices(entity.getOffices().stream()
+                    .map(OfficeEntityMapper.INSTANCE::mapFromEntityWithoutDoctor)
+                    .collect(Collectors.toSet()))
+            .withPatientCards(entity.getPatientCards().stream()
+                    .map(PatientCardEntityMapper.INSTANCE::mapFromEntityWithFields)
+                    .collect(Collectors.toSet()));
+ }
 }
