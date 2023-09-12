@@ -6,6 +6,9 @@ import pl.clinic.domain.Appointments;
 import pl.clinic.infrastructure.database.repository.jpa.AppointmentsJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.AppointmentsEntityMapper;
 
+import java.util.List;
+import java.util.Set;
+
 @Repository
 @AllArgsConstructor
 public class AppointmentsRepository {
@@ -18,4 +21,9 @@ public class AppointmentsRepository {
     }
 
 
+    public List<Appointments> findAppointmentsByPatientId(Integer patientId) {
+      return   appointmentsJpaRepository.findByPatientId(patientId).stream()
+              .map(appointmentsEntityMapper::mapFromEntity)
+              .toList();
+    }
 }

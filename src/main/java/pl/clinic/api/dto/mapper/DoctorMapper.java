@@ -2,6 +2,7 @@ package pl.clinic.api.dto.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.DoctorDTO;
 import pl.clinic.api.dto.OfficeDTO;
 import pl.clinic.api.dto.SpecializationDTO;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface DoctorMapper {
 
-
+    DoctorMapper INSTANCE = Mappers.getMapper(DoctorMapper.class);
 
    default DoctorDTO  mapAdditionalFields(final Doctors doctor){
        return DoctorDTO.builder()

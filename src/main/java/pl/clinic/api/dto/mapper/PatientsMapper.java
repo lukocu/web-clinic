@@ -1,18 +1,14 @@
 package pl.clinic.api.dto.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.PatientsDTO;
-import pl.clinic.domain.Appointments;
 import pl.clinic.domain.Patients;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface PatientsMapper {
-    Patients mapFromDto(PatientsDTO patientsDTO);
 
+    PatientsMapper INSTANCE = Mappers.getMapper(PatientsMapper.class);
     default Patients mapFromDtoWithoutAppointment(PatientsDTO patientsDTO) {
         return Patients.builder()
                 .name(patientsDTO.getName())
@@ -25,7 +21,16 @@ public interface PatientsMapper {
                 .build();
     }
 
-    ;
+   default PatientsDTO mapToDtoWithoutAppointment(Patients patient) {
+        return PatientsDTO.builder()
+                .name(patient.getName())
+                .surname(patient.getSurname())
+                .pesel(patient.getPesel())
+                .birthDate(patient.getBirthDate())
+                .address(patient.getAddress())
+                .phone(patient.getPhone())
+                .build();
 
 
+    }
 }

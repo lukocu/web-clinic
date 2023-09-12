@@ -3,22 +3,25 @@ package pl.clinic.infrastructure.database.repository.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import pl.clinic.domain.AppointmentStatus;
+import org.mapstruct.factory.Mappers;
 import pl.clinic.domain.Appointments;
-import pl.clinic.domain.Office;
-import pl.clinic.domain.Patients;
 import pl.clinic.infrastructure.database.entity.AppointmentsEntity;
-
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AppointmentsEntityMapper {
 
+    AppointmentsEntityMapper INSTANCE= Mappers.getMapper(AppointmentsEntityMapper.class);
 
-    @Mapping(target = "patient", ignore = true)
-    @Mapping(target = "office", ignore = true)
-    Appointments mapFromEntity(AppointmentsEntity entity);
+  default  Appointments mapFromEntity(AppointmentsEntity entity){
+      return Appointments.builder()
+              .probableStartTime(entity.getProbableStartTime())
+              .actualEndTime(entity.getActualEndTime())
+              .appointmentTakenDate(entity.getAppointmentTakenDate())
+              .patient(PatientsEntityMapper.INSTANCE.mapFromEntity(entity.getPatient()))
+              .office(OfficeEntityMapper.INSTANCE.mapFromEntityWithoutAppointments(entity.getOffice()))
+              .appointmentStatus(AppointmentStatusEntityMapper.INSTANCE.mapFromEntity(entity.getAppointmentStatus()))
+              .build();
+  }
 
     default AppointmentsEntity mapToEntity(Appointments appointment) {
         return AppointmentsEntity.builder()

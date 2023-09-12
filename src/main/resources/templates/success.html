@@ -20,12 +20,15 @@
                 <li class="list-group-item">Data: <span th:text="${availability.date}"></span></li>
                 <li class="list-group-item">Godzina rozpoczęcia: <span th:text="${availability.startTime}"></span></li>
                 <li class="list-group-item">Godzina zakończenia: <span th:text="${availability.endTime}"></span></li>
-                <li class="list-group-item">Status dostępności: <span th:text="${availability.availabilityStatus ? 'Dostępny' : 'Niedostępny'}"></span></li>
                 <li class="list-group-item">Numer biura: <span th:text="${availability.officeId}"></span></li>
             </ul>
         </div>
     </div>
+    <div class="row mt-3">
+        <div class="col">
+            <a href="/web-clinic/" class="btn btn-primary">Wróć do menu głównego</a>
+        </div>
+    </div>
 </div>
-
 </body>
 </html>

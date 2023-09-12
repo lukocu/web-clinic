@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @AllArgsConstructor
 public class HomeController {
 
-    private static final String HOME = "/";
-
-    @RequestMapping(value = HOME, method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homePage() {
         return "home";
     }
+
 }

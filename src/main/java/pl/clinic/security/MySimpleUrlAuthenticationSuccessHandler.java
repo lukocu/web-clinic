@@ -20,16 +20,14 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        // Tutaj możesz dodać swoje niestandardowe działania po poprawnym zalogowaniu
-        // Na przykład przekierowanie na określoną stronę w zależności od roli użytkownika
 
         if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("PATIENT"))) {
-            response.sendRedirect("/patient_dashboard");
+            response.sendRedirect(request.getContextPath() + "/patient_dashboard");
         } else if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("DOCTOR"))) {
-            response.sendRedirect("/doctor_dashboard");
+            response.sendRedirect(request.getContextPath() + "/doctor_dashboard");
         } else {
-            // Domyślne przekierowanie na stronę główną
-            response.sendRedirect("/");
+
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 }

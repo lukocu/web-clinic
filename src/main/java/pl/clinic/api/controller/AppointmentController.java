@@ -10,9 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.api.dto.mapper.OfficeDoctorAvailabilityMapper;
 import pl.clinic.business.OfficeDoctorAvailabilityService;
-import pl.clinic.business.PatientsService;
 import pl.clinic.business.UserService;
-import pl.clinic.domain.Patients;
 import pl.clinic.security.IAuthenticationFacade;
 
 import java.time.LocalDate;
@@ -30,7 +28,6 @@ public class AppointmentController {
 
     private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
     private OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
-    private PatientsService patientsService;
     private UserService userService;
 
     private IAuthenticationFacade authenticationFacade;
@@ -69,11 +66,11 @@ public class AppointmentController {
 
         }
         redirectAttributes.addFlashAttribute("availability", availability);
-        return "redirect:/success";
+        return "redirect:/appointment/success";
 
     }
 
-    @GetMapping("/success")
+    @GetMapping("/appointment/success")
     public String showSuccessPage(@ModelAttribute("availability") OfficeDoctorAvailabilityDTO availability, Model model) {
 
         model.addAttribute("availability", availability);

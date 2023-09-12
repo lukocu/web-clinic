@@ -25,15 +25,18 @@
 
             <!-- Przycisk do karty pacjenta -->
             <form th:action="@{/patient_card}" method="get">
-                <input type="hidden" name="patientId" th:value="${patient.patientId}" />
                 <button type="submit" class="btn btn-primary">Go to the patient's card</button>
             </form>
 
-            <!-- Wyświetlanie terminów wizyt -->
-            <h5 class="card-title mt-3">Appointments</h5>
-            <ul th:if="${patient.appointments}" th:each="appointment : ${patient.appointments}">
-                <li th:text="${appointment.date} + ' - ' + ${appointment.description}"></li>
-            </ul>
+            <h5 class="card-title mt-3">Wizyty</h5>
+            <ul th:if="${appointments}" th:each="appointment : ${appointments}">
+            <li>
+                Data i godzina rozpoczęcia: <span th:text="${appointment.probableStartTime}"></span><br>
+                Data rezerwacji: <span th:text="${appointment.appointmentTakenDate}"></span><br>
+                Gabinet: <span th:text="${appointment.office.officeId}"></span><br>
+                Status: <span th:text="${appointment.appointmentStatus.status}"></span><br>
+            </li>
+        </ul>
         </div>
     </div>
 </div>
