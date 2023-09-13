@@ -52,12 +52,7 @@ public class DoctorController {
                                     .thenComparing(OfficeDoctorAvailabilityDTO::getStartTime))
                             .toList();
 
-         /*   List<OfficeDoctorAvailabilityDTO> sortedAvailabilities = doctor.getOffices().stream()
-                    .flatMap(office -> office.getOfficeDoctorAvailabilities().stream())
-                    .map(officeDoctorAvailabilityMapper::mapToDto)
-                    .sorted(Comparator.comparing(OfficeDoctorAvailabilityDTO::getDate)
-                            .thenComparing(OfficeDoctorAvailabilityDTO::getStartTime))
-                    .toList();*/
+
 
             model.addAttribute("doctorDTO",doctorDTO);
             model.addAttribute("sortedAvailabilities", unavailableOfficeHours);

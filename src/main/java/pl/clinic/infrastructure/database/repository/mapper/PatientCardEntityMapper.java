@@ -32,7 +32,7 @@ public interface PatientCardEntityMapper {
                 .withPrescription(PrescriptionsEntityMapper.INSTANCE.mapFromEntity(entity.getPrescription()));
     }
 
-    PatientCardEntity mapToEntity(PatientCard existingPatientCard);
+
 
     default PatientCardEntity mapToEntityWithFields(PatientCard existingPatientCard) {
         return PatientCardEntity.builder()
@@ -40,7 +40,7 @@ public interface PatientCardEntityMapper {
                 .diagnosisDate(existingPatientCard.getDiagnosisDate())
                 .diagnosisNote(existingPatientCard.getDiagnosisNote())
                 .patient(PatientsEntityMapper.INSTANCE.mapToEntity(existingPatientCard.getPatient()))
-                .doctor(DoctorsEntityMapper.INSTANCE.mapToEntity(existingPatientCard.getDoctor()))
+                .doctor(DoctorsEntityMapper.INSTANCE.mapToEntityForPatientCard(existingPatientCard.getDoctor()))
                 .diseases(existingPatientCard.getDiseases().stream()
                         .map(DiseasesEntityMapper.INSTANCE::mapToEntity)
                         .collect(Collectors.toSet()))

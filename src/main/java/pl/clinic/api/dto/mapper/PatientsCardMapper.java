@@ -13,7 +13,7 @@ public interface PatientsCardMapper {
                 .diagnosisDate(patientCardDTO.getDiagnosisDate())
                 .diagnosisNote(patientCardDTO.getDiagnosisNote())
                 .doctor(DoctorMapper.INSTANCE.mapFromDtoForPatientCard(patientCardDTO.getDoctor()))
-                .patient(PatientsMapper.INSTANCE.mapFromDto(patientCardDTO.getPatient()))
+                .patient(PatientsMapper.INSTANCE.mapFromDtoWithoutAppointment(patientCardDTO.getPatient()))
                 .diseases(patientCardDTO.getDiseases().stream()
                         .map(DiseasesMapper.INSTANCE::mapFromDtoWithoutPatientCard)
                         .collect(Collectors.toSet()))

@@ -37,14 +37,14 @@
     <p>Pesel: <span th:text="${patient.pesel}"></span></p>
 
     <!-- Przycisk "Zobacz kartę pacjenta" -->
-    <a th:href="@{'/patient_card/' + ${patient.patientId}}"
+    <a th:href="@{'/patient_card/' + ${patient.pesel}}"
        class="btn btn-primary">Zobacz kartę pacjenta</a>
 
     <!-- Formularz dodawania wpisu do karty pacjenta -->
     <h2>Add Entry to Patient Card</h2>
-    <form action="/web-clinic/doctor_dashboard/visit/${officeDoctorAvailability.officeAvailabilityId}/add_patient_card" method="POST">
+    <form th:action="@{'/doctor_dashboard/visit/' + ${officeAvailabilityId} + '/add_patient_card'}" method="POST">
         <!-- Ukryte pole z identyfikatorem wizyty -->
-        <input type="hidden" name="patientId" value="${patient.patientId}">
+        <input type="hidden" name="patientPesel" value th:value="${patient.pesel}">
 
         <!-- Dodaj pole dla diagnosisNote -->
         <div class="form-group">

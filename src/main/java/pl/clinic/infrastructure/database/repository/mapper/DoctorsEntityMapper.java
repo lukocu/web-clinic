@@ -62,4 +62,14 @@ public interface DoctorsEntityMapper {
                         .collect(Collectors.toSet()))
                 .build();
     }
+
+  default   DoctorsEntity mapToEntityForPatientCard(Doctors doctor) {
+      return DoctorsEntity.builder()
+              .doctorId(doctor.getDoctorId())
+              .name(doctor.getName())
+              .surname(doctor.getSurname())
+              .pesel(doctor.getPesel())
+              .phone(doctor.getPhone())
+              .build();
+  }
 }

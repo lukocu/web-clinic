@@ -21,6 +21,7 @@ import pl.clinic.domain.*;
 import pl.clinic.security.IAuthenticationFacade;
 
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,8 +30,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class VisitController {
 
-    public static final String VISIT = "web-clinic/doctor_dashboard/visit/{officeAvailabilityId}";
-    public static final String VISIT_ADD = "web-clinic/doctor_dashboard/visit/{officeAvailabilityId}/add_patient_card";
+    public static final String VISIT = "/doctor_dashboard/visit/{officeAvailabilityId}";
+    public static final String VISIT_ADD = "/doctor_dashboard/visit/{officeAvailabilityId}/add_patient_card";
 
     private PatientCardService patientCardService;
     private PatientsService patientService;
@@ -42,6 +43,7 @@ public class VisitController {
     private AppointmentsService appointmentsService;
     private IAuthenticationFacade authenticationFacade;
     private UserService userService;
+    private DoctorsService doctorsService;
 
 
 
@@ -94,24 +96,31 @@ public class VisitController {
     public String addPatientCard(
             @PathVariable("officeAvailabilityId") Integer officeAvailabilityId,
             @RequestParam("diagnosisNote") String diagnosisNote,
-            @RequestParam("prescriptionDate") OffsetDateTime prescriptionDate,
-            @RequestParam("prescriptionDateEnd") OffsetDateTime prescriptionDateEnd,
-            @RequestParam("prescriptionAvailable") OffsetDateTime prescriptionAvailable,
+            @RequestParam("prescriptionDate") String prescriptionDateString,
+            @RequestParam("prescriptionDateEnd") String prescriptionDateEndString,
+            @RequestParam("prescriptionAvailable") String prescriptionAvailableString,
             @RequestParam("medicationsData") String medicationsData,
             @RequestParam("diseaseData") String diseaseData,
-            @RequestParam("patientId") Integer patientId,
+            @RequestParam("patientPesel") String patientPesel,
             Model model) throws JsonProcessingException {
         Authentication authentication = authenticationFacade.getAuthentication();
 
-        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-            var user = userService.findByUsername(userDetails.getUsername());
 
-            DoctorDTO doctorDTO = doctorMapper.mapToDtoSpecAndOffices(user.getDoctors());
+        OffsetDateTime prescriptionDate = OffsetDateTime.parse(prescriptionDateString + "Z");
+        OffsetDateTime prescriptionDateEnd = OffsetDateTime.parse(prescriptionDateEndString + "Z");
+        OffsetDateTime prescriptionAvailable = OffsetDateTime.parse(prescriptionAvailableString + "Z");
+
+
+        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+
+            String username = userDetails.getUsername();
+            User user = userService.findByUsername(username);
+            Doctors doctor = doctorsService.findByUserId(user.getUserId());
+            DoctorDTO doctorDTO = doctorMapper.mapToDtoSpecAndOffices(doctor);
 
             ObjectMapper objectMapper = new ObjectMapper();
             List<MedicationsDTO> medications = objectMapper.readValue(medicationsData, new TypeReference<List<MedicationsDTO>>() {
             });
-
 
             List<DiseasesDTO> diseases = objectMapper.readValue(diseaseData, new TypeReference<List<DiseasesDTO>>() {
             });
@@ -119,7 +128,7 @@ public class VisitController {
 
 
             PatientsDTO patientsDTO =
-                    patientsMapper.mapToDtoWithoutAppointment(patientService.getPatientById(patientId));
+                    patientsMapper.mapToDtoWithoutAppointment(patientService.searchPatient(patientPesel));
 
             OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO
                     = officeDoctorAvailabilityMapper.

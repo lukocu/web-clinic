@@ -19,12 +19,12 @@ public interface PatientsMapper {
                 .birthDate(patientsDTO.getBirthDate())
                 .address(patientsDTO.getAddress())
                 .phone(patientsDTO.getPhone())
-                .appointments(null)
                 .build();
     }
 
    default PatientsDTO mapToDtoWithoutAppointment(Patients patient) {
         return PatientsDTO.builder()
+                .patientId(patient.getPatientId())
                 .name(patient.getName())
                 .surname(patient.getSurname())
                 .pesel(patient.getPesel())

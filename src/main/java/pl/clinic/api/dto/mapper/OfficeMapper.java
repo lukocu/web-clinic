@@ -48,9 +48,6 @@ public interface OfficeMapper {
                 .officeDoctorAvailability(office.getOfficeDoctorAvailabilities().stream()
                         .map(OfficeDoctorAvailabilityMapper.INSTANCE::mapToDto)
                         .collect(Collectors.toSet()))
-                .appointment(office.getAppointments().stream()
-                        .map(AppointmentsMapper.INSTANCE::mapToDtoWithoutOffice)
-                        .collect(Collectors.toSet()))
                 .build();
     }
 

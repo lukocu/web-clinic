@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class PatientsDTO {
 
-
+    private Integer patientId;
     private String name;
     private String surname;
     private String pesel;

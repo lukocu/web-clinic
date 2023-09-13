@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorize) ->
                                 authorize.requestMatchers("/", "/login", "/error", "/registration").permitAll()
                                         .requestMatchers("/patient_dashboard/**", "/appointment/**").hasAnyAuthority("PATIENT")
-                                        .requestMatchers("/doctor_dashboard/**").hasAnyAuthority("DOCTOR")
+                                        .requestMatchers("/doctor_dashboard/**","/visit/**").hasAnyAuthority("DOCTOR")
                                         .requestMatchers("/doctor_list/**").hasAnyAuthority("PATIENT", "DOCTOR")
                         // .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 ).formLogin(

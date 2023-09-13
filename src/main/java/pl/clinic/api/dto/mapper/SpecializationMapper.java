@@ -11,12 +11,14 @@ public interface SpecializationMapper {
 
     default SpecializationDTO mapToDto(Specialization specialization) {
         return SpecializationDTO.builder()
+                .specializationId(specialization.getSpecializationId())
                 .specializationName(specialization.getSpecializationName())
                 .build();
     }
 
  default   Specialization mapFromDto(SpecializationDTO specializationDTO){
      return Specialization.builder()
+             .specializationId(specializationDTO.getSpecializationId())
              .specializationName(specializationDTO.getSpecializationName())
              .build();
     }

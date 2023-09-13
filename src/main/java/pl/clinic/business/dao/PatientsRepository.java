@@ -29,4 +29,6 @@ public class PatientsRepository {
         return patientsJpaRepository.findById(patientId)
                 .map(entity->patientsEntityMapper.mapFromEntity(entity));
     }
+
+
 }
