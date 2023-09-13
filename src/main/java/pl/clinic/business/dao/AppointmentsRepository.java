@@ -6,7 +6,9 @@ import pl.clinic.domain.Appointments;
 import pl.clinic.infrastructure.database.repository.jpa.AppointmentsJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.AppointmentsEntityMapper;
 
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -25,5 +27,10 @@ public class AppointmentsRepository {
       return   appointmentsJpaRepository.findByPatientId(patientId).stream()
               .map(appointmentsEntityMapper::mapFromEntity)
               .toList();
+    }
+
+    public Optional<Appointments> findByProbableStartTime(OffsetDateTime offsetDateTime) {
+        return appointmentsJpaRepository.findByProbableStartTime(offsetDateTime)
+                .map(appointmentsEntityMapper::mapFromEntity);
     }
 }

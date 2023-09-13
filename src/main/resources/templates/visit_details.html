@@ -27,6 +27,7 @@
     <p>Date: <span th:text="${officeDoctorAvailability.date}"></span></p>
     <p>Start Time: <span th:text="${officeDoctorAvailability.startTime}"></span></p>
     <p>End Time: <span th:text="${officeDoctorAvailability.endTime}"></span></p>
+    <p>Office Number: <span th:text="${officeDoctorAvailability.officeId}"></span></p>
     <p>Status: <span th:text="${officeDoctorAvailability.availabilityStatus ? 'Unreserved' : 'Reserved'}"></span></p>
 
     <!-- Dane pacjenta (Patients) -->
@@ -39,62 +40,57 @@
     <a th:href="@{'/patient_card/' + ${patient.patientId}}"
        class="btn btn-primary">Zobacz kartę pacjenta</a>
 
-    <!-- Przycisk "Powrót" -->
-    <a th:href="@{'/previous_page'}" class="btn btn-secondary">Powrót</a>
-
     <!-- Formularz dodawania wpisu do karty pacjenta -->
     <h2>Add Entry to Patient Card</h2>
-    <form action="/add_patient_card" method="POST">
-        <div class="form-group">
-            <label for="diagnosisDate">Diagnosis Date:</label>
-            <input type="datetime-local" class="form-control" id="diagnosisDate" name="diagnosisDate" required>
-        </div>
+    <form action="/web-clinic/doctor_dashboard/visit/${officeDoctorAvailability.officeAvailabilityId}/add_patient_card" method="POST">
+        <!-- Ukryte pole z identyfikatorem wizyty -->
+        <input type="hidden" name="patientId" value="${patient.patientId}">
+
+        <!-- Dodaj pole dla diagnosisNote -->
         <div class="form-group">
             <label for="diagnosisNote">Diagnosis Note:</label>
-            <textarea class="form-control" id="diagnosisNote" name="diagnosisNote" rows="3" required></textarea>
+            <textarea class="form-control" id="diagnosisNote" name="diagnosisNote" th:value="${diagnosisNote}" rows="3"></textarea>
         </div>
-        <div class="form-group">
-            <label for="patientId">Patient:</label>
-            <select class="form-control" id="patientId" name="patientId" required>
-                <option value="">Select a patient</option>
-                <!-- Loop through patients to populate the dropdown -->
-                <th:block th:each="patient : ${patients}">
-                    <option th:value="${patient.patientId}" th:text="${patient.fullName}"></option>
-                </th:block>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="doctorId">Doctor:</label>
-            <select class="form-control" id="doctorId" name="doctorId" required>
-                <option value="">Select a doctor</option>
-                <!-- Loop through doctors to populate the dropdown -->
-                <th:block th:each="doctor : ${doctors}">
-                    <option th:value="${doctor.doctorId}" th:text="${doctor.fullName}"></option>
-                </th:block>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="diseaseIds">Diseases:</label>
-            <select class="form-control" id="diseaseIds" name="diseaseIds" multiple required>
-                <!-- Loop through diseases to populate the dropdown with multiple selections -->
-                <th:block th:each="disease : ${diseases}">
-                    <option th:value="${disease.diseaseId}" th:text="${disease.name}"></option>
-                </th:block>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="prescriptionId">Prescription:</label>
-            <select class="form-control" id="prescriptionId" name="prescriptionId" required>
-                <option value="">Select a prescription</option>
-                <!-- Loop through prescriptions to populate the dropdown -->
-                <th:block th:each="prescription : ${prescriptions}">
-                    <option th:value="${prescription.prescriptionId}" th:text="${prescription.name}"></option>
-                </th:block>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-success">Add Patient Card</button>
-    </form>
 
+        <!-- Pola formularza dla recepty (PrescriptionsDTO) -->
+        <div class="form-group">
+            <label for="prescriptionDate">Prescription Date:</label>
+            <input type="datetime-local" class="form-control" id="prescriptionDate" name="prescriptionDate" th:value="${prescriptionsDTO.prescriptionDate}">
+        </div>
+        <div class="form-group">
+            <label for="prescriptionDateEnd">Prescription Date End:</label>
+            <input type="datetime-local" class="form-control" id="prescriptionDateEnd" name="prescriptionDateEnd" th:value="${prescriptionsDTO.prescriptionDateEnd}">
+        </div>
+        <div class="form-group">
+            <label for="prescriptionAvailable">Prescription Available:</label>
+            <input type="datetime-local" class="form-control" id="prescriptionAvailable" name="prescriptionAvailable" th:value="${prescriptionsDTO.prescriptionAvailable}">
+        </div>
+
+
+        <!-- Pola formularza dla leków (MedicationsDTO) -->
+        <!-- Przycisk "Dodaj lek" -->
+        <button type="button" id="addMedicationButton" class="btn btn-primary">Dodaj lek</button>
+
+        <!-- Kontener na tabelę leków -->
+        <div id="medicationsContainer">
+            <!-- Tabela zostanie wygenerowana dynamicznie przez JavaScript -->
+        </div>
+
+        <!-- Ukryte pole z danymi o lekach -->
+        <input type="hidden" id="medicationsData" name="medicationsData" th:value="${medicationsData}">
+
+        <!-- Pola formularza dla chorób (DiseasesDTO) -->
+        <button type="button" id="addDiseaseButton" class="btn btn-primary">Dodaj chorobę</button>
+        <div id="diseasesContainer">
+            <!-- Tabela zostanie wygenerowana dynamicznie przez JavaScript -->
+        </div>
+        <!-- Ukryte pole z danymi o lekach -->
+        <input type="hidden" id="diseaseData" name="diseaseData" th:value="${diseaseData}">
+
+        <!-- Przycisk do przesłania formularza -->
+        <button type="submit" class="btn btn-primary">Dodaj do karty pacjenta</button>
+
+    </form>
 
     <!-- Przycisk "Zakończ wizytę" -->
     <form action="/finish_visit" method="POST">
@@ -102,6 +98,125 @@
         <input type="hidden" name="officeAvailabilityId" value="${officeDoctorAvailability.officeAvailabilityId}">
         <button type="submit" class="btn btn-danger">Zakończ wizytę</button>
     </form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const medicationsDataInput = document.getElementById("medicationsData");
+        const medicationsContainer = document.getElementById("medicationsContainer");
+        const addMedicationButton = document.getElementById("addMedicationButton");
+        let medicationsData = [];
+
+        addMedicationButton.addEventListener("click", function () {
+            const newMedication = {
+                medicationName: "",
+                dosage: "",
+                frequency: "",
+                duration: ""
+            };
+
+            medicationsData.push(newMedication);
+            refreshMedicationsTable();
+        });
+
+        function refreshMedicationsTable() {
+            medicationsContainer.innerHTML = ""; // Wyczyść tabelę
+
+            medicationsData.forEach(function (medication, index) {
+                const medicationFields = document.createElement("div");
+                medicationFields.className = "form-group";
+
+                const medicationNameInput = document.createElement("input");
+                medicationNameInput.type = "text";
+                medicationNameInput.className = "form-control";
+                medicationNameInput.name = "medicationsDTO[" + index + "].medicationName";
+                medicationNameInput.value = medication.medicationName;
+                medicationNameInput.placeholder = "Medication Name"; // Dodaj placeholder
+                medicationFields.appendChild(medicationNameInput);
+
+                const dosageInput = document.createElement("input");
+                dosageInput.type = "text";
+                dosageInput.className = "form-control";
+                dosageInput.name = "medicationsDTO[" + index + "].dosage";
+                dosageInput.value = medication.dosage;
+                dosageInput.placeholder = "Dosage"; // Dodaj placeholder
+                medicationFields.appendChild(dosageInput);
+
+                const frequencyInput = document.createElement("input");
+                frequencyInput.type = "text";
+                frequencyInput.className = "form-control";
+                frequencyInput.name = "medicationsDTO[" + index + "].frequency";
+                frequencyInput.value = medication.frequency;
+                frequencyInput.placeholder = "Frequency"; // Dodaj placeholder
+                medicationFields.appendChild(frequencyInput);
+
+                const durationInput = document.createElement("input");
+                durationInput.type = "text";
+                durationInput.className = "form-control";
+                durationInput.name = "medicationsDTO[" + index + "].duration";
+                durationInput.value = medication.duration;
+                durationInput.placeholder = "Duration"; // Dodaj placeholder
+                medicationFields.appendChild(durationInput);
+
+                medicationsContainer.appendChild(medicationFields);
+            });
+
+            // Zaktualizuj dane w ukrytym polu
+            medicationsDataInput.value = JSON.stringify(medicationsData);
+        }
+
+        // Inicjalizacja tabeli leków
+        refreshMedicationsTable();
+
+        // Obsługa pól dla chorób
+        const diseasesContainer = document.getElementById("diseasesContainer");
+        const addDiseaseButton = document.getElementById("addDiseaseButton");
+        let diseasesData = [];
+
+        addDiseaseButton.addEventListener("click", function () {
+            const newDisease = {
+                diseaseName: "",
+                diseaseDescription: ""
+            };
+
+            diseasesData.push(newDisease);
+            refreshDiseasesTable();
+        });
+
+        function refreshDiseasesTable() {
+            diseasesContainer.innerHTML = "";
+
+            diseasesData.forEach(function (disease, index) {
+                const diseaseFields = document.createElement("div");
+                diseaseFields.className = "form-group";
+
+                const diseaseNameInput = document.createElement("input");
+                diseaseNameInput.type = "text";
+                diseaseNameInput.className = "form-control";
+                diseaseNameInput.name = "diseasesDTO[" + index + "].diseaseName";
+                diseaseNameInput.value = disease.diseaseName;
+                diseaseNameInput.placeholder = "Disease Name";
+                diseaseFields.appendChild(diseaseNameInput);
+
+                const diseaseDescriptionInput = document.createElement("textarea");
+                diseaseDescriptionInput.className = "form-control";
+                diseaseDescriptionInput.name = "diseasesDTO[" + index + "].diseaseDescription";
+                diseaseDescriptionInput.value = disease.diseaseDescription;
+                diseaseDescriptionInput.placeholder = "Disease Description";
+                diseaseFields.appendChild(diseaseDescriptionInput);
+
+                diseasesContainer.appendChild(diseaseFields);
+            });
+
+            // Update hidden input data for diseases
+            const diseasesDataInput = document.getElementById("diseaseData"); // Zaktualizuj ID pola na "diseaseData"
+            diseasesDataInput.value = JSON.stringify(diseasesData); // Użyj tej samej nazwy co w polu name
+        }
+
+        // Inicjalizacja tabeli chorób
+        refreshDiseasesTable();
+    });
+
+</script>
+
 </div>
 </body>
 </html>

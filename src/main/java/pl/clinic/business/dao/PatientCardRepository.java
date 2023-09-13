@@ -23,6 +23,6 @@ public class PatientCardRepository {
 
 
     public void save(PatientCard existingPatientCard) {
-        patientCardJpaRepository.save(patientCardEntityMapper.mapToEntity(existingPatientCard));
+        patientCardJpaRepository.save(patientCardEntityMapper.mapToEntityWithFields(existingPatientCard));
     }
 }

@@ -15,11 +15,13 @@ public class PatientsService {
 
     @Transactional
     public Patients searchPatient(String patientPesel) {
-        Patients patient = patientsRepository.findPatientByPesel(patientPesel)
+        return patientsRepository.findPatientByPesel(patientPesel)
                 .orElseThrow(() -> new NotFoundException("Patient not found"));
-
-        return patient;
     }
 
-
+    @Transactional
+    public Patients getPatientById(Integer patientId) {
+        return patientsRepository.findById(patientId)
+                .orElseThrow(() -> new NotFoundException("Patient not found"));
+    }
 }

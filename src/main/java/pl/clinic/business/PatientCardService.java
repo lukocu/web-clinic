@@ -3,9 +3,10 @@ package pl.clinic.business;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.clinic.api.dto.*;
+import pl.clinic.api.dto.mapper.PatientsCardMapper;
 import pl.clinic.business.dao.PatientCardRepository;
-import pl.clinic.domain.PatientCard;
-import pl.clinic.domain.Patients;
+import pl.clinic.domain.*;
 import pl.clinic.domain.exception.NotFoundException;
 
 @Service
@@ -15,7 +16,7 @@ public class PatientCardService {
 
     private PatientCardRepository patientCardRepository;
     private PatientsService patientsService;
-
+    private PatientsCardMapper patientsCardMapper;
     @Transactional
     public PatientCard getMedicalPatientHistory(String pesel) {
         Patients patient = patientsService.searchPatient(pesel);
@@ -42,5 +43,29 @@ public class PatientCardService {
         patientCardRepository.save(newEntry);
     }
 
+// TODO
+    public PatientCard getPatientCard(Integer patientId) {
+        return null;
 
+    }
+
+    public void saveCard(PatientCardDTO patientCardDTO) {
+        patientCardRepository.save(patientsCardMapper.mapFromDto(patientCardDTO));
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

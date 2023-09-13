@@ -39,8 +39,8 @@ public class PatientsEntity {
     @Column(name = "phone")
     private String phone;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "patient")
-    PatientCardEntity patientCard;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
+    Set<PatientCardEntity> patientCard;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", unique = true)

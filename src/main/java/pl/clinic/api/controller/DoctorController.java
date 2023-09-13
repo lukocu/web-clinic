@@ -14,15 +14,11 @@ import pl.clinic.business.DoctorsService;
 import pl.clinic.business.OfficeDoctorAvailabilityService;
 import pl.clinic.business.UserService;
 import pl.clinic.domain.Doctors;
-import pl.clinic.domain.Office;
-import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.domain.User;
 import pl.clinic.security.IAuthenticationFacade;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -47,7 +43,7 @@ public class DoctorController {
             String username = userDetails.getUsername();
             User user = userService.findByUsername(username);
             Doctors doctor = doctorsService.findByUserId(user.getUserId());
-            DoctorDTO doctorDTO = doctorMapper.mapAdditionalFields(doctor);
+            DoctorDTO doctorDTO = doctorMapper.mapToDtoSpecAndOffices(doctor);
 
             List<OfficeDoctorAvailabilityDTO> unavailableOfficeHours =
                     officeDoctorAvailabilityService.getUnavailableOfficeHours(doctor.getDoctorId()).stream()
@@ -76,7 +72,7 @@ public class DoctorController {
     @GetMapping(value = DOCTOR_LIST)
     public String homePage(Model model) {
         var doctors = doctorsService.getDoctorsAndOffice().stream()
-                .map(doctorMapper::mapAdditionalFields)
+                .map(doctorMapper::mapToDtoSpecAndOffices)
                 .toList();
 
 

@@ -21,6 +21,6 @@ public class PatientsDTO {
     private LocalDate birthDate;
     private String address;
     private String phone;
-
+    private Set<PatientCardDTO> patientCards;
     private Set<AppointmentsDTO> appointment; // Lista ID wizyt pacjenta
 }

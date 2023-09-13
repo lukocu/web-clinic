@@ -45,7 +45,7 @@ public class OfficeDoctorAvailabilityService {
     }
 
     @Transactional
-    public List<OfficeDoctorAvailability> getUnavailableOfficeHours(Integer officeId){
+    public List<OfficeDoctorAvailability> getUnavailableOfficeHours(Integer officeId) {
         return officeDoctorAvailabilityRepository.findByOfficeAndAvailabilityStatusIsFalse(officeId);
     }
 
@@ -89,4 +89,9 @@ public class OfficeDoctorAvailabilityService {
         }
     }
 
+    @Transactional
+    public OfficeDoctorAvailability getOfficeAvailability(Integer officeAvailabilityId) {
+        return officeDoctorAvailabilityRepository.findById(officeAvailabilityId)
+                .orElseThrow(() -> new NotFoundException("Slot not found"));
+    }
 }

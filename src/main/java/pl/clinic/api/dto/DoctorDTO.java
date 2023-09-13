@@ -1,9 +1,6 @@
 package pl.clinic.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pl.clinic.domain.Office;
 import pl.clinic.domain.PatientCard;
 import pl.clinic.domain.Specialization;
@@ -27,9 +24,9 @@ public class DoctorDTO {
 
     String pesel;
 
-    String specializationNames;
+    Set<SpecializationDTO> specializationNames;
 
-    Set<Integer> offices;
+    Set<OfficeDTO> offices;
 
      Set<PatientCardDTO> patientCards;
 }

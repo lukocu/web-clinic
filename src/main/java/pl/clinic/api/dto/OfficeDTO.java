@@ -22,7 +22,7 @@ public class OfficeDTO {
     private Integer officeId;
     private BigDecimal firstConsultationFee;
     private BigDecimal followupConsultationFee;
-    private DoctorDTO doctor; // Zamiast ID lekarza, używamy obiektu DoctorDTO
+    private DoctorDTO doctor;
     private Set<OfficeDoctorAvailabilityDTO> officeDoctorAvailability;
     private Set<AppointmentsDTO> appointment;
 

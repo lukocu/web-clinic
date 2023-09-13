@@ -11,13 +11,13 @@ import java.time.Duration;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicationDTO {
+public class MedicationsDTO {
 
-    private Integer medicationId;
+
     private String medicationName;
     private String dosage;
     private String frequency;
-    private Duration duration;
+    private String duration;
 
 
 

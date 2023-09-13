@@ -12,16 +12,16 @@ public interface AppointmentsEntityMapper {
 
     AppointmentsEntityMapper INSTANCE= Mappers.getMapper(AppointmentsEntityMapper.class);
 
-  default  Appointments mapFromEntity(AppointmentsEntity entity){
-      return Appointments.builder()
-              .probableStartTime(entity.getProbableStartTime())
-              .actualEndTime(entity.getActualEndTime())
-              .appointmentTakenDate(entity.getAppointmentTakenDate())
-              .patient(PatientsEntityMapper.INSTANCE.mapFromEntity(entity.getPatient()))
-              .office(OfficeEntityMapper.INSTANCE.mapFromEntityWithoutAppointments(entity.getOffice()))
-              .appointmentStatus(AppointmentStatusEntityMapper.INSTANCE.mapFromEntity(entity.getAppointmentStatus()))
-              .build();
-  }
+    default  Appointments mapFromEntity(AppointmentsEntity entity){
+        return Appointments.builder()
+                .probableStartTime(entity.getProbableStartTime())
+                .actualEndTime(entity.getActualEndTime())
+                .appointmentTakenDate(entity.getAppointmentTakenDate())
+                .patient(PatientsEntityMapper.INSTANCE.mapFromEntity(entity.getPatient()))
+                .office(OfficeEntityMapper.INSTANCE.mapFromEntityWithoutAppointments(entity.getOffice()))
+                .appointmentStatus(AppointmentStatusEntityMapper.INSTANCE.mapFromEntity(entity.getAppointmentStatus()))
+                .build();
+    }
 
     default AppointmentsEntity mapToEntity(Appointments appointment) {
         return AppointmentsEntity.builder()

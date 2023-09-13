@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.clinic.domain.Medications;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -13,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrescriptionsDTO {
-    Integer prescriptionId;
 
     OffsetDateTime prescriptionDate;
 
@@ -21,5 +19,5 @@ public class PrescriptionsDTO {
 
     OffsetDateTime prescriptionAvailable;
 
-    Set<Medications> medications;
+    Set<MedicationsDTO> medications;
 }

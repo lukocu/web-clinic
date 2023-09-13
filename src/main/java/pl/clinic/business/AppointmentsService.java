@@ -8,6 +8,7 @@ import pl.clinic.domain.*;
 import pl.clinic.domain.exception.NotFoundException;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -41,5 +42,13 @@ public class AppointmentsService {
     @Transactional
     public List<Appointments> findAppointmentsByPatientId(Integer patientId) {
         return appointmentsRepository.findAppointmentsByPatientId(patientId);
+    }
+
+    @Transactional
+    public Appointments getCurrentAppointement(LocalDate date, LocalTime startTime) {
+        OffsetDateTime offsetDateTime = OffsetDateTime.of(date, startTime, ZoneOffset.UTC);
+        return appointmentsRepository.findByProbableStartTime(offsetDateTime)
+                .orElseThrow(()->new NotFoundException("Appointment not found"));
+
     }
 }

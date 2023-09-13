@@ -12,4 +12,6 @@ public interface MedicationsEntityMapper {
     MedicationsEntityMapper INSTANCE = Mappers.getMapper(MedicationsEntityMapper.class);
 
     Medications mapFromEntity(MedicationsEntity entity);
+
+    MedicationsEntity mapToEntity(Medications medications);
 }

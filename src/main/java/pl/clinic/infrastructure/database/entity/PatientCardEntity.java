@@ -28,7 +28,7 @@ public class PatientCardEntity {
     @Column(name = "diagnosis_note")
     private String diagnosisNote;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
     private PatientsEntity patient;
 

@@ -1,5 +1,6 @@
 package pl.clinic.infrastructure.database.repository.mapper;
 
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -13,4 +14,7 @@ public interface DiseasesEntityMapper {
 
     @Mapping(target = "patientCards", ignore = true)
     Diseases mapFromEntity(DiseasesEntity entity);
+
+    @InheritInverseConfiguration
+    DiseasesEntity mapToEntity(Diseases diseases);
 }

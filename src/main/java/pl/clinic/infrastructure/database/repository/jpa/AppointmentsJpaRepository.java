@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import pl.clinic.domain.Appointments;
 import pl.clinic.infrastructure.database.entity.AppointmentsEntity;
 
+import java.time.OffsetDateTime;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -16,4 +18,6 @@ public interface AppointmentsJpaRepository extends JpaRepository<AppointmentsEnt
         WHERE a.patient.patientId = :patientId
         """)
     Set<AppointmentsEntity> findByPatientId(Integer patientId);
+
+    Optional<AppointmentsEntity> findByProbableStartTime(OffsetDateTime offsetDateTime);
 }

@@ -29,4 +29,14 @@ public interface OfficeDoctorAvailabilityMapper {
                 .officeId(officeDoctorAvailability.getOffice().getOfficeId())
                 .build();
     }
+
+   default OfficeDoctorAvailability mapFromDtoWithoutOffice(OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO){
+        return OfficeDoctorAvailability.builder()
+                .officeAvailabilityId(officeDoctorAvailabilityDTO.getOfficeAvailabilityId())
+                .date(officeDoctorAvailabilityDTO.getDate())
+                .startTime(officeDoctorAvailabilityDTO.getStartTime())
+                .endTime(officeDoctorAvailabilityDTO.getEndTime())
+                .availabilityStatus(officeDoctorAvailabilityDTO.getAvailabilityStatus())
+                .build();
+   }
 }

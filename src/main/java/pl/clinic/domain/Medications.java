@@ -19,7 +19,7 @@ public class Medications {
 
     String frequency;
 
-    Duration duration;
+    String duration;
 
 
 }

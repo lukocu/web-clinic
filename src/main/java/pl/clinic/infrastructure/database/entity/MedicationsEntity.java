@@ -31,7 +31,7 @@ public class MedicationsEntity {
     private String frequency;
 
     @Column(name = "duration")
-    private Duration duration;
+    private String duration;
 
 
 }

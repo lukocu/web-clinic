@@ -18,4 +18,5 @@ public interface PatientsEntityMapper {
     Patients mapFromEntity(PatientsEntity entity);
     @InheritInverseConfiguration
     PatientsEntity mapToEntity(Patients patient);
+
 }

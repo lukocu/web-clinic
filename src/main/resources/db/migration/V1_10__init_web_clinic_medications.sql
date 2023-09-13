@@ -3,5 +3,5 @@ CREATE TABLE medications (
                              medication_name VARCHAR(50) NOT NULL,
                              dosage VARCHAR(25) NOT NULL,
                              frequency VARCHAR(25),
-                             duration INTERVAL
+                             duration VARCHAR(50)
 );
