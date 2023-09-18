@@ -48,11 +48,6 @@ INSERT INTO patients (patient_id, name, surname,pesel, birth_date, address, phon
 VALUES (1, 'Alice', 'Smith','95011257943', '1990-05-15', '123 Main St', '555-1234', 4), -- Patient with ID 4 from clinic_user
        (2, 'Bob', 'Johnson','99022878014', '1985-10-20', '456 Elm St', '555-5678', 5);-- Patient with ID 5 from clinic_user
 
--- Przykładowe dane dla tabeli medications
-INSERT INTO medications (medication_id, medication_name, dosage, frequency, duration)
-VALUES (1, 'Aspirin', '500 mg', 'Once a day', '1 day'),
-       (2, 'Ibuprofen', '200 mg', 'Every 6 hours', '3 days');
-
 
 
 -- Przykładowe dane dla tabeli office_doctor_availability
@@ -98,3 +93,8 @@ VALUES (1, 1, '2023-08-15', '08:00:00', '12:00:00', true), -- Office 1 availabil
 --INSERT INTO patient_disease (patient_disease_id, patient_card_id, disease_id)
 --VALUES (1, 1, 1), -- Alice has Flu
   --     (2, 2, 2); -- Bob has Hypertension
+-- Przykładowe dane dla tabeli medications
+--INSERT INTO medications (medication_id, medication_name, dosage, frequency, duration)
+--VALUES (1, 'Aspirin', '500 mg', 'Once a day', '1 day'),
+--       (2, 'Ibuprofen', '200 mg', 'Every 6 hours', '3 days');
+

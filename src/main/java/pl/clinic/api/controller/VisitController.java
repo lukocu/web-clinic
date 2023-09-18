@@ -13,18 +13,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.clinic.api.dto.*;
-import pl.clinic.api.dto.mapper.DoctorMapper;
-import pl.clinic.api.dto.mapper.OfficeDoctorAvailabilityMapper;
-import pl.clinic.api.dto.mapper.PatientsMapper;
+import pl.clinic.api.dto.mapper.*;
 import pl.clinic.business.*;
 import pl.clinic.domain.*;
 import pl.clinic.security.IAuthenticationFacade;
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -44,9 +42,10 @@ public class VisitController {
     private IAuthenticationFacade authenticationFacade;
     private UserService userService;
     private DoctorsService doctorsService;
-
-
-
+    private DiseasesMapper diseasesMapper;
+    private MedicationsMapper medicationsMapper;
+    private MedicationsService medicationsService;
+    private PrescriptionsService prescriptionsService;
 
     //  private PrescriptionService prescriptionService;
     @GetMapping(value = VISIT)
@@ -98,7 +97,6 @@ public class VisitController {
             @RequestParam("diagnosisNote") String diagnosisNote,
             @RequestParam("prescriptionDate") String prescriptionDateString,
             @RequestParam("prescriptionDateEnd") String prescriptionDateEndString,
-            @RequestParam("prescriptionAvailable") String prescriptionAvailableString,
             @RequestParam("medicationsData") String medicationsData,
             @RequestParam("diseaseData") String diseaseData,
             @RequestParam("patientPesel") String patientPesel,
@@ -108,7 +106,6 @@ public class VisitController {
 
         OffsetDateTime prescriptionDate = OffsetDateTime.parse(prescriptionDateString + "Z");
         OffsetDateTime prescriptionDateEnd = OffsetDateTime.parse(prescriptionDateEndString + "Z");
-        OffsetDateTime prescriptionAvailable = OffsetDateTime.parse(prescriptionAvailableString + "Z");
 
 
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
@@ -116,7 +113,7 @@ public class VisitController {
             String username = userDetails.getUsername();
             User user = userService.findByUsername(username);
             Doctors doctor = doctorsService.findByUserId(user.getUserId());
-            DoctorDTO doctorDTO = doctorMapper.mapToDtoSpecAndOffices(doctor);
+
 
             ObjectMapper objectMapper = new ObjectMapper();
             List<MedicationsDTO> medications = objectMapper.readValue(medicationsData, new TypeReference<List<MedicationsDTO>>() {
@@ -125,37 +122,43 @@ public class VisitController {
             List<DiseasesDTO> diseases = objectMapper.readValue(diseaseData, new TypeReference<List<DiseasesDTO>>() {
             });
 
+            Set<Medications> medicationsSet = medications.stream().map(MedicationsMapper.INSTANCE::mapFromDto)
+                    .collect(Collectors.toSet());
 
 
-            PatientsDTO patientsDTO =
-                    patientsMapper.mapToDtoWithoutAppointment(patientService.searchPatient(patientPesel));
+            Set<Diseases> diseasesSet = diseases.stream().map(DiseasesMapper.INSTANCE::mapFromDtoWithoutPatientCard)
+                    .collect(Collectors.toSet());
 
-            OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO
-                    = officeDoctorAvailabilityMapper.
-                    mapToDto(officeDoctorAvailabilityService.getOfficeAvailability(officeAvailabilityId));
+
+            Patients patient = patientService.searchPatient(patientPesel);
+
+            OfficeDoctorAvailability officeAvailability =
+                    officeDoctorAvailabilityService.getOfficeAvailability(officeAvailabilityId);
+
 
             OffsetDateTime currentTime
-                    = OffsetDateTime.of(officeDoctorAvailabilityDTO.getDate(),
-                    officeDoctorAvailabilityDTO.getEndTime(),
+                    = OffsetDateTime.of(officeAvailability.getDate(),
+                    officeAvailability.getEndTime(),
                     ZoneOffset.UTC);
 
-            PatientCardDTO patientCardDTO = PatientCardDTO.builder()
+            PatientCard patientCard = PatientCard.builder()
                     .diagnosisDate(currentTime)
                     .diagnosisNote(diagnosisNote)
-                    .patient(patientsDTO)
-                    .doctor(doctorDTO)
-                    .diseases(new HashSet<>(diseases))
-                    .prescription(PrescriptionsDTO.builder()
+                    .patient(patient)
+                    .doctor(doctor)
+                    .diseases(diseasesSet)
+                    .prescription(Prescriptions.builder() //NIE POSAIDAJA ID
                             .prescriptionDate(prescriptionDate)
                             .prescriptionDateEnd(prescriptionDateEnd)
-                            .prescriptionAvailable(prescriptionAvailable)
-                            .medications(new HashSet<>(medications))
+                            .prescriptionAvailable(true)
+                            .medications(medicationsSet)
                             .build())
                     .build();
+            patientCardService.addPatientCardEntry(patientCard);
 
-            patientCardService.saveCard(patientCardDTO);
+            officeDoctorAvailabilityService.removeAvailability(officeAvailabilityId);
 
-            return "visit_details";
+            return "doctor_dashboard";
         }
         return "error";
     }

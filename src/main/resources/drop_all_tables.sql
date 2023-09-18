@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS doctor_specialization CASCADE;
 DROP TABLE IF EXISTS office CASCADE;
 DROP TABLE IF EXISTS office_doctor_availability CASCADE;
 DROP TABLE IF EXISTS appointment_status CASCADE;
+DROP TABLE IF EXISTS prescription_medications CASCADE;
 DROP TABLE IF EXISTS appointments CASCADE;
 DROP TABLE IF EXISTS medications CASCADE;
 DROP TABLE IF EXISTS prescriptions CASCADE;

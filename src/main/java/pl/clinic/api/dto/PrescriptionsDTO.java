@@ -17,7 +17,7 @@ public class PrescriptionsDTO {
 
     OffsetDateTime prescriptionDateEnd;
 
-    OffsetDateTime prescriptionAvailable;
+    Boolean prescriptionAvailable;
 
     Set<MedicationsDTO> medications;
 }

@@ -18,7 +18,7 @@ public class Prescriptions {
 
     OffsetDateTime prescriptionDateEnd;
 
-    OffsetDateTime prescriptionAvailable;
+    Boolean prescriptionAvailable;
 
     Set<Medications> medications;
 }

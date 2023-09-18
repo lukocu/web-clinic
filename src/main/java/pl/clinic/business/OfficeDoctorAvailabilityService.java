@@ -94,4 +94,18 @@ public class OfficeDoctorAvailabilityService {
         return officeDoctorAvailabilityRepository.findById(officeAvailabilityId)
                 .orElseThrow(() -> new NotFoundException("Slot not found"));
     }
+
+    @Transactional
+    public void updateAvailabilityStatus(Integer officeAvailabilityId, boolean newStatus) {
+        OfficeDoctorAvailability availability = officeDoctorAvailabilityRepository.findById(officeAvailabilityId)
+                .orElseThrow(() -> new NotFoundException("Slot not found"));
+
+        OfficeDoctorAvailability updatedAvailability = availability.withAvailabilityStatus(newStatus);
+        officeDoctorAvailabilityRepository.save(updatedAvailability);
+    }
+
+    @Transactional
+    public void removeAvailability(Integer officeAvailabilityId) {
+        officeDoctorAvailabilityRepository.deleteById(officeAvailabilityId);
+    }
 }

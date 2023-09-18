@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Duration;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,5 +34,6 @@ public class MedicationsEntity {
     @Column(name = "duration")
     private String duration;
 
-
+    @ManyToMany(mappedBy = "medications")
+    private Set<PrescriptionsEntity> prescriptions;
 }

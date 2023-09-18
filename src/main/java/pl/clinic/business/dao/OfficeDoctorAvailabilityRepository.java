@@ -47,4 +47,7 @@ public class OfficeDoctorAvailabilityRepository {
                 .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
     }
 
+    public void deleteById(Integer officeAvailabilityId) {
+        officeDoctorAvailabilityJpaRepository.deleteById(officeAvailabilityId);
+    }
 }

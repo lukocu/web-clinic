@@ -86,15 +86,22 @@ CREATE TABLE medications (
                              medication_name VARCHAR(50) NOT NULL,
                              dosage VARCHAR(25) NOT NULL,
                              frequency VARCHAR(25),
-                             duration INTERVAL
+                             duration varchar(50),
+                             prescription_id INT,
+                             FOREIGN KEY (prescription_id) REFERENCES prescriptions(prescription_id)
 );
 CREATE TABLE prescriptions (
                                prescription_id serial PRIMARY KEY,
-                               medication_id int NOT NULL,
                                prescription_date TIMESTAMP NOT NULL,
                                prescription_date_end TIMESTAMP,
-                               prescription_available BOOLEAN NOT NULL,
-                               FOREIGN KEY (medication_id) REFERENCES medications(medication_id)
+                               prescription_available BOOLEAN NOT NULL
+);
+CREATE TABLE prescription_medications (
+                                          prescription_id INT,
+                                          medication_id INT,
+                                          PRIMARY KEY (prescription_id, medication_id),
+                                          FOREIGN KEY (prescription_id) REFERENCES prescriptions(prescription_id),
+                                          FOREIGN KEY (medication_id) REFERENCES medications(medication_id)
 );
 CREATE TABLE diseases (
                           disease_id serial PRIMARY KEY,

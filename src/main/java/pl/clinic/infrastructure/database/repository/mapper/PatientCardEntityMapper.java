@@ -36,7 +36,6 @@ public interface PatientCardEntityMapper {
 
     default PatientCardEntity mapToEntityWithFields(PatientCard existingPatientCard) {
         return PatientCardEntity.builder()
-                .patientCardId(existingPatientCard.getPatientCardId())
                 .diagnosisDate(existingPatientCard.getDiagnosisDate())
                 .diagnosisNote(existingPatientCard.getDiagnosisNote())
                 .patient(PatientsEntityMapper.INSTANCE.mapToEntity(existingPatientCard.getPatient()))

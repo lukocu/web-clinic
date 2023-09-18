@@ -28,8 +28,14 @@ public class PrescriptionsEntity {
     private OffsetDateTime prescriptionDateEnd;
 
     @Column(name = "prescription_available")
-    private OffsetDateTime prescriptionAvailable;
+    private Boolean prescriptionAvailable;
 
-    @OneToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "prescription_medications",
+            joinColumns = @JoinColumn(name = "prescription_id"),
+            inverseJoinColumns = @JoinColumn(name = "medication_id")
+    )
     private Set<MedicationsEntity> medications;
 }

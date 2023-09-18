@@ -2,21 +2,31 @@ package pl.clinic.business;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pl.clinic.api.dto.*;
 import pl.clinic.api.dto.mapper.PatientsCardMapper;
 import pl.clinic.business.dao.PatientCardRepository;
-import pl.clinic.domain.*;
+import pl.clinic.domain.Medications;
+import pl.clinic.domain.PatientCard;
+import pl.clinic.domain.Patients;
+import pl.clinic.domain.Prescriptions;
 import pl.clinic.domain.exception.NotFoundException;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class PatientCardService {
 
-
+    private static final Logger logger = LoggerFactory.getLogger(PatientCardService.class);
     private PatientCardRepository patientCardRepository;
     private PatientsService patientsService;
     private PatientsCardMapper patientsCardMapper;
+    private PrescriptionsService prescriptionsService;
+    private MedicationsService medicationsService;
     @Transactional
     public PatientCard getMedicalPatientHistory(String pesel) {
         Patients patient = patientsService.searchPatient(pesel);
@@ -28,19 +38,29 @@ public class PatientCardService {
 
     @Transactional
     public void addPatientCardEntry(PatientCard patientCard) {
+        Set<Medications> medicationsSet=new HashSet<>();
 
-        // Utwórz nowy wpis na podstawie pól z formularza
-        PatientCard newEntry = PatientCard.builder()
-                .diagnosisDate(patientCard.getDiagnosisDate())
-                .diagnosisNote(patientCard.getDiagnosisNote())
-                .doctor(patientCard.getDoctor())
-                .diseases(patientCard.getDiseases())
-                .prescription(patientCard.getPrescription())
-                .build();
 
-        // Dodaj nowy wpis do istniejącej karty pacjenta
+       patientCard.getPrescription().getMedications().forEach(
+               medication -> {
+                   Medications byName = medicationsService.findByName(medication.getMedicationName());
+                    if(byName!=null){
+                        medicationsSet.add(byName);
+                    }
+                    else{
+                        medicationsSet.add(medication);
+                    }
+               }
+       );
 
-        patientCardRepository.save(newEntry);
+        logger.info("Zawartość medicationsSet przed: {}", medicationsSet);
+        Prescriptions prescription = patientCard.getPrescription().withMedications(medicationsSet);
+
+        PatientCard newPatientCard = patientCard.withPrescription(prescription);
+
+
+        patientCardRepository.save(newPatientCard);
+
     }
 
 // TODO
@@ -49,19 +69,8 @@ public class PatientCardService {
 
     }
 
-    public void saveCard(PatientCardDTO patientCardDTO) {
-        patientCardRepository.save(patientsCardMapper.mapFromDto(patientCardDTO));
-    }
+
 }
-
-
-
-
-
-
-
-
-
 
 
 
