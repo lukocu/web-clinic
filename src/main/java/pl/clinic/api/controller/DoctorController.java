@@ -1,6 +1,8 @@
 package pl.clinic.api.controller;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,7 @@ public class DoctorController {
     private final OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
     private final OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
 
-
+    private static final Logger logger = LoggerFactory.getLogger(DoctorController.class);
 
     @GetMapping(value = DOCTOR_DASHBOAR)
     public String getDoctorDashboar(Model model) {
@@ -45,8 +47,9 @@ public class DoctorController {
             Doctors doctor = doctorsService.findByUserId(user.getUserId());
             DoctorDTO doctorDTO = doctorMapper.mapToDtoSpecAndOffices(doctor);
 
+
             List<OfficeDoctorAvailabilityDTO> unavailableOfficeHours =
-                    officeDoctorAvailabilityService.getUnavailableOfficeHours(doctor.getDoctorId()).stream()
+                    officeDoctorAvailabilityService.getUnavailableOfficeHoursForDoctor(doctor.getDoctorId()).stream()
                             .map(officeDoctorAvailabilityMapper::mapToDto)
                             .sorted(Comparator.comparing(OfficeDoctorAvailabilityDTO::getDate)
                                     .thenComparing(OfficeDoctorAvailabilityDTO::getStartTime))
@@ -54,8 +57,13 @@ public class DoctorController {
 
 
 
+            logger.info("DoctorDTO : ", doctorDTO.toString());
+
             model.addAttribute("doctorDTO",doctorDTO);
             model.addAttribute("sortedAvailabilities", unavailableOfficeHours);
+
+            logger.info("Dashboard data fetched for doctor with username: {}", username);
+
             return "doctor_dashboard";
 
         }

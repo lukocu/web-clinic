@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.MedicationsRepository;
 import pl.clinic.domain.Medications;
 import pl.clinic.domain.exception.NotFoundException;
+import pl.clinic.infrastructure.database.repository.mapper.MedicationsEntityMapper;
 
 import java.util.Set;
 
@@ -31,7 +32,10 @@ public class MedicationsService {
 
 
     }
-
+    @Transactional
+    public void saveOne(Medications medication) {
+        medicationsRepository.save(medication);
+    }
 
     public Medications findByName(String medicationName) {
       return   medicationsRepository.findByName(medicationName)

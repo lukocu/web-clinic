@@ -27,6 +27,7 @@ public class PatientCardService {
     private PatientsCardMapper patientsCardMapper;
     private PrescriptionsService prescriptionsService;
     private MedicationsService medicationsService;
+
     @Transactional
     public PatientCard getMedicalPatientHistory(String pesel) {
         Patients patient = patientsService.searchPatient(pesel);
@@ -38,32 +39,40 @@ public class PatientCardService {
 
     @Transactional
     public void addPatientCardEntry(PatientCard patientCard) {
-        Set<Medications> medicationsSet=new HashSet<>();
+    /*    Set<Medications> medicationsSet = new HashSet<>();
+        Set<Medications> medicationsWithId = new HashSet<>();
 
 
-       patientCard.getPrescription().getMedications().forEach(
-               medication -> {
-                   Medications byName = medicationsService.findByName(medication.getMedicationName());
-                    if(byName!=null){
+        patientCard.getPrescription().getMedications().forEach(
+                medication -> {
+                    Medications byName = medicationsService.findByName(medication.getMedicationName());
+                    if (byName != null) {
                         medicationsSet.add(byName);
-                    }
-                    else{
+                    } else {
                         medicationsSet.add(medication);
                     }
-               }
-       );
+                }
+        );
+        medicationsService.save(medicationsSet);
 
-        logger.info("Zawartość medicationsSet przed: {}", medicationsSet);
-        Prescriptions prescription = patientCard.getPrescription().withMedications(medicationsSet);
+        medicationsSet
+                .forEach(
+                        medication -> {
+                            medicationsWithId.add(medicationsService.findByName(medication.getMedicationName()));
+                        }
+                );
+*/
+        logger.info("Zawartość medicationsSet przed: {}", patientCard.getPrescription().getMedications());
+    /*    Prescriptions prescription = patientCard.getPrescription().withMedications(medicationsWithId);
 
-        PatientCard newPatientCard = patientCard.withPrescription(prescription);
+        PatientCard newPatientCard = patientCard.withPrescription(prescription);*/
 
 
-        patientCardRepository.save(newPatientCard);
+        patientCardRepository.save(patientCard);
 
     }
 
-// TODO
+    // TODO
     public PatientCard getPatientCard(Integer patientId) {
         return null;
 

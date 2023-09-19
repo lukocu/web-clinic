@@ -14,22 +14,26 @@ public interface MedicationsEntityMapper {
     MedicationsEntityMapper INSTANCE = Mappers.getMapper(MedicationsEntityMapper.class);
 
 
-  default   Medications mapFromEntity(MedicationsEntity entity){
-      return Medications.builder()
-              .medicationId(entity.getMedicationId())
-              .medicationName(entity.getMedicationName())
-              .dosage(entity.getDosage())
-              .frequency(entity.getFrequency())
-              .build();
-  };
+    default Medications mapFromEntity(MedicationsEntity entity) {
+        return Medications.builder()
+                .medicationId(entity.getMedicationId())
+                .medicationName(entity.getMedicationName())
+                .dosage(entity.getDosage())
+                .frequency(entity.getFrequency())
+                .duration(entity.getDuration())
+                .build();
+    }
+
+    ;
 
     @InheritInverseConfiguration
- default    MedicationsEntity mapToEntity(Medications medications) {
-     return    MedicationsEntity.builder()
+    default MedicationsEntity mapToEntity(Medications medications) {
+        return MedicationsEntity.builder()
                 .medicationId(medications.getMedicationId())
                 .medicationName(medications.getMedicationName())
                 .dosage(medications.getDosage())
                 .frequency(medications.getFrequency())
+                .duration(medications.getDuration())
                 .build();
 
     }

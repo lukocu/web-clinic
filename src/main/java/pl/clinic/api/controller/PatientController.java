@@ -51,12 +51,12 @@ public class PatientController {
 
                 model.addAttribute("patient", patientsDTO);
 
-                List<AppointmentsDTO> appointments = appointmentsService.findAppointmentsByPatientId(user.getPatient().getPatientId())
+           /*     List<AppointmentsDTO> appointments = appointmentsService.findAppointmentsByPatientId(user.getPatient().getPatientId())
                         .stream()
                         .map(appointment -> appointmentsMapper.mapToDto(appointment))
                         .toList();
 
-                model.addAttribute("appointments", appointments);
+                model.addAttribute("appointments", appointments);*/
 
                 return "patient_dashboard";
 

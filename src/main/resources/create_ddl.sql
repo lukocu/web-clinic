@@ -86,9 +86,7 @@ CREATE TABLE medications (
                              medication_name VARCHAR(50) NOT NULL,
                              dosage VARCHAR(25) NOT NULL,
                              frequency VARCHAR(25),
-                             duration varchar(50),
-                             prescription_id INT,
-                             FOREIGN KEY (prescription_id) REFERENCES prescriptions(prescription_id)
+                             duration varchar(50)
 );
 CREATE TABLE prescriptions (
                                prescription_id serial PRIMARY KEY,

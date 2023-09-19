@@ -2,6 +2,8 @@ package pl.clinic.business;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.clinic.business.dao.OfficeDoctorAvailabilityRepository;
 import pl.clinic.business.dao.OfficeRepository;
@@ -21,6 +23,7 @@ public class OfficeDoctorAvailabilityService {
     private OfficeDoctorAvailabilityRepository officeDoctorAvailabilityRepository;
     private OfficeRepository officeRepository;
     private AppointmentsService appointmentsService;
+    private static final Logger logger = LoggerFactory.getLogger(OfficeDoctorAvailabilityService.class);
 
     @Transactional
     public void setOfficeAvailability(Integer officeId, LocalDate date, LocalTime startTime, LocalTime endTime) {
@@ -47,6 +50,11 @@ public class OfficeDoctorAvailabilityService {
     @Transactional
     public List<OfficeDoctorAvailability> getUnavailableOfficeHours(Integer officeId) {
         return officeDoctorAvailabilityRepository.findByOfficeAndAvailabilityStatusIsFalse(officeId);
+    }
+
+    @Transactional
+    public List<OfficeDoctorAvailability> getUnavailableHours() {
+        return officeDoctorAvailabilityRepository.findAvailabilityStatusIsFalse();
     }
 
     @Transactional
@@ -107,5 +115,10 @@ public class OfficeDoctorAvailabilityService {
     @Transactional
     public void removeAvailability(Integer officeAvailabilityId) {
         officeDoctorAvailabilityRepository.deleteById(officeAvailabilityId);
+    }
+
+    @Transactional
+    public List<OfficeDoctorAvailability> getUnavailableOfficeHoursForDoctor(Integer doctorId) {
+        return officeDoctorAvailabilityRepository.findAvailableStatusIsFalseWithDoctorId(doctorId);
     }
 }

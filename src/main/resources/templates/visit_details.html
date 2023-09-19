@@ -87,14 +87,18 @@
         <!-- Przycisk do przesłania formularza -->
         <button type="submit" class="btn btn-primary">Dodaj do karty pacjenta</button>
 
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
     </form>
 
+
     <!-- Przycisk "Zakończ wizytę" -->
-    <form action="/finish_visit" method="POST">
-        <!-- Ukryte pole z identyfikatorem wizyty -->
+    <form th:action="@{'/doctor_dashboard/visit/' + ${officeAvailabilityId} + '/finish_visit'}"  th:method="DELETE">
         <input type="hidden" name="officeAvailabilityId" value="${officeDoctorAvailability.officeAvailabilityId}">
         <button type="submit" class="btn btn-danger">Zakończ wizytę</button>
     </form>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const medicationsDataInput = document.getElementById("medicationsData");

@@ -21,8 +21,14 @@ public interface OfficeEntityMapper {
     @Mapping(target = "doctor", ignore = true)
     Office mapFromEntity(OfficeEntity entity);
 
-    @InheritInverseConfiguration
-    OfficeEntity mapToEntity(Office office);
+
+  default   OfficeEntity mapToEntity(Office office){
+   return    OfficeEntity.builder()
+              .officeId(office.getOfficeId())
+              .firstConsultationFee(office.getFirstConsultationFee())
+              .followupConsultationFee(office.getFollowupConsultationFee())
+              .build();
+  }
 
     default Office mapFromEntityWithoutAppointments(OfficeEntity entity) {
         return Office.builder()
