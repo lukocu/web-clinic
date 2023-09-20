@@ -20,7 +20,7 @@ public class OfficeDoctorAvailabilityRepository {
 
     public List<OfficeDoctorAvailability> findAvailableHoursForDoctor(String name, String surname) {
         return officeDoctorAvailabilityJpaRepository.findAvailableHoursForDoctor(name, surname).stream()
-                .map(officeDoctorAvailabilityEntityMapper::mapFromEntity)
+                .map(officeDoctorAvailabilityEntityMapper::mapFromEntityWithOffice)
                 .toList();
     }
 

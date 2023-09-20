@@ -6,10 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 import pl.clinic.api.dto.OfficeDTO;
 import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.api.dto.mapper.OfficeDoctorAvailabilityMapper;
@@ -31,6 +28,8 @@ public class AvailabilityController {
 
     public static final String ADD="/doctor_dashboard/add_availability";
     public static final String ADD_POST="/doctor_dashboard/add_availability/add";
+    public static final String REMOVE="/doctor_dashboard/remove_availability";
+    public static final String REMOVE_DELETE="/doctor_dashboard/remove_availability/{officeAvailabilityId}";
 
     private final OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
     private UserService userService;
@@ -55,16 +54,13 @@ public class AvailabilityController {
             OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO = new OfficeDoctorAvailabilityDTO();
 
 
-
-            // Pobierz listę biur z sesji, jeśli istnieje
             List<OfficeDTO> sessionAvailableOffices = (List<OfficeDTO>) session.getAttribute("availableOffices");
 
-            // Jeśli lista biur nie jest dostępna w sesji, dodaj ją
+
             if (sessionAvailableOffices == null) {
                 sessionAvailableOffices = new ArrayList<>();
             }
             sessionAvailableOffices.addAll(availableOffices);
-            // Dodaj aktualną listę biur do modelu
 
 
             List<OfficeDoctorAvailability> addedAvailabilities = (List<OfficeDoctorAvailability>) session.getAttribute("addedAvailabilities");
@@ -115,6 +111,36 @@ public class AvailabilityController {
         return  "redirect:/doctor_dashboard/add_availability";
     }
 
+    @GetMapping(REMOVE)
+    public String showRemoveAvailabilityPage(Model model) {
+
+        Authentication authentication = authenticationFacade.getAuthentication();
+
+        if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+            var user = userService.findByUsername(userDetails.getUsername());
+            Doctors doctor = doctorsService.findByUserId(user.getUserId());
+
+            List<OfficeDoctorAvailabilityDTO> doctorAvailabilities =
+                    officeDoctorAvailabilityService.getAvailableHoursForDoctor(doctor.getName(),doctor.getSurname())
+                            .stream()
+                            .map(availability->officeDoctorAvailabilityMapper.mapToDtoWithOfficeId(availability))
+                            .toList();
+
+
+            model.addAttribute("doctorAvailabilities", doctorAvailabilities);
+
+            return "remove_availability";
+        }
+        return "error";
+    }
+
+    @DeleteMapping(REMOVE_DELETE)
+    public String removeAvailability(@PathVariable("officeAvailabilityId") Integer officeAvailabilityId) {
+
+        officeDoctorAvailabilityService.removeAvailability(officeAvailabilityId);
+
+        return "redirect:/doctor_dashboard/remove_availability";
+    }
 
     private String translateErrorCodeToMessage(String errorCode) {
 

@@ -20,7 +20,8 @@
     <h1 class="display-4">Add Your Availability</h1>
 
 
-    <form th:action="@{/doctor_dashboard/add_availability/add}" method="POST" th:object="${availabilityDTO}" class="needs-validation"
+    <form th:action="@{/doctor_dashboard/add_availability/add}" method="POST" th:object="${availabilityDTO}"
+          class="needs-validation"
           novalidate>
         <div class="form-group">
             <label for="date">Date:</label>
@@ -44,12 +45,13 @@
             </div>
         </div>
         <div class="form-group">
-        <label for="officeNumber">Office Number:</label>
-        <select class="form-control" id="officeNumber" name="officeId" required>
-            <option value="" disabled selected>Select your office</option>
-            <option th:each="office : ${availableOffices}" th:value="${office.officeId}" th:text="${office.officeId}"></option>
-        </select>
-    </div>
+            <label for="officeNumber">Office Number:</label>
+            <select class="form-control" id="officeNumber" name="officeId" required>
+                <option value="" disabled selected>Select your office</option>
+                <option th:each="office : ${availableOffices}" th:value="${office.officeId}"
+                        th:text="${office.officeId}"></option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Add Availability</button>
         <div th:if="${error}" class="alert alert-danger">
             <p th:text="${error}"></p>
@@ -62,13 +64,15 @@
         <h2 class="display-5">Lista dodanych wizyt w tej sesji:</h2>
         <ul th:if="${addedAvailabilities != null}" class="list-group">
             <li th:each="availability : ${addedAvailabilities}" class="list-group-item">
-                Wizyta dnia <span th:text="${availability.date}"></span> od <span th:text="${availability.startTime}"></span> do <span th:text="${availability.endTime}"></span>
+                Wizyta dnia <span th:text="${availability.date}"></span> od <span
+                    th:text="${availability.startTime}"></span> do <span th:text="${availability.endTime}"></span>
             </li>
         </ul>
     </div>
 
-</div>
-<!-- Fragment availability-table.html -->
+    <div class="d-flex justify-content-center">
+        <a th:href="@{/doctor_dashboard}" class="btn btn-primary mt-3">Return to Dashboard</a>
+    </div>
 
 
 </body>

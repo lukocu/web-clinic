@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.clinic.api.dto.AppointmentsDTO;
+import pl.clinic.api.dto.DoctorDTO;
 import pl.clinic.api.dto.PatientsDTO;
 import pl.clinic.api.dto.mapper.AppointmentsMapper;
 import pl.clinic.api.dto.mapper.PatientsMapper;
@@ -51,12 +52,14 @@ public class PatientController {
 
                 model.addAttribute("patient", patientsDTO);
 
-           /*     List<AppointmentsDTO> appointments = appointmentsService.findAppointmentsByPatientId(user.getPatient().getPatientId())
+               List<AppointmentsDTO> appointments = appointmentsService.findAppointmentsByPatientId(user.getPatient().getPatientId())
                         .stream()
                         .map(appointment -> appointmentsMapper.mapToDto(appointment))
                         .toList();
 
-                model.addAttribute("appointments", appointments);*/
+
+                model.addAttribute("appointments", appointments);
+
 
                 return "patient_dashboard";
 

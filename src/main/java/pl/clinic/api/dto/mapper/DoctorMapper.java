@@ -27,6 +27,15 @@ public interface DoctorMapper {
                 .build();
 
     }
+ default DoctorDTO mapToDto(final Doctors doctor) {
+        return DoctorDTO.builder()
+                .name(doctor.getName())
+                .surname(doctor.getSurname())
+                .phone(doctor.getPhone())
+                .pesel(doctor.getPesel())
+                .build();
+
+    }
 
     default Doctors mapFromDtoForPatientCard(DoctorDTO doctor) {
        return Doctors.builder()

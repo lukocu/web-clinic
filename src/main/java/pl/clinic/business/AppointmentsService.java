@@ -12,7 +12,6 @@ import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -41,7 +40,7 @@ public class AppointmentsService {
 
     @Transactional
     public List<Appointments> findAppointmentsByPatientId(Integer patientId) {
-        return appointmentsRepository.findAppointmentsByPatientId(patientId);
+        return appointmentsRepository.findAppointmentsByPatientIdWithAllFields(patientId);
     }
 
     @Transactional
@@ -50,5 +49,11 @@ public class AppointmentsService {
         return appointmentsRepository.findByProbableStartTime(offsetDateTime)
                 .orElseThrow(()->new NotFoundException("Appointment not found"));
 
+    }
+
+    public Appointments getCurrentAppointementWithOffice(LocalDate date, LocalTime startTime, Office office) {
+        OffsetDateTime offsetDateTime = OffsetDateTime.of(date, startTime, ZoneOffset.UTC);
+        return appointmentsRepository.findByProbableStartTimeWithOffice(offsetDateTime,office)
+                .orElseThrow(()->new NotFoundException("Appointment not found"));
     }
 }

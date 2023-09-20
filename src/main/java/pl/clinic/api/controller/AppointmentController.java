@@ -25,6 +25,7 @@ public class AppointmentController {
     public static final String APPOINTMENT_LIST = "/appointment/{officeId}";
 
     public static final String APPOINTMENT_BOOK = "/appointment/{officeId}/book";
+    public static final String APPOINTMENT_HISTORY="/patient_dashboard/appointment_history";
 
     private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
     private OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;

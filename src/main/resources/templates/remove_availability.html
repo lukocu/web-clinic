@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Availability</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+
+
+<div class="container mt-4">
+    <h1 class="display-4">Remove Availability</h1>
+
+
+    <ul th:if="${doctorAvailabilities != null}" class="list-group">
+        <li th:each="availability : ${doctorAvailabilities}" class="list-group-item">
+            Wizyta dnia <span th:text="${availability.date}"></span> od <span th:text="${availability.startTime}"></span> do <span th:text="${availability.endTime}"></span> w biurze nr <span th:text="${availability.officeId}"></span>
+
+            <form th:action="@{'/doctor_dashboard/remove_availability/' + ${availability.officeAvailabilityId}}" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" class="btn btn-danger btn-sm float-right">Usuń</button>
+            </form>
+        </li>
+    </ul>
+
+
+    <a th:href="@{/doctor_dashboard}" class="btn btn-primary mt-3">Return to Dashboard</a>
+</div>
+
+</body>
+</html>

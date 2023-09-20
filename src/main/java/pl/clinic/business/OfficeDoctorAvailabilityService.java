@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.business.dao.OfficeDoctorAvailabilityRepository;
+import pl.clinic.domain.Doctors;
 import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.exception.NotFoundException;
@@ -54,16 +55,6 @@ public class OfficeDoctorAvailabilityService {
     }
 
 
-    @Transactional
-    public void markSlotAsAvailable(Integer officeAvailabilityId) {
-        OfficeDoctorAvailability availability = officeDoctorAvailabilityRepository.findById(officeAvailabilityId)
-                .orElseThrow(() -> new NotFoundException("Slot not found"));
-
-        if (!availability.getAvailabilityStatus()) {
-            OfficeDoctorAvailability updatedAvailability = availability.withAvailabilityStatus(true);
-            officeDoctorAvailabilityRepository.save(updatedAvailability);
-        }
-    }
 
     @Transactional
     public OfficeDoctorAvailability getOfficeAvailability(Integer officeAvailabilityId) {
@@ -135,4 +126,6 @@ public class OfficeDoctorAvailabilityService {
     public void addAvailable(OfficeDoctorAvailability officeDoctorAvailability) {
         officeDoctorAvailabilityRepository.save(officeDoctorAvailability.withAvailabilityStatus(true));
     }
+
+
 }

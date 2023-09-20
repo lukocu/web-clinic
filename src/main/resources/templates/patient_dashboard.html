@@ -25,16 +25,31 @@
 
 
             <form th:action="@{/patient_card}" method="get">
-                <button type="submit" class="btn btn-primary">Go to the patient's card</button>
+                <button type="submit" class="btn btn-primary">Go to your medical history</button>
+            </form>
+            <p></p>
+            <form th:action="@{/appointment}" method="get">
+                <button type="submit" class="btn btn-primary">Go to your appointment portal</button>
+            </form>
+            <p></p>
+            <form th:action="@{/appointment_history}" method="get">
+                <button type="submit" class="btn btn-primary">Go to your appointment history</button>
+            </form>
+            <p></p>
+            <form th:action="@{/}" method="get">
+                <button type="submit" class="btn btn-primary">Go to main menu</button>
             </form>
 
-            <h5 class="card-title mt-3">Wizyty</h5>
-            <ul th:if="${appointments}" th:each="appointment : ${appointments}">
-                <li>
-                    Data i godzina rozpoczęcia: <span th:text="${appointment.probableStartTime}"></span><br>
-                    Data rezerwacji: <span th:text="${appointment.appointmentTakenDate}"></span><br>
-                    Gabinet: <span th:text="${appointment.office.officeId}"></span><br>
-                    Status: <span th:text="${appointment.appointmentStatus.status}"></span><br>
+            <h5 class="card-title mt-3">Upcoming visits</h5>
+            <ul th:if="${appointments}" th:each="appointment : ${appointments}" class="list-group">
+                <li class="list-group-item">
+                    <p class="mb-0">
+                        Data i godzina rozpoczęcia: <span th:text="${appointment.probableStartTime}"></span><br>
+                        Data rezerwacji: <span th:text="${appointment.appointmentTakenDate}"></span><br>
+                        Gabinet: <span th:text="${appointment.office.officeId}"></span><br>
+                        Status: <span th:text="${appointment.appointmentStatus.status}"></span><br>
+                        Doctor: <span th:text="${appointment.office.doctor.getName() + ' ' + appointment.office.doctor.getSurname()}"></span><br>
+                    </p>
                 </li>
             </ul>
         </div>

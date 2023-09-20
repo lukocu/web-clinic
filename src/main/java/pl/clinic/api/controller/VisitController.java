@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.aspectj.apache.bcel.generic.ClassGen;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -12,13 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.clinic.api.dto.*;
-import pl.clinic.api.dto.mapper.*;
+import pl.clinic.api.dto.mapper.DiseasesMapper;
+import pl.clinic.api.dto.mapper.MedicationsMapper;
+import pl.clinic.api.dto.mapper.OfficeDoctorAvailabilityMapper;
+import pl.clinic.api.dto.mapper.PatientsMapper;
 import pl.clinic.business.*;
 import pl.clinic.domain.*;
 import pl.clinic.security.IAuthenticationFacade;
 
-import java.time.*;
-import java.util.Comparator;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,12 +32,10 @@ public class VisitController {
 
     public static final String VISIT = "/doctor_dashboard/visit/{officeAvailabilityId}";
     public static final String VISIT_ADD = "/doctor_dashboard/visit/{officeAvailabilityId}/add_patient_card";
-    public static final String VISIT_FINISH ="/doctor_dashboard/visit/{officeAvailabilityId}/finish_visit";
+    public static final String VISIT_FINISH = "/doctor_dashboard/visit/{officeAvailabilityId}/finish_visit";
 
     private PatientCardService patientCardService;
     private PatientsService patientService;
-    private PatientsMapper patientsMapper;
-    private DoctorMapper doctorMapper;
     private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
     private OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
     private OfficeService officeService;
@@ -43,11 +43,6 @@ public class VisitController {
     private IAuthenticationFacade authenticationFacade;
     private UserService userService;
     private DoctorsService doctorsService;
-    private DiseasesMapper diseasesMapper;
-    private MedicationsMapper medicationsMapper;
-    private MedicationsService medicationsService;
-    private PrescriptionsService prescriptionsService;
-
 
 
     @GetMapping(value = VISIT)
@@ -58,7 +53,7 @@ public class VisitController {
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
 
             var user = userService.findByUsername(userDetails.getUsername());
-            Doctors doctor = user.getDoctors();
+
 
             OfficeDoctorAvailability visit = officeDoctorAvailabilityService
                     .getOfficeAvailability(officeAvailabilityId);
@@ -66,7 +61,7 @@ public class VisitController {
             Office office = officeService.getOffice(visit.getOffice().getOfficeId());
 
             Appointments currentAppointement = appointmentsService
-                    .getCurrentAppointement(visit.getDate(), visit.getStartTime());
+                    .getCurrentAppointementWithOffice(visit.getDate(), visit.getStartTime(), office);
 
             PatientsDTO patientDTO =
                     PatientsMapper.INSTANCE.mapToDtoWithoutAppointment(currentAppointement.getPatient());
@@ -102,7 +97,7 @@ public class VisitController {
             @RequestParam("medicationsData") String medicationsData,
             @RequestParam("diseaseData") String diseaseData,
             @RequestParam("patientPesel") String patientPesel,
-            RedirectAttributes redirectAttributes,Model model) throws JsonProcessingException {
+            RedirectAttributes redirectAttributes, Model model) throws JsonProcessingException {
 
         Authentication authentication = authenticationFacade.getAuthentication();
 
@@ -132,12 +127,10 @@ public class VisitController {
             Set<Diseases> diseasesSet = diseases.stream().map(DiseasesMapper.INSTANCE::mapFromDtoWithoutPatientCard)
                     .collect(Collectors.toSet());
 
-
             Patients patient = patientService.searchPatient(patientPesel);
 
             OfficeDoctorAvailability officeAvailability =
                     officeDoctorAvailabilityService.getOfficeAvailability(officeAvailabilityId);
-
 
             OffsetDateTime currentTime
                     = OffsetDateTime.of(officeAvailability.getDate(),
@@ -160,34 +153,26 @@ public class VisitController {
 
             patientCardService.addPatientCardEntry(patientCard);
 
-
-
             redirectAttributes.addFlashAttribute("successMessage", "Sukces! Dane zostały dodane.");
 
-
-
-           model.addAttribute("diagnosisNote", diagnosisNote);
+            model.addAttribute("diagnosisNote", diagnosisNote);
             model.addAttribute("prescriptionDate", prescriptionDateString);
             model.addAttribute("prescriptionDateEnd", prescriptionDateEndString);
             model.addAttribute("medicationsData", medicationsData);
             model.addAttribute("diseaseData", diseaseData);
             model.addAttribute("patientPesel", patientPesel);
 
-
-
             return "redirect:/doctor_dashboard/visit/" + officeAvailabilityId;
         }
         return "error";
     }
+
     @DeleteMapping(VISIT_FINISH)
     public String deleteVisit(@PathVariable Integer officeAvailabilityId) {
-        // Wywołaj usługę do usuwania rekordu z bazy danych
 
         officeDoctorAvailabilityService.removeAvailability(officeAvailabilityId);
 
-
-
-        return "redirect:/doctor_dashboard"; // Przykład przekierowania na inny widok
+        return "redirect:/doctor_dashboard";
     }
 
 }

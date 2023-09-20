@@ -3,17 +3,9 @@ package pl.clinic.api.dto.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import pl.clinic.api.dto.AppointmentsDTO;
-import pl.clinic.api.dto.DoctorDTO;
 import pl.clinic.api.dto.OfficeDTO;
-import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
-import pl.clinic.domain.Appointments;
-import pl.clinic.domain.Doctors;
 import pl.clinic.domain.Office;
-import pl.clinic.domain.OfficeDoctorAvailability;
 
-import java.math.BigDecimal;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -47,7 +39,7 @@ public interface OfficeMapper {
                 .officeId(office.getOfficeId())
                 .firstConsultationFee(office.getFirstConsultationFee())
                 .followupConsultationFee(office.getFollowupConsultationFee())
-                .doctor(DoctorMapper.INSTANCE.mapToDtoSpecAndOffices(office.getDoctor()))
+                .doctor(DoctorMapper.INSTANCE.mapToDto(office.getDoctor()))
                 .officeDoctorAvailability(office.getOfficeDoctorAvailabilities().stream()
                         .map(OfficeDoctorAvailabilityMapper.INSTANCE::mapToDto)
                         .collect(Collectors.toSet()))
@@ -89,6 +81,15 @@ public interface OfficeMapper {
                 .appointments(officeDTO.getAppointment().stream()
                         .map(AppointmentsMapper.INSTANCE::mapFromDtoWithoutOffice)
                         .collect(Collectors.toSet()))
+                .build();
+    }
+
+    default OfficeDTO mapToDtoWithDoctor(Office office) {
+        return OfficeDTO.builder()
+                .officeId(office.getOfficeId())
+                .firstConsultationFee(office.getFirstConsultationFee())
+                .followupConsultationFee(office.getFollowupConsultationFee())
+                .doctor(DoctorMapper.INSTANCE.mapToDto(office.getDoctor()))
                 .build();
     }
 }

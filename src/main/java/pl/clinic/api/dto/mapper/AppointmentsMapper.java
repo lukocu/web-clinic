@@ -24,7 +24,7 @@ public interface AppointmentsMapper {
                 .actualEndTime(model.getActualEndTime())
                 .appointmentTakenDate(model.getAppointmentTakenDate())
                 .patient(PatientsMapper.INSTANCE.mapToDtoWithoutAppointment(model.getPatient()))
-                .office(OfficeMapper.INSTANCE.mapToDtoWithoutAppointment(model.getOffice()))
+                .office(OfficeMapper.INSTANCE.mapToDtoWithDoctor(model.getOffice()))
                 .appointmentStatus(AppointmentStatusMapper.INSTANCE.mapToDto(model.getAppointmentStatus()))
                 .build();
     }
