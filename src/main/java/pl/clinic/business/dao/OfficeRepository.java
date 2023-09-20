@@ -3,9 +3,13 @@ package pl.clinic.business.dao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.clinic.domain.Office;
+import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.infrastructure.database.repository.jpa.OfficeJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.OfficeEntityMapper;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +22,12 @@ public class OfficeRepository {
         return officeJpaRepository.findById(officeId)
                 .map(entity -> officeEntityMapper.mapFromEntity(entity));
     }
+
+    public List<Office> findByDoctorId(Integer doctorId) {
+        return officeJpaRepository.findAllByDoctorDoctorId(doctorId).stream()
+                .map(officeEntity -> officeEntityMapper.mapFromEntityWithoutDoctor(officeEntity))
+                .toList();
+    }
+
+
 }

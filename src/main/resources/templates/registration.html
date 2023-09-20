@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rejestracja</title>
-    <!-- Dodaj linki do Bootstrapa -->
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
     <a href="web-clinic/ " class="btn btn-secondary mb-3">Powrót do logowania</a>
 
     <form th:action="@{/register}" method="post" th:object="${registrationUserDto}">
-        <!-- Nazwa użytkownika -->
+
         <div class="form-group">
             <label for="username">Nazwa użytkownika:</label>
             <input type="text" class="form-control" id="username" th:field="*{username}" required>
@@ -24,19 +24,19 @@
             <label for="email">Email:</label>
             <input type="email" class="form-control" id="email" th:field="*{email}" required>
         </div>
-        <!-- Hasło -->
+
         <div class="form-group">
             <label for="password">Hasło:</label>
             <input type="password" class="form-control" id="password" th:field="*{password}" required>
         </div>
-        <!-- Potwierdzenie hasła -->
+
         <div class="form-group">
             <label for="confirmPassword">Potwierdź hasło:</label>
             <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
         </div>
     </form>
     <form th:action="@{/register}" method="post" th:object="${registrationPatientDto}">
-        <!-- Dodatkowe pola pacjenta -->
+
         <div class="form-group">
             <label for="name">Imię:</label>
             <input type="text" class="form-control" id="name" th:field="*{name}" required>
@@ -61,9 +61,9 @@
             <label for="phone">Numer telefonu:</label>
             <input type="tel" class="form-control" id="phone" th:field="*{phone}" required>
         </div>
-        </form>
-        <!-- Przycisk "Zarejestruj" -->
-        <button type="submit" class="btn btn-primary">Zarejestruj</button>
+    </form>
+
+    <button type="submit" class="btn btn-primary">Zarejestruj</button>
 
 </div>
 </body>

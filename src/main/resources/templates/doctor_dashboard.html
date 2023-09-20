@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Dashboard</title>
-    <!-- Dodaj linki do plików CSS Bootstrapa -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<!-- Pasek nawigacyjny Bootstrapa -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="#">Doctor Dashboard</a>
@@ -32,7 +32,7 @@
     </div>
 </nav>
 
-<!-- Treść strony -->
+
 <div class="container mt-4">
     <h1 class="display-4">Welcome, <span th:text="${doctorDTO.name}"></span> <span th:text="${doctorDTO.surname}"></span>!</h1>
     <p class="lead">This is your dashboard.</p>
@@ -53,6 +53,10 @@
             </ul>
         </li>
     </ul>
+
+    <h2 class="mt-4">Manage Your Availability</h2>
+    <a th:href="@{'/doctor_dashboard/add_availability'}" class="btn btn-primary">Add Your Availability</a>
+
     <h2 class="mt-4">See Upcoming Visits</h2>
     <table class="table table-striped table-bordered">
         <thead class="thead-light">

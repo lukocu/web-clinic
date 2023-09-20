@@ -10,6 +10,7 @@ import pl.clinic.domain.Doctors;
 import pl.clinic.domain.Office;
 import pl.clinic.domain.exception.NotFoundException;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -37,4 +38,8 @@ public class OfficeService {
     }
 
 
+    @Transactional
+    public List<Office> getOffices(Integer doctorId) {
+        return officeRepository.findByDoctorId(doctorId);
+    }
 }

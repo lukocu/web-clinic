@@ -34,4 +34,6 @@ public class DoctorsService {
         return doctorsRepository.findByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("Doctor not found"));
     }
+
+
 }

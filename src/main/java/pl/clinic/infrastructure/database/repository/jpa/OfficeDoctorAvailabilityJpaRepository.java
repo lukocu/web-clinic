@@ -9,6 +9,7 @@ import pl.clinic.infrastructure.database.entity.OfficeDoctorAvailabilityEntity;
 import pl.clinic.infrastructure.database.entity.OfficeEntity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +17,7 @@ import java.util.Optional;
 @Repository
 public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<OfficeDoctorAvailabilityEntity, Integer> {
 
-    List<OfficeDoctorAvailabilityEntity> findByOfficeAndDateAndAvailabilityStatus(OfficeEntity office, LocalDate date, Boolean availabilityStatus);
 
-    List<OfficeDoctorAvailabilityEntity> findAllByAvailabilityStatusAndDate(Boolean availabilityStatus, LocalDate date);
-
-    List<OfficeDoctorAvailabilityEntity> findAllByDate(LocalDate date);
 
     @Query("SELECT oda " +
             "FROM DoctorsEntity doctors " +
@@ -48,4 +45,27 @@ public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<Off
     @Modifying
     @Query("delete from OfficeDoctorAvailabilityEntity oda where oda.officeAvailabilityId = :officeAvailabilityId")
     void deleteByIdCustom(@Param("officeAvailabilityId") Integer officeAvailabilityId);
+
+    @Query("SELECT oda FROM OfficeDoctorAvailabilityEntity oda " +
+            "WHERE oda.date = :date " +
+            "AND oda.office.officeId = :officeId " +
+            "AND ((oda.startTime >= :startTime AND oda.startTime < :endTime) OR " +
+            "(oda.endTime > :startTime AND oda.endTime <= :endTime))")
+    List<OfficeDoctorAvailabilityEntity> findByDateAndTimeRange(@Param("date") LocalDate date,
+                                                                @Param("startTime") LocalTime startTime,
+                                                                @Param("endTime") LocalTime endTime,
+                                                                @Param("officeId") Integer officeId);
+
+    @Query("SELECT oda FROM OfficeDoctorAvailabilityEntity oda " +
+            "WHERE oda.date = :date " +
+            "AND oda.office.officeId = :officeId " +
+            "AND ((oda.startTime >= :startTime AND oda.startTime < :endTime) OR " +
+            "(oda.endTime > :startTime AND oda.endTime <= :endTime)) " +
+            "AND oda.availabilityStatus = true")
+    List<OfficeDoctorAvailabilityEntity> findConflictingAppointments(@Param("date") LocalDate date,
+                                                                     @Param("startTime") LocalTime startTime,
+                                                                     @Param("endTime") LocalTime endTime,
+                                                                     @Param("officeId") Integer officeId);
+
+
 }

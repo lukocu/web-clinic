@@ -5,14 +5,14 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.business.dao.OfficeDoctorAvailabilityRepository;
-import pl.clinic.business.dao.OfficeRepository;
-import pl.clinic.domain.Office;
 import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.exception.NotFoundException;
 import pl.clinic.domain.exception.SlotNotAvailableException;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -21,41 +21,9 @@ import java.util.List;
 @AllArgsConstructor
 public class OfficeDoctorAvailabilityService {
     private OfficeDoctorAvailabilityRepository officeDoctorAvailabilityRepository;
-    private OfficeRepository officeRepository;
     private AppointmentsService appointmentsService;
     private static final Logger logger = LoggerFactory.getLogger(OfficeDoctorAvailabilityService.class);
 
-    @Transactional
-    public void setOfficeAvailability(Integer officeId, LocalDate date, LocalTime startTime, LocalTime endTime) {
-        Office office = officeRepository.findById(officeId)
-                .orElseThrow(() -> new NotFoundException("office not found"));
-
-        if (office != null) {
-            OfficeDoctorAvailability availability = OfficeDoctorAvailability.builder()
-                    .date(date)
-                    .startTime(startTime)
-                    .endTime(endTime)
-                    .availabilityStatus(true)
-                    .office(office)
-                    .build();
-
-            officeDoctorAvailabilityRepository.save(availability);
-        } else {
-            // Obsłuż przypadek, gdy biuro o podanym ID nie zostało znalezione
-
-        }
-
-    }
-
-    @Transactional
-    public List<OfficeDoctorAvailability> getUnavailableOfficeHours(Integer officeId) {
-        return officeDoctorAvailabilityRepository.findByOfficeAndAvailabilityStatusIsFalse(officeId);
-    }
-
-    @Transactional
-    public List<OfficeDoctorAvailability> getUnavailableHours() {
-        return officeDoctorAvailabilityRepository.findAvailabilityStatusIsFalse();
-    }
 
     @Transactional
     public List<OfficeDoctorAvailability> getAvailableHoursForOffice(Integer officeId) {
@@ -120,5 +88,51 @@ public class OfficeDoctorAvailabilityService {
     @Transactional
     public List<OfficeDoctorAvailability> getUnavailableOfficeHoursForDoctor(Integer doctorId) {
         return officeDoctorAvailabilityRepository.findAvailableStatusIsFalseWithDoctorId(doctorId);
+    }
+
+    public String isValid(OfficeDoctorAvailabilityDTO availabilityDTO) {
+
+        if (isFullHourOrHalfHour(availabilityDTO.getStartTime()) || isFullHourOrHalfHour(availabilityDTO.getEndTime())) {
+            return "error.fullHourOrHalfHour";
+        }
+
+        if (availabilityDTO.getStartTime().isAfter(availabilityDTO.getEndTime())) {
+            return "error.startTimeAfterEndTime";
+        }
+
+        Duration duration = Duration.between(availabilityDTO.getStartTime(), availabilityDTO.getEndTime());
+        if (duration.toMinutes() < 30) {
+            return "error.durationTooShort";
+        }
+
+        if (exists(availabilityDTO.getOfficeId(), availabilityDTO.getDate(), availabilityDTO.getStartTime(), availabilityDTO.getEndTime())) {
+            return "error.availabilityExists";
+        }
+
+        return null;
+    }
+
+
+    public boolean exists(Integer officeId, LocalDate date, LocalTime startTime, LocalTime endTime) {
+        List<OfficeDoctorAvailability> existingEntries =
+                officeDoctorAvailabilityRepository.findByDateAndTimeRange(date, startTime, endTime, officeId);
+
+        if (!existingEntries.isEmpty()) {
+            return true;
+        }
+
+        List<OfficeDoctorAvailability> conflictingEntries =
+                officeDoctorAvailabilityRepository.findConflictingAppointments(date, startTime, endTime, officeId);
+
+        return !conflictingEntries.isEmpty();
+    }
+
+    private boolean isFullHourOrHalfHour(LocalTime time) {
+        return time.getMinute() != 0 && time.getMinute() != 30;
+    }
+
+    @Transactional
+    public void addAvailable(OfficeDoctorAvailability officeDoctorAvailability) {
+        officeDoctorAvailabilityRepository.save(officeDoctorAvailability.withAvailabilityStatus(true));
     }
 }

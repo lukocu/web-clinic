@@ -6,6 +6,8 @@ import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.infrastructure.database.repository.jpa.OfficeDoctorAvailabilityJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.OfficeDoctorAvailabilityEntityMapper;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +41,6 @@ public class OfficeDoctorAvailabilityRepository {
     }
 
 
-
     public Optional<OfficeDoctorAvailability> findById(Integer officeAvailabilityId) {
         return officeDoctorAvailabilityJpaRepository.findById(officeAvailabilityId)
                 .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
@@ -57,6 +58,18 @@ public class OfficeDoctorAvailabilityRepository {
 
     public List<OfficeDoctorAvailability> findAvailableStatusIsFalseWithDoctorId(Integer doctorId) {
         return officeDoctorAvailabilityJpaRepository.findUnavailableStatusForDoctor(doctorId).stream()
+                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
+                .toList();
+    }
+
+    public List<OfficeDoctorAvailability> findByDateAndTimeRange(LocalDate date, LocalTime startTime, LocalTime endTime, Integer officeId) {
+        return officeDoctorAvailabilityJpaRepository.findByDateAndTimeRange(date, startTime, endTime, officeId).stream()
+                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
+                .toList();
+    }
+
+    public List<OfficeDoctorAvailability> findConflictingAppointments(LocalDate date, LocalTime startTime, LocalTime endTime, Integer officeId) {
+        return officeDoctorAvailabilityJpaRepository.findConflictingAppointments(date, startTime, endTime, officeId).stream()
                 .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
                 .toList();
     }

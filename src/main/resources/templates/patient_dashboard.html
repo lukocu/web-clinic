@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Patient Dashboard</title>
-    <!-- Dodaj linki do Bootstrap CSS i JavaScript -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -14,7 +14,7 @@
     <h1>Patient Dashboard</h1>
     <div class="card">
         <div class="card-body">
-            <!-- Wyświetlanie danych pacjenta -->
+
             <h5 class="card-title">Patient Information</h5>
             <p><strong>Name:</strong> <span th:text="${patient.name}"></span></p>
             <p><strong>Surname:</strong> <span th:text="${patient.surname}"></span></p>
@@ -23,20 +23,20 @@
             <p><strong>Address:</strong> <span th:text="${patient.address}"></span></p>
             <p><strong>Phone:</strong> <span th:text="${patient.phone}"></span></p>
 
-            <!-- Przycisk do karty pacjenta -->
+
             <form th:action="@{/patient_card}" method="get">
                 <button type="submit" class="btn btn-primary">Go to the patient's card</button>
             </form>
 
             <h5 class="card-title mt-3">Wizyty</h5>
             <ul th:if="${appointments}" th:each="appointment : ${appointments}">
-            <li>
-                Data i godzina rozpoczęcia: <span th:text="${appointment.probableStartTime}"></span><br>
-                Data rezerwacji: <span th:text="${appointment.appointmentTakenDate}"></span><br>
-                Gabinet: <span th:text="${appointment.office.officeId}"></span><br>
-                Status: <span th:text="${appointment.appointmentStatus.status}"></span><br>
-            </li>
-        </ul>
+                <li>
+                    Data i godzina rozpoczęcia: <span th:text="${appointment.probableStartTime}"></span><br>
+                    Data rezerwacji: <span th:text="${appointment.appointmentTakenDate}"></span><br>
+                    Gabinet: <span th:text="${appointment.office.officeId}"></span><br>
+                    Status: <span th:text="${appointment.appointmentStatus.status}"></span><br>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

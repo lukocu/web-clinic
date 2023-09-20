@@ -4,25 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visit Details</title>
-    <!-- Dodaj linki do plików CSS Bootstrapa -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<!-- Pasek nawigacyjny Bootstrapa -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="#">Visit Details</a>
     </div>
 </nav>
 
-<!-- Treść strony -->
+
 <div class="container mt-4">
     <h1>Visit Details</h1>
 
-    <!-- Dane wizyty (OfficeDoctorAvailability) -->
+
     <h2>Visit Information</h2>
     <p>Date: <span th:text="${officeDoctorAvailability.date}"></span></p>
     <p>Start Time: <span th:text="${officeDoctorAvailability.startTime}"></span></p>
@@ -30,61 +30,60 @@
     <p>Office Number: <span th:text="${officeDoctorAvailability.officeId}"></span></p>
     <p>Status: <span th:text="${officeDoctorAvailability.availabilityStatus ? 'Unreserved' : 'Reserved'}"></span></p>
 
-    <!-- Dane pacjenta (Patients) -->
+
     <h2>Patient Information</h2>
     <p>Name: <span th:text="${patient.name}"></span></p>
     <p>Surname: <span th:text="${patient.surname}"></span></p>
     <p>Pesel: <span th:text="${patient.pesel}"></span></p>
 
-    <!-- Przycisk "Zobacz kartę pacjenta" -->
+
     <a th:href="@{'/patient_card/' + ${patient.pesel}}"
        class="btn btn-primary">Zobacz kartę pacjenta</a>
 
-    <!-- Formularz dodawania wpisu do karty pacjenta -->
+
     <h2>Add Entry to Patient Card</h2>
     <form th:action="@{'/doctor_dashboard/visit/' + ${officeAvailabilityId} + '/add_patient_card'}" method="POST">
-        <!-- Ukryte pole z identyfikatorem wizyty -->
+
         <input type="hidden" name="patientPesel" value th:value="${patient.pesel}">
 
-        <!-- Dodaj pole dla diagnosisNote -->
         <div class="form-group">
             <label for="diagnosisNote">Diagnosis Note:</label>
-            <textarea class="form-control" id="diagnosisNote" name="diagnosisNote" th:value="${diagnosisNote}" rows="3"></textarea>
+            <textarea class="form-control" id="diagnosisNote" name="diagnosisNote" th:value="${diagnosisNote}"
+                      rows="3"></textarea>
         </div>
 
-        <!-- Pola formularza dla recepty (PrescriptionsDTO) -->
+
         <div class="form-group">
             <label for="prescriptionDate">Prescription Date:</label>
-            <input type="datetime-local" class="form-control" id="prescriptionDate" name="prescriptionDate" th:value="${prescriptionsDTO.prescriptionDate}">
+            <input type="datetime-local" class="form-control" id="prescriptionDate" name="prescriptionDate"
+                   th:value="${prescriptionsDTO.prescriptionDate}">
         </div>
         <div class="form-group">
             <label for="prescriptionDateEnd">Prescription Date End:</label>
-            <input type="datetime-local" class="form-control" id="prescriptionDateEnd" name="prescriptionDateEnd" th:value="${prescriptionsDTO.prescriptionDateEnd}">
+            <input type="datetime-local" class="form-control" id="prescriptionDateEnd" name="prescriptionDateEnd"
+                   th:value="${prescriptionsDTO.prescriptionDateEnd}">
         </div>
 
 
-
-        <!-- Pola formularza dla leków (MedicationsDTO) -->
-        <!-- Przycisk "Dodaj lek" -->
         <button type="button" id="addMedicationButton" class="btn btn-primary">Dodaj lek</button>
 
-        <!-- Kontener na tabelę leków -->
+
         <div id="medicationsContainer">
-            <!-- Tabela zostanie wygenerowana dynamicznie przez JavaScript -->
+
         </div>
 
-        <!-- Ukryte pole z danymi o lekach -->
+
         <input type="hidden" id="medicationsData" name="medicationsData">
 
-        <!-- Pola formularza dla chorób (DiseasesDTO) -->
+
         <button type="button" id="addDiseaseButton" class="btn btn-primary">Dodaj chorobę</button>
         <div id="diseasesContainer">
-            <!-- Tabela zostanie wygenerowana dynamicznie przez JavaScript -->
+
         </div>
-        <!-- Ukryte pole z danymi o chorobie -->
+
         <input type="hidden" id="diseaseData" name="diseaseData">
 
-        <!-- Przycisk do przesłania formularza -->
+
         <button type="submit" class="btn btn-primary">Dodaj do karty pacjenta</button>
 
         <div th:if="${successMessage}" class="alert alert-success">
@@ -93,196 +92,193 @@
     </form>
 
 
-    <!-- Przycisk "Zakończ wizytę" -->
-    <form th:action="@{'/doctor_dashboard/visit/' + ${officeAvailabilityId} + '/finish_visit'}"  th:method="DELETE">
+    <form th:action="@{'/doctor_dashboard/visit/' + ${officeAvailabilityId} + '/finish_visit'}" th:method="DELETE">
         <input type="hidden" name="officeAvailabilityId" value="${officeDoctorAvailability.officeAvailabilityId}">
         <button type="submit" class="btn btn-danger">Zakończ wizytę</button>
     </form>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const medicationsDataInput = document.getElementById("medicationsData");
-        const medicationsContainer = document.getElementById("medicationsContainer");
-        const addMedicationButton = document.getElementById("addMedicationButton");
-        let medicationsData = [];
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const medicationsDataInput = document.getElementById("medicationsData");
+            const medicationsContainer = document.getElementById("medicationsContainer");
+            const addMedicationButton = document.getElementById("addMedicationButton");
+            let medicationsData = [];
 
-        function addNewMedication() {
-            medicationsData.push({
-                medicationName: "",
-                dosage: "",
-                frequency: "",
-                duration: ""
-            });
+            function addNewMedication() {
+                medicationsData.push({
+                    medicationName: "",
+                    dosage: "",
+                    frequency: "",
+                    duration: ""
+                });
+
+                refreshMedicationsTable();
+            }
+
+
+            function refreshMedicationsTable() {
+                medicationsContainer.innerHTML = "";
+
+                medicationsData.forEach(function (medication, index) {
+                    const medicationFields = document.createElement("div");
+                    medicationFields.className = "form-group";
+
+                    const medicationNameInput = document.createElement("input");
+                    medicationNameInput.type = "text";
+                    medicationNameInput.className = "form-control";
+                    medicationNameInput.name = "medicationsDTO[" + index + "].medicationName";
+                    medicationNameInput.value = medication.medicationName;
+                    medicationNameInput.placeholder = "Medication Name";
+                    medicationFields.appendChild(medicationNameInput);
+
+                    const dosageInput = document.createElement("input");
+                    dosageInput.type = "text";
+                    dosageInput.className = "form-control";
+                    dosageInput.name = "medicationsDTO[" + index + "].dosage";
+                    dosageInput.value = medication.dosage;
+                    dosageInput.placeholder = "Dosage"; // Dodaj placeholder
+                    medicationFields.appendChild(dosageInput);
+
+                    const frequencyInput = document.createElement("input");
+                    frequencyInput.type = "text";
+                    frequencyInput.className = "form-control";
+                    frequencyInput.name = "medicationsDTO[" + index + "].frequency";
+                    frequencyInput.value = medication.frequency;
+                    frequencyInput.placeholder = "Frequency"; // Dodaj placeholder
+                    medicationFields.appendChild(frequencyInput);
+
+                    const durationInput = document.createElement("input");
+                    durationInput.type = "text";
+                    durationInput.className = "form-control";
+                    durationInput.name = "medicationsDTO[" + index + "].duration";
+                    durationInput.value = medication.duration;
+                    durationInput.placeholder = "Duration"; //
+                    medicationFields.appendChild(durationInput);
+
+
+                    medicationNameInput.addEventListener("input", function () {
+                        medicationsData[index].medicationName = medicationNameInput.value;
+                    });
+
+                    dosageInput.addEventListener("input", function () {
+                        medicationsData[index].dosage = dosageInput.value;
+                    });
+
+                    frequencyInput.addEventListener("input", function () {
+                        medicationsData[index].frequency = frequencyInput.value;
+                    });
+
+                    durationInput.addEventListener("input", function () {
+                        medicationsData[index].duration = durationInput.value;
+                    });
+
+                    medicationsContainer.appendChild(medicationFields);
+                });
+
+
+                const filteredMedicationsData = medicationsData.filter(function (medication) {
+                    return (
+                        medication.medicationName !== "" ||
+                        medication.dosage !== "" ||
+                        medication.frequency !== "" ||
+                        medication.duration !== ""
+                    );
+                });
+
+
+                console.log("Zawartość medicationsData po dodaniu leku:", medicationsData);
+
+                medicationsDataInput.value = JSON.stringify(filteredMedicationsData);
+            }
+
 
             refreshMedicationsTable();
-        }
 
+            addMedicationButton.addEventListener("click", function () {
+                addNewMedication();
 
-
-        function refreshMedicationsTable() {
-            medicationsContainer.innerHTML = ""; // Wyczyść tabelę
-
-            medicationsData.forEach(function (medication, index) {
-                const medicationFields = document.createElement("div");
-                medicationFields.className = "form-group";
-
-                const medicationNameInput = document.createElement("input");
-                medicationNameInput.type = "text";
-                medicationNameInput.className = "form-control";
-                medicationNameInput.name = "medicationsDTO[" + index + "].medicationName";
-                medicationNameInput.value = medication.medicationName;
-                medicationNameInput.placeholder = "Medication Name"; // Dodaj placeholder
-                medicationFields.appendChild(medicationNameInput);
-
-                const dosageInput = document.createElement("input");
-                dosageInput.type = "text";
-                dosageInput.className = "form-control";
-                dosageInput.name = "medicationsDTO[" + index + "].dosage";
-                dosageInput.value = medication.dosage;
-                dosageInput.placeholder = "Dosage"; // Dodaj placeholder
-                medicationFields.appendChild(dosageInput);
-
-                const frequencyInput = document.createElement("input");
-                frequencyInput.type = "text";
-                frequencyInput.className = "form-control";
-                frequencyInput.name = "medicationsDTO[" + index + "].frequency";
-                frequencyInput.value = medication.frequency;
-                frequencyInput.placeholder = "Frequency"; // Dodaj placeholder
-                medicationFields.appendChild(frequencyInput);
-
-                const durationInput = document.createElement("input");
-                durationInput.type = "text";
-                durationInput.className = "form-control";
-                durationInput.name = "medicationsDTO[" + index + "].duration";
-                durationInput.value = medication.duration;
-                durationInput.placeholder = "Duration"; // Dodaj placeholder
-                medicationFields.appendChild(durationInput);
-
-                // Dodaj event listenery do pól formularza
-                medicationNameInput.addEventListener("input", function () {
-                    medicationsData[index].medicationName = medicationNameInput.value;
-                });
-
-                dosageInput.addEventListener("input", function () {
-                    medicationsData[index].dosage = dosageInput.value;
-                });
-
-                frequencyInput.addEventListener("input", function () {
-                    medicationsData[index].frequency = frequencyInput.value;
-                });
-
-                durationInput.addEventListener("input", function () {
-                    medicationsData[index].duration = durationInput.value;
-                });
-
-                medicationsContainer.appendChild(medicationFields);
-            });
-
-            // Usuń puste obiekty z medicationsData przed aktualizacją
-            const filteredMedicationsData = medicationsData.filter(function (medication) {
-                return (
-                    medication.medicationName !== "" ||
-                    medication.dosage !== "" ||
-                    medication.frequency !== "" ||
-                    medication.duration !== ""
-                );
+                refreshMedicationsTable();
             });
 
 
-            console.log("Zawartość medicationsData po dodaniu leku:", medicationsData);
-            // Zaktualizuj dane w ukrytym polu
-            medicationsDataInput.value = JSON.stringify(filteredMedicationsData);
-        }
+            const diseasesDataInput = document.getElementById("diseaseData");
+            const diseasesContainer = document.getElementById("diseasesContainer");
+            const addDiseaseButton = document.getElementById("addDiseaseButton");
+            let diseasesData = [];
 
-        // Inicjalizacja tabeli leków
-        refreshMedicationsTable();
+            function addNewDisease() {
+                diseasesData.push({
+                    diseaseName: "",
+                    diseaseDescription: ""
+                });
 
-        addMedicationButton.addEventListener("click", function () {
-            addNewMedication();
-            // Po dodaniu nowego leku odśwież pola formularza
-            refreshMedicationsTable();
-        });
+                refreshDiseasesTable();
+            }
 
-// Obsługa pól dla chorób
-        const diseasesDataInput = document.getElementById("diseaseData");
-        const diseasesContainer = document.getElementById("diseasesContainer");
-        const addDiseaseButton = document.getElementById("addDiseaseButton");
-        let diseasesData = [];
+            addDiseaseButton.addEventListener("click", function () {
+                addNewDisease();
 
-        function addNewDisease() {
-            diseasesData.push({
-                diseaseName: "",
-                diseaseDescription: ""
+                refreshDiseasesTable();
             });
+
+            function refreshDiseasesTable() {
+                diseasesContainer.innerHTML = "";
+
+                diseasesData.forEach(function (disease, index) {
+                    const diseaseFields = document.createElement("div");
+                    diseaseFields.className = "form-group";
+
+                    const diseaseNameInput = document.createElement("input");
+                    diseaseNameInput.type = "text";
+                    diseaseNameInput.className = "form-control";
+                    diseaseNameInput.name = "diseasesDTO[" + index + "].diseaseName";
+                    diseaseNameInput.value = disease.diseaseName;
+                    diseaseNameInput.placeholder = "Disease Name";
+                    diseaseFields.appendChild(diseaseNameInput);
+
+                    const diseaseDescriptionInput = document.createElement("input");
+                    diseaseDescriptionInput.className = "form-control";
+                    diseaseDescriptionInput.name = "diseasesDTO[" + index + "].diseaseDescription";
+                    diseaseDescriptionInput.value = disease.diseaseDescription;
+                    diseaseDescriptionInput.placeholder = "Disease Description";
+                    diseaseFields.appendChild(diseaseDescriptionInput);
+
+
+                    diseaseNameInput.addEventListener("input", function () {
+                        diseasesData[index].diseaseName = diseaseNameInput.value;
+
+                    });
+
+                    diseaseDescriptionInput.addEventListener("input", function () {
+                        diseasesData[index].diseaseDescription = diseaseDescriptionInput.value;
+                    });
+
+                    diseasesContainer.appendChild(diseaseFields);
+                });
+
+
+                const filteredDiseasesData = diseasesData.filter(function (disease) {
+                    return (
+                        disease.diseaseName !== "" ||
+                        disease.diseaseDescription !== ""
+
+                    );
+                });
+
+
+                console.log("Zawartość diseasesData po dodaniu leku:", diseasesData);
+
+                diseasesDataInput.value = JSON.stringify(filteredDiseasesData);
+
+            }
+
 
             refreshDiseasesTable();
-        }
 
-        addDiseaseButton.addEventListener("click", function () {
-            addNewDisease();
-            // Po dodaniu nowej choroby odśwież pola formularza
-            refreshDiseasesTable();
+
         });
 
-        function refreshDiseasesTable() {
-            diseasesContainer.innerHTML = ""; // Wyczyść tabelę
-
-            diseasesData.forEach(function (disease, index) {
-                const diseaseFields = document.createElement("div");
-                diseaseFields.className = "form-group";
-
-                const diseaseNameInput = document.createElement("input");
-                diseaseNameInput.type = "text";
-                diseaseNameInput.className = "form-control";
-                diseaseNameInput.name = "diseasesDTO[" + index + "].diseaseName";
-                diseaseNameInput.value = disease.diseaseName;
-                diseaseNameInput.placeholder = "Disease Name"; // Dodaj placeholder
-                diseaseFields.appendChild(diseaseNameInput);
-
-                const diseaseDescriptionInput = document.createElement("input");
-                diseaseDescriptionInput.className = "form-control";
-                diseaseDescriptionInput.name = "diseasesDTO[" + index + "].diseaseDescription";
-                diseaseDescriptionInput.value = disease.diseaseDescription;
-                diseaseDescriptionInput.placeholder = "Disease Description";
-                diseaseFields.appendChild(diseaseDescriptionInput);
-
-                // Dodaj event listenery do pól formularza chorób
-                diseaseNameInput.addEventListener("input", function () {
-                    diseasesData[index].diseaseName = diseaseNameInput.value;
-
-                });
-
-                diseaseDescriptionInput.addEventListener("input", function () {
-                    diseasesData[index].diseaseDescription = diseaseDescriptionInput.value;
-                });
-
-                diseasesContainer.appendChild(diseaseFields);
-            });
-
-            // Usuń puste obiekty z medicationsData przed aktualizacją
-            const filteredDiseasesData = diseasesData.filter(function (disease) {
-                return (
-                    disease.diseaseName !== "" ||
-                    disease.diseaseDescription !== ""
-
-                );
-            });
-
-
-            console.log("Zawartość diseasesData po dodaniu leku:", diseasesData);
-            // Zaktualizuj dane w ukrytym polu
-            diseasesDataInput.value = JSON.stringify(filteredDiseasesData);
-
-        }
-
-        // Inicjalizacja tabeli chorób
-        refreshDiseasesTable();
-
-
-
-    });
-
-</script>
+    </script>
 
 </div>
 </body>
