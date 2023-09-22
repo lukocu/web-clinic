@@ -44,7 +44,7 @@
             <p><strong>Phone:</strong> <span th:text="${patient.phone}"></span></p>
 
 
-            <form th:action="@{/patient_dashboard/patient_card}" method="post">
+            <form th:action="@{/patient_dashboard/patient_card}" th:method="post">
                 <input type="hidden" name="patientId" th:value="${patient.patientId}" />
                 <button type="submit" class="btn btn-primary">Go to your medical history</button>
             </form>
@@ -70,6 +70,9 @@
                         Gabinet: <span th:text="${appointment.office.officeId}"></span><br>
                         Status: <span th:text="${appointment.appointmentStatus.status}"></span><br>
                         Doctor: <span th:text="${appointment.office.doctor.getName() + ' ' + appointment.office.doctor.getSurname()}"></span><br>
+                    <form th:action="@{'/patient_dashboard/cancel-visit/' + ${appointment.appointmentId}}" th:method="put">
+                        <button type="submit" class="btn btn-danger">Cancel Visit</button>
+                    </form>
                     </p>
                 </li>
             </ul>

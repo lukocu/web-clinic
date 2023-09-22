@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface PatientCardJpaRepository extends JpaRepository<PatientCardEntity, Integer> {
 
-    Optional<PatientCardEntity> findByPatientPesel(String patientPesel);
+
     @Query("""
 
             SELECT pc,doc,dis,pres,medi FROM PatientCardEntity pc
@@ -25,4 +25,4 @@ public interface PatientCardJpaRepository extends JpaRepository<PatientCardEntit
             """)
     List<PatientCardEntity> findByPatientIdWithDetails(@Param("patientId") Integer patientId);
 }
-// dodałem tutaj cos nowego w select ale ogolnie to tak usun appointments z bazy danych zdubuguj kod no i zobaczymy co teraz wyciagniemy z tego
+

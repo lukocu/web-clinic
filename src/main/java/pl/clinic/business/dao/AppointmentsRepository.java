@@ -29,10 +29,7 @@ public class AppointmentsRepository {
               .toList();
     }
 
-    public Optional<Appointments> findByProbableStartTime(OffsetDateTime offsetDateTime) {
-        return appointmentsJpaRepository.findByProbableStartTime(offsetDateTime)
-                .map(appointmentsEntityMapper::mapFromEntity);
-    }
+
 
     public Optional<Appointments>  findByProbableStartTimeWithOffice(OffsetDateTime offsetDateTime, Office office) {
         return appointmentsJpaRepository.findByProbableStartTimeWithOffice(offsetDateTime,office.getOfficeId())

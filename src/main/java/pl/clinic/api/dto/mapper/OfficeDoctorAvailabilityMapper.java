@@ -3,13 +3,8 @@ package pl.clinic.api.dto.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
-import pl.clinic.domain.Appointments;
-import pl.clinic.domain.Doctors;
 import pl.clinic.domain.Office;
 import pl.clinic.domain.OfficeDoctorAvailability;
-
-import java.math.BigDecimal;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface OfficeDoctorAvailabilityMapper {

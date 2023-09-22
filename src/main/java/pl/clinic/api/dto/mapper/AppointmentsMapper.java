@@ -3,14 +3,7 @@ package pl.clinic.api.dto.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.AppointmentsDTO;
-import pl.clinic.domain.AppointmentStatus;
 import pl.clinic.domain.Appointments;
-import pl.clinic.domain.Office;
-import pl.clinic.domain.Patients;
-
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface AppointmentsMapper {

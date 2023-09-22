@@ -14,7 +14,7 @@ import java.util.Optional;
 public class MedicationsRepository {
     private MedicationsJpaRepository medicationsJpaRepository;
     private MedicationsEntityMapper medicationsEntityMapper;
-    private MedicationsMapper medicationsMapper;
+
     public void save(Medications medication) {
          medicationsJpaRepository.save(medicationsEntityMapper.mapToEntity(medication));
     }

@@ -52,9 +52,6 @@ public class VisitController {
 
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
 
-            var user = userService.findByUsernameDoctor(userDetails.getUsername());
-
-
             OfficeDoctorAvailability visit = officeDoctorAvailabilityService
                     .getOfficeAvailability(officeAvailabilityId);
 

@@ -1,16 +1,12 @@
 package pl.clinic.infrastructure.database.repository.mapper;
 
-import jakarta.persistence.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import pl.clinic.domain.Role;
 import pl.clinic.domain.User;
-import pl.clinic.infrastructure.database.entity.DoctorsEntity;
-import pl.clinic.infrastructure.database.entity.PatientsEntity;
 import pl.clinic.infrastructure.database.entity.RoleEntity;
 import pl.clinic.infrastructure.database.entity.UserEntity;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

@@ -4,10 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.business.dao.OfficeDoctorAvailabilityRepository;
-import pl.clinic.domain.Doctors;
+import pl.clinic.domain.Office;
 import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.exception.NotFoundException;
@@ -16,14 +18,18 @@ import pl.clinic.domain.exception.SlotNotAvailableException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class OfficeDoctorAvailabilityService {
+
+    @Autowired
     private OfficeDoctorAvailabilityRepository officeDoctorAvailabilityRepository;
+
+    @Autowired
+    @Lazy
     private AppointmentsService appointmentsService;
-    private static final Logger logger = LoggerFactory.getLogger(OfficeDoctorAvailabilityService.class);
 
 
     @Transactional
@@ -43,7 +49,7 @@ public class OfficeDoctorAvailabilityService {
 
         if (availability.getAvailabilityStatus()) {
             OfficeDoctorAvailability officeDoctorAvailability =
-                    availability.withAvailabilityStatus(false);// Zmiana statusu dostępności na zarezerwowany
+                    availability.withAvailabilityStatus(false);
             officeDoctorAvailabilityRepository.save(officeDoctorAvailability);
 
             appointmentsService.createScheduledAppointment(officeDoctorAvailability, patient);
@@ -53,7 +59,6 @@ public class OfficeDoctorAvailabilityService {
             throw new SlotNotAvailableException("Slot is already booked");
         }
     }
-
 
 
     @Transactional
@@ -127,5 +132,17 @@ public class OfficeDoctorAvailabilityService {
         officeDoctorAvailabilityRepository.save(officeDoctorAvailability.withAvailabilityStatus(true));
     }
 
+    public OfficeDoctorAvailability getOfficeAvailabilityByStartTimeAndEndTime(
+            OffsetDateTime probableStartTime,
+            Office office) {
 
+        LocalDate date =
+                LocalDate.of(probableStartTime.getYear(), probableStartTime.getMonth(), probableStartTime.getDayOfMonth());
+
+        LocalTime startTime = LocalTime.of(probableStartTime.getHour(), probableStartTime.getMinute());
+
+
+        return officeDoctorAvailabilityRepository.findByDateAndTime(date,startTime, office.getOfficeId())
+                .orElseThrow(() -> new NotFoundException("Office Availability no found"));
+    }
 }

@@ -47,8 +47,9 @@ public class PatientCardController {
                       .map(card-> patientsCardMapper.mapToDtoWithDoc(card))
                       .toList();
 
-        model.addAttribute("patientCardDTO",patientCardDTO);
+
         model.addAttribute("patientDTO",patientsDTO);
+        model.addAttribute("patientCardDTO",patientCardDTO);
 
         return "patient_card";
     }

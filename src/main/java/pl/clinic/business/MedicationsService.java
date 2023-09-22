@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.MedicationsRepository;
 import pl.clinic.domain.Medications;
-import pl.clinic.domain.exception.NotFoundException;
-import pl.clinic.infrastructure.database.repository.mapper.MedicationsEntityMapper;
 
 import java.util.Set;
 

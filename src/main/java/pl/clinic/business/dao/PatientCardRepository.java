@@ -7,7 +7,6 @@ import pl.clinic.infrastructure.database.repository.jpa.PatientCardJpaRepository
 import pl.clinic.infrastructure.database.repository.mapper.PatientCardEntityMapper;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @AllArgsConstructor

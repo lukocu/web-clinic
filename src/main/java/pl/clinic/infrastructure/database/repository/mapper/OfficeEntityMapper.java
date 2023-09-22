@@ -1,7 +1,5 @@
 package pl.clinic.infrastructure.database.repository.mapper;
 
-import jakarta.persistence.*;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

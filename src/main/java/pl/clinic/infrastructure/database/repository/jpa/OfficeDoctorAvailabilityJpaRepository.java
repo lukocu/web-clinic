@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.clinic.infrastructure.database.entity.OfficeDoctorAvailabilityEntity;
-import pl.clinic.infrastructure.database.entity.OfficeEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -67,5 +66,14 @@ public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<Off
                                                                      @Param("endTime") LocalTime endTime,
                                                                      @Param("officeId") Integer officeId);
 
-
+@Query("""
+        SELECT oda
+        FROM OfficeDoctorAvailabilityEntity oda
+        WHERE oda.date = :date
+          AND oda.startTime = :startTime
+          AND oda.office.officeId = :officeId
+        """)
+    Optional<OfficeDoctorAvailabilityEntity> findByDateAndTime(@Param("date")LocalDate date,
+                                                               @Param("startTime")LocalTime startTime,
+                                                               @Param("officeId") Integer officeId);
 }

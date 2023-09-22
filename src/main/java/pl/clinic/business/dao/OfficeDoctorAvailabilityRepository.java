@@ -34,11 +34,7 @@ public class OfficeDoctorAvailabilityRepository {
                 .toList();
     }
 
-    public List<OfficeDoctorAvailability> findByOfficeAndAvailabilityStatusIsFalse(Integer officeId) {
-        return officeDoctorAvailabilityJpaRepository.findByOfficeIdAndAvailabilityStatusIsFalse(officeId).stream()
-                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
-                .toList();
-    }
+
 
 
     public Optional<OfficeDoctorAvailability> findById(Integer officeAvailabilityId) {
@@ -50,11 +46,7 @@ public class OfficeDoctorAvailabilityRepository {
         officeDoctorAvailabilityJpaRepository.deleteByIdCustom(officeAvailabilityId);
     }
 
-    public List<OfficeDoctorAvailability> findAvailabilityStatusIsFalse() {
-        return officeDoctorAvailabilityJpaRepository.findByAvailabilityStatusIsFalse().stream()
-                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
-                .toList();
-    }
+
 
     public List<OfficeDoctorAvailability> findAvailableStatusIsFalseWithDoctorId(Integer doctorId) {
         return officeDoctorAvailabilityJpaRepository.findUnavailableStatusForDoctor(doctorId).stream()
@@ -68,9 +60,18 @@ public class OfficeDoctorAvailabilityRepository {
                 .toList();
     }
 
-    public List<OfficeDoctorAvailability> findConflictingAppointments(LocalDate date, LocalTime startTime, LocalTime endTime, Integer officeId) {
+    public List<OfficeDoctorAvailability> findConflictingAppointments(LocalDate date,
+                                                                      LocalTime startTime,
+                                                                      LocalTime endTime, Integer officeId) {
         return officeDoctorAvailabilityJpaRepository.findConflictingAppointments(date, startTime, endTime, officeId).stream()
                 .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity))
                 .toList();
+    }
+
+    public Optional<OfficeDoctorAvailability> findByDateAndTime(LocalDate date,
+                                                                LocalTime startTime,
+                                                             Integer officeId) {
+        return officeDoctorAvailabilityJpaRepository.findByDateAndTime(date, startTime, officeId)
+                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
     }
 }

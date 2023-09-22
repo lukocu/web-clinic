@@ -15,13 +15,6 @@ public class DoctorsService {
 
     private DoctorsRepository doctorsRepository;
 
-    @Transactional
-    public Doctors searchDoctor(String name, String surname) {
-        Doctors doctor = doctorsRepository.findByNameAndSurname(name, surname)
-                .orElseThrow(() -> new NotFoundException("Doctor not found"));
-
-        return doctor;
-    }
 
     @Transactional
     public List<Doctors> getDoctorsAndOffice() {

@@ -37,8 +37,10 @@
     <p>Pesel: <span th:text="${patient.pesel}"></span></p>
 
 
-    <a th:href="@{'/patient_card/' + ${patient.pesel}}"
-       class="btn btn-primary">Zobacz kartę pacjenta</a>
+    <form th:action="@{/patient_dashboard/patient_card}" th:method="post">
+        <input type="hidden" name="patientId" th:value="${patient.patientId}" />
+        <button type="submit" class="btn btn-primary">Go to patient medical history</button>
+    </form>
 
 
     <h2>Add Entry to Patient Card</h2>

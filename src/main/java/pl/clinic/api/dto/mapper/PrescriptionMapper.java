@@ -3,11 +3,8 @@ package pl.clinic.api.dto.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.PrescriptionsDTO;
-import pl.clinic.domain.Medications;
 import pl.clinic.domain.Prescriptions;
 
-import java.time.OffsetDateTime;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")

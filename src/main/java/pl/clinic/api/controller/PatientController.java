@@ -6,29 +6,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import pl.clinic.api.dto.AppointmentsDTO;
-import pl.clinic.api.dto.DoctorDTO;
 import pl.clinic.api.dto.PatientsDTO;
 import pl.clinic.api.dto.mapper.AppointmentsMapper;
 import pl.clinic.api.dto.mapper.PatientsMapper;
 import pl.clinic.business.AppointmentsService;
-import pl.clinic.business.PatientsService;
 import pl.clinic.business.UserService;
-import pl.clinic.domain.Appointments;
-import pl.clinic.domain.Patients;
-import pl.clinic.domain.Status;
 import pl.clinic.domain.User;
 import pl.clinic.security.IAuthenticationFacade;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @AllArgsConstructor
 public class PatientController {
 
     public static final String PATIENT = "/patient_dashboard";
-    public static final String APPOINTMENT_HISTORY= "/patient_dashboard/appointment_history";
+    public static final String PATIENT_CANCEL = "/patient_dashboard/cancel-visit/{appointmentId}";
+    public static final String APPOINTMENT_HISTORY = "/patient_dashboard/appointment_history";
 
     private UserService userService;
     private IAuthenticationFacade authenticationFacade;
@@ -76,6 +73,14 @@ public class PatientController {
         }
     }
 
+    @PutMapping(PATIENT_CANCEL)
+    public String cancelVisit(@PathVariable Integer appointmentId) {
+
+       appointmentsService.appointmentCanceled(appointmentId);
+
+        return "redirect:/patient_dashboard"; //
+    }
+
     @GetMapping(APPOINTMENT_HISTORY)
     public String showAppointmentHistory(Model model) {
         Authentication authentication = authenticationFacade.getAuthentication();
@@ -98,7 +103,6 @@ public class PatientController {
 
 
                 model.addAttribute("completedAndCanceledAppointments", completedAndCanceledAppointments);
-
 
 
                 return "appointment_history";

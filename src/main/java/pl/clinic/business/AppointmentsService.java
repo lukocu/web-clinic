@@ -1,6 +1,8 @@
 package pl.clinic.business;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.AppointmentsRepository;
@@ -11,10 +13,13 @@ import java.time.*;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class AppointmentsService {
-
+    @Autowired
     private AppointmentsRepository appointmentsRepository;
+
+    @Autowired
+    @Lazy
+    private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
 
 
     @Transactional
@@ -25,11 +30,11 @@ public class AppointmentsService {
                         officeDoctorAvailability.getStartTime(),
                         ZoneOffset.UTC))
                 .appointmentTakenDate(LocalDate.now())
-                .office(officeDoctorAvailability.getOffice()) // Przypisanie biura
+                .office(officeDoctorAvailability.getOffice())
                 .appointmentStatus(AppointmentStatus.builder()
                         .appointmentStatusId(1)
                         .status(Status.Scheduled)
-                        .build()) // Tworzenie statusu rezerwacji
+                        .build())
                 .patient(patient)
                 .build();
 
@@ -40,7 +45,6 @@ public class AppointmentsService {
     public List<Appointments> findAppointmentsByPatientId(Integer patientId) {
         return appointmentsRepository.findAppointmentsByPatientIdWithAllFields(patientId);
     }
-
 
 
     @Transactional
@@ -56,18 +60,39 @@ public class AppointmentsService {
                 .orElseThrow(() -> new NotFoundException("Appointment not found"));
 
 
-            Appointments updatedAppointment = currentAppointment
-                    .withActualEndTime(OffsetDateTime.of(
-                            LocalDateTime.of(visit.getDate(),visit.getEndTime()),ZoneOffset.UTC))
-                    .withAppointmentStatus(AppointmentStatus.builder()
-                    .appointmentStatusId(2)
-                    .status(Status.Completed)
-                    .build());
+        Appointments updatedAppointment = currentAppointment
+                .withActualEndTime(OffsetDateTime.of(
+                        LocalDateTime.of(visit.getDate(), visit.getEndTime()), ZoneOffset.UTC))
+                .withAppointmentStatus(AppointmentStatus.builder()
+                        .appointmentStatusId(2)
+                        .status(Status.Completed)
+                        .build());
 
-            appointmentsRepository.save(updatedAppointment);
-        }
-
-        public List<Appointments> getCompletedAndCanceledAppointments (Integer patientId){
-            return appointmentsRepository.findCompletedAndCanceledByPatient(patientId);
-        }
+        appointmentsRepository.save(updatedAppointment);
     }
+
+    public List<Appointments> getCompletedAndCanceledAppointments(Integer patientId) {
+        return appointmentsRepository.findCompletedAndCanceledByPatient(patientId);
+    }
+
+    @Transactional
+    public void appointmentCanceled(Integer appointmentId) {
+        Appointments currentAppointment = appointmentsRepository.findById(appointmentId)
+                .orElseThrow(() -> new NotFoundException("Appointment not found"));
+
+        Appointments appointmentWithNewStatus = currentAppointment.withAppointmentStatus(AppointmentStatus.builder()
+                .appointmentStatusId(3)
+                .status(Status.Canceled)
+                .build());
+        OfficeDoctorAvailability currentOfficeAvailability =
+                officeDoctorAvailabilityService.getOfficeAvailabilityByStartTimeAndEndTime(
+                        appointmentWithNewStatus.getProbableStartTime(),
+                        appointmentWithNewStatus.getOffice());
+
+        officeDoctorAvailabilityService.addAvailable(currentOfficeAvailability);
+
+
+        appointmentsRepository.save(appointmentWithNewStatus);
+
+    }
+}

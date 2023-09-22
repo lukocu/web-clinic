@@ -1,8 +1,6 @@
 package pl.clinic.api.controller;
 
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -35,7 +33,6 @@ public class DoctorController {
     private final OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
     private final OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
 
-    private static final Logger logger = LoggerFactory.getLogger(DoctorController.class);
 
     @GetMapping(value = DOCTOR_DASHBOAR)
     public String getDoctorDashboar(Model model) {
@@ -56,13 +53,9 @@ public class DoctorController {
                             .toList();
 
 
-
-            logger.info("DoctorDTO : ", doctorDTO.toString());
-
-            model.addAttribute("doctorDTO",doctorDTO);
+            model.addAttribute("doctorDTO", doctorDTO);
             model.addAttribute("sortedAvailabilities", unavailableOfficeHours);
 
-            logger.info("Dashboard data fetched for doctor with username: {}", username);
 
             return "doctor_dashboard";
 

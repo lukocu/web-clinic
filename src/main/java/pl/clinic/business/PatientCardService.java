@@ -2,17 +2,11 @@ package pl.clinic.business;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import pl.clinic.api.dto.mapper.PatientsCardMapper;
 import pl.clinic.business.dao.PatientCardRepository;
 import pl.clinic.domain.PatientCard;
-import pl.clinic.domain.Patients;
 import pl.clinic.domain.Prescriptions;
-import pl.clinic.domain.exception.NotFoundException;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;

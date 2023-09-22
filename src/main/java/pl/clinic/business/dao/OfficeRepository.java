@@ -3,12 +3,9 @@ package pl.clinic.business.dao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.clinic.domain.Office;
-import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.infrastructure.database.repository.jpa.OfficeJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.OfficeEntityMapper;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 

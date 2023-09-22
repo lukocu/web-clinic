@@ -10,6 +10,7 @@ import pl.clinic.domain.Doctors;
 import pl.clinic.domain.Office;
 import pl.clinic.domain.exception.NotFoundException;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class OfficeService {
 
     private OfficeRepository officeRepository;
     private DoctorsRepository doctorsRepository;
-    private OfficeDoctorAvailabilityRepository officeDoctorAvailabilityRepository;
+
 
     @Transactional
     public Set<Office> getDoctorOffices(String pesel) {
@@ -42,4 +43,6 @@ public class OfficeService {
     public List<Office> getOffices(Integer doctorId) {
         return officeRepository.findByDoctorId(doctorId);
     }
+
+
 }
