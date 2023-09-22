@@ -50,16 +50,24 @@ VALUES (1, 'Alice', 'Smith','95011257943', '1990-05-15', '123 Main St', '555-123
 
 
 
+
+
+-- Przykładowe dane dla tabeli appointment_status
+INSERT INTO appointment_status (appointment_status_id, status)
+VALUES (1, 'Scheduled'),
+       (2, 'Completed'),
+       (3, 'Canceled');
+
+
+
 -- Przykładowe dane dla tabeli office_doctor_availability
-INSERT INTO office_doctor_availability (office_availability_id, office_id, date, start_time, end_time,
-                                        availability_status)
-VALUES (1, 1, '2023-08-15', '08:00:00', '12:00:00', true), -- Office 1 availability for Doctor 1
-       (2, 2, '2023-08-17', '14:00:00', '15:00:00', true), -- Office 2 availability for Doctor 2
-       (3, 2, '2023-08-17', '16:00:00', '17:00:00', true), -- Office 2 availability for Doctor 2
-       (4, 2, '2023-08-17', '17:00:00', '18:00:00', true), -- Office 2 availability for Doctor 2
-       (5, 2, '2023-08-17', '18:00:00', '19:00:00', true); -- Office 2 availability for Doctor 2
-
-
+--INSERT INTO office_doctor_availability (office_availability_id, office_id, date, start_time, end_time,
+--                                        availability_status)
+--VALUES (1, 1, '2023-08-15', '08:00:00', '12:00:00', true), -- Office 1 availability for Doctor 1
+--       (2, 2, '2023-08-17', '14:00:00', '15:00:00', true), -- Office 2 availability for Doctor 2
+--       (3, 2, '2023-08-17', '16:00:00', '17:00:00', true), -- Office 2 availability for Doctor 2
+--       (4, 2, '2023-08-17', '17:00:00', '18:00:00', true), -- Office 2 availability for Doctor 2
+--       (5, 2, '2023-08-17', '18:00:00', '19:00:00', true); -- Office 2 availability for Doctor 2
 -- Przykładowe dane dla tabeli appointments
 --INSERT INTO appointments (appointment_id, patient_id, office_id, probable_start_time, actual_end_time,
  --                         appointment_status_id, appointment_taken_date)
@@ -67,11 +75,7 @@ VALUES (1, 1, '2023-08-15', '08:00:00', '12:00:00', true), -- Office 1 availabil
  --      (2, 2, 2, '2023-08-22 15:30:00', NULL, 1, '2023-08-18');
 
 
--- Przykładowe dane dla tabeli appointment_status
---INSERT INTO appointment_status (appointment_status_id, status)
---VALUES (1, 'Scheduled'),
---       (2, 'Completed'),
---       (3, 'Canceled');
+
 
 -- Przykładowe dane dla tabeli diseases
 --INSERT INTO diseases (disease_id, disease_name, disease_description)

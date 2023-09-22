@@ -52,7 +52,7 @@ public class VisitController {
 
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
 
-            var user = userService.findByUsername(userDetails.getUsername());
+            var user = userService.findByUsernameDoctor(userDetails.getUsername());
 
 
             OfficeDoctorAvailability visit = officeDoctorAvailabilityService
@@ -109,7 +109,7 @@ public class VisitController {
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
 
             String username = userDetails.getUsername();
-            User user = userService.findByUsername(username);
+            User user = userService.findByUsernameDoctor(username);
             Doctors doctor = doctorsService.findByUserId(user.getUserId());
 
 
@@ -170,7 +170,18 @@ public class VisitController {
     @DeleteMapping(VISIT_FINISH)
     public String deleteVisit(@PathVariable Integer officeAvailabilityId) {
 
+        OfficeDoctorAvailability visit = officeDoctorAvailabilityService
+                .getOfficeAvailability(officeAvailabilityId);
+
+        Office office = officeService.getOffice(visit.getOffice().getOfficeId());
+
+        Appointments currentAppointement = appointmentsService
+                .getCurrentAppointementWithOffice(visit.getDate(), visit.getStartTime(), office);
+
+         appointmentsService.UpdateStatus(currentAppointement.getAppointmentId(),visit);
+
         officeDoctorAvailabilityService.removeAvailability(officeAvailabilityId);
+
 
         return "redirect:/doctor_dashboard";
     }

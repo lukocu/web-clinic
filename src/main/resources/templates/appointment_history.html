@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment History</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">My Clinic</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link btn btn-primary" th:href="@{/patient_dashboard}">Patient Dashboard</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h1 class="display-4">Appointment History</h1>
+
+    <div th:each="appointment : ${completedAndCanceledAppointments}" class="table-container table-spacing">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Date and Time</th>
+                <th>Doctor</th>
+                <th>Office</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${appointment.probableStartTime}"></td>
+                <td th:text="${appointment.office.doctor.getName()} + ' ' + ${appointment.office.doctor.getSurname()}"></td>
+                <td th:text="${appointment.office.officeId}"></td>
+                <td th:text="${appointment.appointmentStatus.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

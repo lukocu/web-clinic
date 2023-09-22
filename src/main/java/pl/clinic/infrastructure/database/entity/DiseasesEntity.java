@@ -26,12 +26,7 @@ public class DiseasesEntity {
     @Column(name = "disease_description")
     private String diseaseDescription;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "patient_disease",
-            joinColumns = @JoinColumn(name = "disease_id"),
-            inverseJoinColumns = @JoinColumn(name = "patient_card_id")
-    )
+    @ManyToMany(mappedBy = "diseases")
     private Set<PatientCardEntity> patientCards;
 
 }

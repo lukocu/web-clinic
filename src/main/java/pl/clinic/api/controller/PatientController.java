@@ -16,6 +16,7 @@ import pl.clinic.business.PatientsService;
 import pl.clinic.business.UserService;
 import pl.clinic.domain.Appointments;
 import pl.clinic.domain.Patients;
+import pl.clinic.domain.Status;
 import pl.clinic.domain.User;
 import pl.clinic.security.IAuthenticationFacade;
 
@@ -26,13 +27,15 @@ import java.util.Set;
 @AllArgsConstructor
 public class PatientController {
 
-    public static final String PATIENT ="/patient_dashboard";
+    public static final String PATIENT = "/patient_dashboard";
+    public static final String APPOINTMENT_HISTORY= "/patient_dashboard/appointment_history";
+
     private UserService userService;
     private IAuthenticationFacade authenticationFacade;
-    private PatientsService patientsService;
     private AppointmentsService appointmentsService;
     private PatientsMapper patientsMapper;
     private AppointmentsMapper appointmentsMapper;
+
     @GetMapping(value = PATIENT)
     public String getPatientPage(Model model) {
 
@@ -52,7 +55,7 @@ public class PatientController {
 
                 model.addAttribute("patient", patientsDTO);
 
-               List<AppointmentsDTO> appointments = appointmentsService.findAppointmentsByPatientId(user.getPatient().getPatientId())
+                List<AppointmentsDTO> appointments = appointmentsService.findAppointmentsByPatientId(user.getPatient().getPatientId())
                         .stream()
                         .map(appointment -> appointmentsMapper.mapToDto(appointment))
                         .toList();
@@ -73,4 +76,41 @@ public class PatientController {
         }
     }
 
+    @GetMapping(APPOINTMENT_HISTORY)
+    public String showAppointmentHistory(Model model) {
+        Authentication authentication = authenticationFacade.getAuthentication();
+
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
+
+            String username = userDetails.getUsername();
+
+
+            User user = userService.findByUsername(username);
+
+
+            if (user.getPatient() != null) {
+
+                List<AppointmentsDTO> completedAndCanceledAppointments =
+                        appointmentsService.getCompletedAndCanceledAppointments(user.getPatient().getPatientId()).stream()
+                                .map(appointments -> appointmentsMapper.mapToDto(appointments))
+                                .toList();
+
+
+                model.addAttribute("completedAndCanceledAppointments", completedAndCanceledAppointments);
+
+
+
+                return "appointment_history";
+
+            } else {
+
+                return "redirect:/error";
+            }
+        } else {
+
+            return "redirect:/login";
+        }
+
+    }
 }

@@ -1,32 +1,55 @@
 package pl.clinic.api.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.clinic.security.IAuthenticationFacade;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import pl.clinic.api.dto.PatientCardDTO;
+import pl.clinic.api.dto.PatientsDTO;
+import pl.clinic.api.dto.mapper.PatientsCardMapper;
+import pl.clinic.api.dto.mapper.PatientsMapper;
+import pl.clinic.business.PatientCardService;
+import pl.clinic.business.PatientsService;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
 public class PatientCardController {
 
-    private IAuthenticationFacade authenticationFacade;
-    @GetMapping("/patient_card")
-    public String showPatientCard(Model model) {
-        Authentication authentication = authenticationFacade.getAuthentication();
 
+    public static final String PATIENT_CARD = "/patient_dashboard/patient_card";
+    private PatientCardService patientCardService;
+    private PatientsCardMapper patientsCardMapper;
+    private PatientsService patientService;
+    private PatientsMapper patientsMapper;
+    @PostMapping(PATIENT_CARD)
+    public String goToPatientCard(
+            @RequestParam Integer patientId,
+            HttpSession session) {
 
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
+        session.setAttribute("patientId", patientId);
 
-            String username = userDetails.getUsername();
+        return "redirect:/patient_dashboard/patient_card";
+    }
 
-            model.addAttribute("patient", userDetails);
-            return "patient_card";
+    @GetMapping(PATIENT_CARD)
+    public String showPatientCard(HttpSession session, Model model) {
 
-        } else {
-            return "redirect:/login";
-        }
+        Integer patientId = (Integer) session.getAttribute("patientId");
+        PatientsDTO patientsDTO = patientsMapper.mapToDto(patientService.getPatient(patientId));
+
+        List<PatientCardDTO> patientCardDTO =
+              patientCardService.getPatientCards(patientId).stream()
+                      .map(card-> patientsCardMapper.mapToDtoWithDoc(card))
+                      .toList();
+
+        model.addAttribute("patientCardDTO",patientCardDTO);
+        model.addAttribute("patientDTO",patientsDTO);
+
+        return "patient_card";
     }
 }

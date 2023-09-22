@@ -30,4 +30,9 @@ public class UserRepository {
         return userJpaRepository.findByUsername(username)
                 .map(userEntityMapper::mapFromEntity);
     }
+
+    public Optional<User> findByUsernameDoctor(String username) {
+        return userJpaRepository.findByUsername(username)
+                .map(userEntityMapper::mapFromEntityForDoctor);
+    }
 }

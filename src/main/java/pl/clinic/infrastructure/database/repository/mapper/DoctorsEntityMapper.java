@@ -1,6 +1,5 @@
 package pl.clinic.infrastructure.database.repository.mapper;
 
-import jakarta.persistence.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -8,7 +7,6 @@ import org.mapstruct.factory.Mappers;
 import pl.clinic.domain.Doctors;
 import pl.clinic.infrastructure.database.entity.*;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -43,7 +41,7 @@ public interface DoctorsEntityMapper {
                         .map(OfficeEntityMapper.INSTANCE::mapFromEntityWithoutDoctor)
                         .collect(Collectors.toSet()))
                 .withPatientCards(entity.getPatientCards().stream()
-                        .map(PatientCardEntityMapper.INSTANCE::mapFromEntityWithFields)
+                        .map(PatientCardEntityMapper.INSTANCE::mapFromEntityWithFieldsForDoc)
                         .collect(Collectors.toSet()));
     }
 

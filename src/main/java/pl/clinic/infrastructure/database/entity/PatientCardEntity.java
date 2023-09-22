@@ -36,8 +36,14 @@ public class PatientCardEntity {
     @JoinColumn(name = "doctor_id")
     private DoctorsEntity doctor;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "patientCards",cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "patient_disease",
+            joinColumns = @JoinColumn(name = "patient_card_id"),
+            inverseJoinColumns = @JoinColumn(name = "disease_id")
+    )
     private Set<DiseasesEntity> diseases;
+
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "prescription_id")

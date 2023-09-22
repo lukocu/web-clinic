@@ -14,6 +14,7 @@ public interface AppointmentsEntityMapper {
 
     default  Appointments mapFromEntity(AppointmentsEntity entity){
         return Appointments.builder()
+                .appointmentId(entity.getAppointmentId())
                 .probableStartTime(entity.getProbableStartTime())
                 .actualEndTime(entity.getActualEndTime())
                 .appointmentTakenDate(entity.getAppointmentTakenDate())
@@ -25,6 +26,7 @@ public interface AppointmentsEntityMapper {
 
     default AppointmentsEntity mapToEntity(Appointments appointment) {
         return AppointmentsEntity.builder()
+                .appointmentId(appointment.getAppointmentId())
                 .probableStartTime(appointment.getProbableStartTime())
                 .actualEndTime(appointment.getActualEndTime())
                 .appointmentTakenDate(appointment.getAppointmentTakenDate())

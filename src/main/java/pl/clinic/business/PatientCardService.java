@@ -7,75 +7,46 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.clinic.api.dto.mapper.PatientsCardMapper;
 import pl.clinic.business.dao.PatientCardRepository;
-import pl.clinic.domain.Medications;
 import pl.clinic.domain.PatientCard;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.Prescriptions;
 import pl.clinic.domain.exception.NotFoundException;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class PatientCardService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PatientCardService.class);
+
     private PatientCardRepository patientCardRepository;
-    private PatientsService patientsService;
-    private PatientsCardMapper patientsCardMapper;
     private PrescriptionsService prescriptionsService;
-    private MedicationsService medicationsService;
-
-    @Transactional
-    public PatientCard getMedicalPatientHistory(String pesel) {
-        Patients patient = patientsService.searchPatient(pesel);
-
-        return patientCardRepository.findPatientCardByPesel(patient.getPesel())
-                .orElseThrow(() -> new NotFoundException("Patient medical History not found"));
-
-    }
 
     @Transactional
     public void addPatientCardEntry(PatientCard patientCard) {
-    /*    Set<Medications> medicationsSet = new HashSet<>();
-        Set<Medications> medicationsWithId = new HashSet<>();
-
-
-        patientCard.getPrescription().getMedications().forEach(
-                medication -> {
-                    Medications byName = medicationsService.findByName(medication.getMedicationName());
-                    if (byName != null) {
-                        medicationsSet.add(byName);
-                    } else {
-                        medicationsSet.add(medication);
-                    }
-                }
-        );
-        medicationsService.save(medicationsSet);
-
-        medicationsSet
-                .forEach(
-                        medication -> {
-                            medicationsWithId.add(medicationsService.findByName(medication.getMedicationName()));
-                        }
-                );
-*/
-        logger.info("Zawartość medicationsSet przed: {}", patientCard.getPrescription().getMedications());
-    /*    Prescriptions prescription = patientCard.getPrescription().withMedications(medicationsWithId);
-
-        PatientCard newPatientCard = patientCard.withPrescription(prescription);*/
-
 
         patientCardRepository.save(patientCard);
 
     }
 
-    // TODO
-    public PatientCard getPatientCard(Integer patientId) {
-        return null;
+    @Transactional
+    public List<PatientCard> getPatientCards(Integer patientId) {
+        List<PatientCard> patientCards = patientCardRepository.findPatientCardByPatientId(patientId);
 
+        OffsetDateTime now = OffsetDateTime.now();
+    List<Prescriptions> newPrescriptions= new ArrayList<>();
+        for (PatientCard patientCard : patientCards) {
+            Prescriptions prescription = patientCard.getPrescription();
+                if (prescription.getPrescriptionDateEnd().isBefore(now)) {
+                   newPrescriptions.add(prescription.withPrescriptionAvailable(false));
+                }
+        }
+        newPrescriptions.forEach(prescriptions -> prescriptionsService.save(prescriptions));
+
+        return patientCardRepository.findPatientCardByPatientId(patientId);
     }
 
 

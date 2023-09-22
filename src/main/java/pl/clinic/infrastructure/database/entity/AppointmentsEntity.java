@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,7 +40,7 @@ public class AppointmentsEntity {
     @JoinColumn(name = "office_id")
     private OfficeEntity office;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appointment_status_id")
     private AppointmentStatusEntity appointmentStatus;
 }

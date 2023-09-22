@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface PatientsCardMapper {
-  default  PatientCard mapFromDto(PatientCardDTO patientCardDTO) {
+
+
+    default PatientCard mapFromDto(PatientCardDTO patientCardDTO) {
         return PatientCard.builder()
                 .diagnosisDate(patientCardDTO.getDiagnosisDate())
                 .diagnosisNote(patientCardDTO.getDiagnosisNote())
@@ -18,6 +20,18 @@ public interface PatientsCardMapper {
                         .map(DiseasesMapper.INSTANCE::mapFromDtoWithoutPatientCard)
                         .collect(Collectors.toSet()))
                 .prescription(PrescriptionMapper.INSTANCE.mapFromDto(patientCardDTO.getPrescription()))
+                .build();
+    }
+
+    default PatientCardDTO mapToDtoWithDoc(PatientCard patientCard) {
+        return PatientCardDTO.builder()
+                .diagnosisDate(patientCard.getDiagnosisDate())
+                .diagnosisNote(patientCard.getDiagnosisNote())
+                .doctor(DoctorMapper.INSTANCE.mapToDto(patientCard.getDoctor()))
+                .diseases(patientCard.getDiseases().stream()
+                        .map(DiseasesMapper.INSTANCE::mapToDto)
+                        .collect(Collectors.toSet()))
+                .prescription(PrescriptionMapper.INSTANCE.mapToDto(patientCard.getPrescription()))
                 .build();
     }
 }

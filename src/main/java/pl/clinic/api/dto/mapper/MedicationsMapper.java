@@ -18,8 +18,9 @@ public interface MedicationsMapper {
     MedicationsMapper INSTANCE = Mappers.getMapper(MedicationsMapper.class);
 
 
+    @Mapping(target = "medicationId", ignore = true)
     Medications mapFromDto(MedicationsDTO medication);
 
     @InheritInverseConfiguration
-    MedicationsEntity mapToEntity(Medications medication);
+    MedicationsDTO mapToDto(Medications medication);
 }

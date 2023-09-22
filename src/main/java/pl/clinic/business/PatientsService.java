@@ -19,5 +19,9 @@ public class PatientsService {
                 .orElseThrow(() -> new NotFoundException("Patient not found"));
     }
 
-
+    @Transactional
+    public Patients getPatient(Integer patientId) {
+        return patientsRepository.findById(patientId)
+                .orElseThrow(() -> new NotFoundException("Patient not found"));
+    }
 }

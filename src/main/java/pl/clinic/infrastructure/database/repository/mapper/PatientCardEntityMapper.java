@@ -1,6 +1,5 @@
 package pl.clinic.infrastructure.database.repository.mapper;
 
-import jakarta.persistence.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -8,8 +7,6 @@ import org.mapstruct.factory.Mappers;
 import pl.clinic.domain.PatientCard;
 import pl.clinic.infrastructure.database.entity.*;
 
-import java.time.OffsetDateTime;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -23,13 +20,23 @@ public interface PatientCardEntityMapper {
     @Mapping(target = "prescription", ignore = true)
     PatientCard mapFromEntity(PatientCardEntity entity);
 
-    default PatientCard mapFromEntityWithFields(PatientCardEntity entity) {
+    default PatientCard mapFromEntityWithFieldsForDoc(PatientCardEntity entity) {
         return mapFromEntity(entity)
                 .withPatient(PatientsEntityMapper.INSTANCE.mapFromEntity(entity.getPatient()))
                 .withDiseases(entity.getDiseases().stream()
                         .map(DiseasesEntityMapper.INSTANCE::mapFromEntity)
                         .collect(Collectors.toSet()))
                 .withPrescription(PrescriptionsEntityMapper.INSTANCE.mapFromEntity(entity.getPrescription()));
+    }
+
+
+    default PatientCard mapFromEntityWithFields(PatientCardEntity entity) {
+        return mapFromEntity(entity)
+                .withDoctor(DoctorsEntityMapper.INSTANCE.mapFromEntity(entity.getDoctor()))
+                .withDiseases(entity.getDiseases().stream()
+                        .map(DiseasesEntityMapper.INSTANCE::mapFromEntity)
+                        .collect(Collectors.toSet()))
+                .withPrescription(PrescriptionsEntityMapper.INSTANCE.mapFromEntityWithMedications(entity.getPrescription()));
     }
 
 

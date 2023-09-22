@@ -25,4 +25,16 @@ public interface PrescriptionMapper {
                        .collect(Collectors.toSet()))
                .build();
    }
+
+  default   PrescriptionsDTO mapToDto(Prescriptions prescription){
+       return PrescriptionsDTO.builder()
+              .prescriptionDate(prescription.getPrescriptionDate())
+              .prescriptionDateEnd(prescription.getPrescriptionDateEnd())
+              .prescriptionAvailable(prescription.getPrescriptionAvailable())
+              .medications(prescription.getMedications().stream()
+                      .map(MedicationsMapper.INSTANCE::mapToDto)
+                      .collect(Collectors.toSet()))
+              .build();
+
+  }
 }

@@ -18,4 +18,11 @@ public interface DiseasesMapper {
                 .build();
 
     }
+
+  default   DiseasesDTO mapToDto(Diseases diseases){
+        return DiseasesDTO.builder()
+                .diseaseName(diseases.getDiseaseName())
+                .diseaseDescription(diseases.getDiseaseDescription())
+                .build();
+  }
 }

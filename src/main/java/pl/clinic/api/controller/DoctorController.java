@@ -43,7 +43,7 @@ public class DoctorController {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
 
             String username = userDetails.getUsername();
-            User user = userService.findByUsername(username);
+            User user = userService.findByUsernameDoctor(username);
             Doctors doctor = doctorsService.findByUserId(user.getUserId());
             DoctorDTO doctorDTO = doctorMapper.mapToDtoSpecAndOffices(doctor);
 

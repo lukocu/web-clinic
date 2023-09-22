@@ -32,7 +32,7 @@ public class UserService {
 
     @Transactional
     public User findByUsernameDoctor(String username) {
-        return userRepository.findByUsername(username)
+        return userRepository.findByUsernameDoctor(username)
                 .orElseThrow(() -> new NotFoundException("user not found"));
     }
     @Transactional

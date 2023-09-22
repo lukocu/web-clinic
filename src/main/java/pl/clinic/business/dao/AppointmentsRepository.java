@@ -35,7 +35,18 @@ public class AppointmentsRepository {
     }
 
     public Optional<Appointments>  findByProbableStartTimeWithOffice(OffsetDateTime offsetDateTime, Office office) {
-        return appointmentsJpaRepository.findByProbableStartTimeWithOffice(offsetDateTime,office)
+        return appointmentsJpaRepository.findByProbableStartTimeWithOffice(offsetDateTime,office.getOfficeId())
+                .map(appointmentsEntityMapper::mapFromEntity);
+    }
+
+    public List<Appointments> findCompletedAndCanceledByPatient(Integer patientId) {
+        return appointmentsJpaRepository.findCompletedAndCanceledByPatientId(patientId).stream()
+                .map(appointmentsEntityMapper::mapFromEntity)
+                .toList();
+    }
+
+    public Optional<Appointments> findById(Integer appointmentId) {
+        return appointmentsJpaRepository.findById(appointmentId)
                 .map(appointmentsEntityMapper::mapFromEntity);
     }
 }

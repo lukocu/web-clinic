@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Card</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Patient Cards</h1>
+
+    <div class="card">
+        <div class="card">
+
+            <div class="card-body">
+                <h5 class="card-title">Cards with medicine history</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>Patient:</th>
+                            <td><span th:text="${patientDTO.name + ' ' + patientDTO.surname}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>Pesel:</th>
+                            <td><span th:text="${patientDTO.pesel}"></span></td>
+                        </tr>
+
+                        <tr th:each="patientCard : ${patientCardDTO}">
+                            <th>Diagnosis Date:</th>
+                            <td><span th:text="${patientCard.diagnosisDate}"></span></td>
+                            <th>Diagnosis Note:</th>
+                            <td><span th:text="${patientCard.diagnosisNote}"></span></td>
+                            <th>Doctor:</th>
+                            <td><span th:text="${patientCard.doctor.name + ' ' + patientCard.doctor.surname}"></span>
+                            </td>
+                            <th>Diseases:</th>
+                            <td>
+                                <ul>
+                                    <li th:each="disease : ${patientCard.diseases}">
+                                        <span th:text="${disease.diseaseName}"></span> - <span
+                                            th:text="${disease.diseaseDescription}"></span>
+                                    </li>
+                                </ul>
+                            </td>
+                            <th>Prescriptions:</th>
+                            <td>
+                                <ul>
+                                    <li th:each="prescription : ${patientCard.prescription}"><p></p>
+                                        Prescription date start: <span
+                                                th:text="${prescription.prescriptionDate}"></span>
+                                        <p></p>
+                                        Prescription date end: <span
+                                                th:text="${prescription.prescriptionDateEnd ? 'Available' : 'Not Available'}"></span>
+                                        <p></p>
+                                        Availability: <span
+                                                th:text="${prescription.prescriptionAvailable ? 'Available' : 'Not Available'}"></span>
+                                        <ul>
+
+                                            <li th:each="medication : ${prescription.medications}">
+                                                <span th:text="${medication.medicationName}"></span> - <span
+                                                    th:text="${medication.dosage}"></span>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

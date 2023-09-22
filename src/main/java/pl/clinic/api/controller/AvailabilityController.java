@@ -44,7 +44,7 @@ public class AvailabilityController {
         Authentication authentication = authenticationFacade.getAuthentication();
 
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-            var user = userService.findByUsername(userDetails.getUsername());
+            var user = userService.findByUsernameDoctor(userDetails.getUsername());
             Doctors doctor = doctorsService.findByUserId(user.getUserId());
 
             List<OfficeDTO> availableOffices = officeService.getOffices(doctor.getDoctorId()).stream()

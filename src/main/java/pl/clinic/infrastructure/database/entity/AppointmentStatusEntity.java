@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import pl.clinic.domain.Status;
 
+import java.util.List;
+
 @Getter
 @Setter
 @EqualsAndHashCode(of = "appointmentStatusId")
@@ -24,6 +26,7 @@ public class AppointmentStatusEntity {
     @Column(name = "status")
     private Status status;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "appointmentStatus")
-    private AppointmentsEntity appointments;
+    @OneToMany(mappedBy = "appointmentStatus", cascade = CascadeType.ALL)
+    private List<AppointmentsEntity> appointments;
 }
+

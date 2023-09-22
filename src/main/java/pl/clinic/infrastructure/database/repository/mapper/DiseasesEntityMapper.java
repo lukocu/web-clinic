@@ -12,9 +12,21 @@ import pl.clinic.infrastructure.database.entity.DiseasesEntity;
 public interface DiseasesEntityMapper {
     DiseasesEntityMapper INSTANCE = Mappers.getMapper(DiseasesEntityMapper.class);
 
-    @Mapping(target = "patientCards", ignore = true)
-    Diseases mapFromEntity(DiseasesEntity entity);
+
+    default Diseases mapFromEntity(DiseasesEntity entity) {
+        return Diseases.builder()
+                .diseaseId(entity.getDiseaseId())
+                .diseaseDescription(entity.getDiseaseDescription())
+                .diseaseName(entity.getDiseaseName())
+                .build();
+    }
 
     @InheritInverseConfiguration
-    DiseasesEntity mapToEntity(Diseases diseases);
+    default DiseasesEntity mapToEntity(Diseases diseases) {
+        return DiseasesEntity.builder()
+                .diseaseId(diseases.getDiseaseId())
+                .diseaseDescription(diseases.getDiseaseDescription())
+                .diseaseName(diseases.getDiseaseName())
+                .build();
+    }
 }

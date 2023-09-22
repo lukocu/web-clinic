@@ -6,6 +6,7 @@ import pl.clinic.domain.PatientCard;
 import pl.clinic.infrastructure.database.repository.jpa.PatientCardJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.PatientCardEntityMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,13 +17,13 @@ public class PatientCardRepository {
     private PatientCardEntityMapper patientCardEntityMapper;
 
 
-    public Optional<PatientCard> findPatientCardByPesel(String pesel) {
-        return patientCardJpaRepository.findByPatientPesel(pesel)
-                .map(entity -> patientCardEntityMapper.mapFromEntity(entity));
-    }
-
-
     public void save(PatientCard existingPatientCard) {
         patientCardJpaRepository.save(patientCardEntityMapper.mapToEntityWithFields(existingPatientCard));
+    }
+
+    public List<PatientCard> findPatientCardByPatientId(Integer patientId) {
+        return patientCardJpaRepository.findByPatientIdWithDetails(patientId).stream()
+                .map(entity->patientCardEntityMapper.mapFromEntityWithFields(entity))
+                .toList();
     }
 }

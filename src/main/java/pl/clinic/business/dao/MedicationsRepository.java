@@ -16,7 +16,7 @@ public class MedicationsRepository {
     private MedicationsEntityMapper medicationsEntityMapper;
     private MedicationsMapper medicationsMapper;
     public void save(Medications medication) {
-         medicationsJpaRepository.save(medicationsMapper.mapToEntity(medication));
+         medicationsJpaRepository.save(medicationsEntityMapper.mapToEntity(medication));
     }
 
     public Optional<Medications> findByName(String medicationName) {

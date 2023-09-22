@@ -1,8 +1,6 @@
 package pl.clinic.infrastructure.database.repository.mapper;
 
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import pl.clinic.domain.Patients;
@@ -12,11 +10,29 @@ import pl.clinic.infrastructure.database.entity.PatientsEntity;
 public interface PatientsEntityMapper {
 
     PatientsEntityMapper INSTANCE = Mappers.getMapper(PatientsEntityMapper.class);
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "appointments", ignore = true)
-    @Mapping(target = "patientCard",ignore = true)
-    Patients mapFromEntity(PatientsEntity entity);
-    @InheritInverseConfiguration
-    PatientsEntity mapToEntity(Patients patient);
+
+    default Patients mapFromEntity(PatientsEntity entity){
+        return Patients.builder()
+                .patientId(entity.getPatientId())
+                .name(entity.getName())
+                .surname(entity.getSurname())
+                .pesel(entity.getPesel())
+                .birthDate(entity.getBirthDate())
+                .address(entity.getAddress())
+                .phone(entity.getPhone())
+                .build();
+    }
+
+    default PatientsEntity mapToEntity(Patients patient){
+        return PatientsEntity.builder()
+                .patientId(patient.getPatientId())
+                .name(patient.getName())
+                .surname(patient.getSurname())
+                .pesel(patient.getPesel())
+                .birthDate(patient.getBirthDate())
+                .address(patient.getAddress())
+                .phone(patient.getPhone())
+                .build();
+    }
 
 }
