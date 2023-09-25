@@ -1,9 +1,6 @@
 package pl.clinic.business;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -128,7 +125,7 @@ public class OfficeDoctorAvailabilityService {
     }
 
     @Transactional
-    public void addAvailable(OfficeDoctorAvailability officeDoctorAvailability) {
+    public void setAvailable(OfficeDoctorAvailability officeDoctorAvailability) {
         officeDoctorAvailabilityRepository.save(officeDoctorAvailability.withAvailabilityStatus(true));
     }
 

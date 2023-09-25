@@ -49,9 +49,9 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                                 authorize.requestMatchers("/", "/login", "/error", "/registration").permitAll()
-                                        .requestMatchers( "/appointment/**").hasAnyAuthority("PATIENT")
+                                        .requestMatchers( "/appointment/**","/patient_dashboard/**").hasAnyAuthority("PATIENT")
                                         .requestMatchers("/doctor_dashboard/**","/visit/**").hasAnyAuthority("DOCTOR")
-                                        .requestMatchers("/doctor_list/**","/patient_dashboard/**").hasAnyAuthority("PATIENT", "DOCTOR")
+                                        .requestMatchers("/doctor_list/**","/patient_card").hasAnyAuthority("PATIENT", "DOCTOR")
                         // .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 ).formLogin(
                         form -> form
@@ -75,9 +75,7 @@ public class SecurityConfiguration {
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
     SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.configure(http))
-                .authorizeHttpRequests()
-                .anyRequest()
-                .permitAll();
+                .authorizeHttpRequests((authorize)->authorize.anyRequest().permitAll());
 
         return http.build();
     }

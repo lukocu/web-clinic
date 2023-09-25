@@ -21,7 +21,7 @@ import java.util.List;
 public class PatientCardController {
 
 
-    public static final String PATIENT_CARD = "/patient_dashboard/patient_card";
+    public static final String PATIENT_CARD = "/patient_card";
     private PatientCardService patientCardService;
     private PatientsCardMapper patientsCardMapper;
     private PatientsService patientService;
@@ -33,7 +33,7 @@ public class PatientCardController {
 
         session.setAttribute("patientId", patientId);
 
-        return "redirect:/patient_dashboard/patient_card";
+        return "redirect:/patient_card";
     }
 
     @GetMapping(PATIENT_CARD)

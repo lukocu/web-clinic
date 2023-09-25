@@ -19,24 +19,14 @@ public class MedicationsService {
         for (Medications medication : medicationsSet) {
             String medicationName = medication.getMedicationName();
 
-            // Sprawdź, czy lek o danej nazwie istnieje w bazie danych
+
             Medications existingMedication = medicationsRepository.findByNameNoOptional(medicationName);
 
             if (existingMedication == null)  {
-                // Lek o danej nazwie nie istnieje, możesz go zapisać.
+
                 medicationsRepository.save(medication);
             }
         }
-
-
-    }
-    @Transactional
-    public void saveOne(Medications medication) {
-        medicationsRepository.save(medication);
     }
 
-    public Medications findByName(String medicationName) {
-      return   medicationsRepository.findByName(medicationName)
-              .orElse(null);
-    }
 }

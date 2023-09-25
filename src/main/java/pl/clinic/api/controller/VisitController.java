@@ -58,7 +58,7 @@ public class VisitController {
             Office office = officeService.getOffice(visit.getOffice().getOfficeId());
 
             Appointments currentAppointement = appointmentsService
-                    .getCurrentAppointementWithOffice(visit.getDate(), visit.getStartTime(), office);
+                    .getCurrentAppointmentWithOffice(visit.getDate(), visit.getStartTime(), office);
 
             PatientsDTO patientDTO =
                     PatientsMapper.INSTANCE.mapToDtoWithoutAppointment(currentAppointement.getPatient());
@@ -173,7 +173,7 @@ public class VisitController {
         Office office = officeService.getOffice(visit.getOffice().getOfficeId());
 
         Appointments currentAppointement = appointmentsService
-                .getCurrentAppointementWithOffice(visit.getDate(), visit.getStartTime(), office);
+                .getCurrentAppointmentWithOffice(visit.getDate(), visit.getStartTime(), office);
 
          appointmentsService.UpdateStatus(currentAppointement.getAppointmentId(),visit);
 

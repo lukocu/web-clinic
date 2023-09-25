@@ -37,7 +37,7 @@
     <p>Pesel: <span th:text="${patient.pesel}"></span></p>
 
 
-    <form th:action="@{/patient_dashboard/patient_card}" th:method="post">
+    <form th:action="@{/patient_card}" th:method="post">
         <input type="hidden" name="patientId" th:value="${patient.patientId}" />
         <button type="submit" class="btn btn-primary">Go to patient medical history</button>
     </form>

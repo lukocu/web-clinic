@@ -1,6 +1,5 @@
 package pl.clinic.business;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class AppointmentsService {
 
 
     @Transactional
-    public Appointments getCurrentAppointementWithOffice(LocalDate date, LocalTime startTime, Office office) {
+    public Appointments getCurrentAppointmentWithOffice(LocalDate date, LocalTime startTime, Office office) {
         OffsetDateTime offsetDateTime = OffsetDateTime.of(date, startTime, ZoneOffset.UTC);
         return appointmentsRepository.findByProbableStartTimeWithOffice(offsetDateTime, office)
                 .orElseThrow(() -> new NotFoundException("Appointment not found"));
@@ -89,7 +88,7 @@ public class AppointmentsService {
                         appointmentWithNewStatus.getProbableStartTime(),
                         appointmentWithNewStatus.getOffice());
 
-        officeDoctorAvailabilityService.addAvailable(currentOfficeAvailability);
+        officeDoctorAvailabilityService.setAvailable(currentOfficeAvailability);
 
 
         appointmentsRepository.save(appointmentWithNewStatus);
