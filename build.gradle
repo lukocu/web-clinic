@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.2'
     id 'io.spring.dependency-management' version '1.1.2'
+    id 'jacoco'
 }
 
 group = 'com.example'
@@ -50,9 +51,18 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    implementation 'org.jacoco:org.jacoco.core:0.8.7'
+
 
 }
-
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDir = file("$buildDir/reports/jacoco") // Katalog z raportami JaCoCo
+}
 tasks.named('test') {
     useJUnitPlatform()
+}
+tasks.named("jacocoTestReport") {
+    dependsOn(test)
+    dependsOn(jacocoTestCoverageVerification) // Jeśli chcesz też weryfikować pokrycie
 }

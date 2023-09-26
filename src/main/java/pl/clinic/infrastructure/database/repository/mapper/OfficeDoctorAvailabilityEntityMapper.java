@@ -34,4 +34,14 @@ public interface OfficeDoctorAvailabilityEntityMapper {
                 .build();
 
     }
+
+    default OfficeDoctorAvailabilityEntity mapToEntityWithOfficeNoId(OfficeDoctorAvailability availability){
+        return OfficeDoctorAvailabilityEntity.builder()
+                .date(availability.getDate())
+                .startTime(availability.getStartTime())
+                .endTime(availability.getEndTime())
+                .availabilityStatus(availability.getAvailabilityStatus())
+                .office(OfficeEntityMapper.INSTANCE.mapToEntity(availability.getOffice()))
+                .build();
+    }
 }

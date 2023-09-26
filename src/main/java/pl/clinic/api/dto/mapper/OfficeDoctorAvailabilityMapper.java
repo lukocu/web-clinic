@@ -45,7 +45,6 @@ public interface OfficeDoctorAvailabilityMapper {
 
     default OfficeDoctorAvailability mapFromDtoWithOffice(OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO) {
         return OfficeDoctorAvailability.builder()
-                .officeAvailabilityId(officeDoctorAvailabilityDTO.getOfficeAvailabilityId())
                 .date(officeDoctorAvailabilityDTO.getDate())
                 .startTime(officeDoctorAvailabilityDTO.getStartTime())
                 .endTime(officeDoctorAvailabilityDTO.getEndTime())

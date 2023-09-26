@@ -6,11 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.MedicationsRepository;
 import pl.clinic.domain.Medications;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class MedicationsService {
+
     MedicationsRepository medicationsRepository;
 
     @Transactional
@@ -20,9 +22,9 @@ public class MedicationsService {
             String medicationName = medication.getMedicationName();
 
 
-            Medications existingMedication = medicationsRepository.findByNameNoOptional(medicationName);
+            Optional<Medications> existingMedication = medicationsRepository.findByName(medicationName);
 
-            if (existingMedication == null)  {
+            if (existingMedication.isEmpty())  {
 
                 medicationsRepository.save(medication);
             }

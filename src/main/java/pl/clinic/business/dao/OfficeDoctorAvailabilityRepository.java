@@ -74,4 +74,8 @@ public class OfficeDoctorAvailabilityRepository {
         return officeDoctorAvailabilityJpaRepository.findByDateAndTime(date, startTime, officeId)
                 .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
     }
+
+    public void newSave(OfficeDoctorAvailability officeDoctorAvailability) {
+        officeDoctorAvailabilityJpaRepository.save(officeDoctorAvailabilityEntityMapper.mapToEntityWithOfficeNoId(officeDoctorAvailability));
+    }
 }

@@ -1,5 +1,5 @@
 CREATE TABLE office_doctor_availability (
-                                            office_availability_id SERIAL PRIMARY KEY,
+                                            office_availability_id serial PRIMARY KEY,
                                             office_id int NOT NULL,
                                             date DATE NOT NULL,
                                             start_time TIME NOT NULL,

@@ -93,7 +93,7 @@ public class AvailabilityController {
 
         OfficeDoctorAvailability officeDoctorAvailability = officeDoctorAvailabilityMapper
                 .mapFromDtoWithOffice(availabilityDTO);
-        officeDoctorAvailabilityService.setAvailable(officeDoctorAvailability);
+        officeDoctorAvailabilityService.addAvailable(officeDoctorAvailability);
 
         model.addAttribute("success", "Success! entity was added");
 

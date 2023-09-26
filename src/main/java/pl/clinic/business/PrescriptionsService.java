@@ -13,7 +13,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 public class PrescriptionsService {
     private PrescriptionsRepository prescriptionsRepository;
-    private MedicationsService medicationsService;
+
 
     @Transactional
     public void save(Prescriptions prescription) {
@@ -21,8 +21,5 @@ public class PrescriptionsService {
         prescriptionsRepository.save(prescription);
     }
 
-    public Prescriptions findByDate(OffsetDateTime prescriptionDate) {
-            return prescriptionsRepository.findByDate(prescriptionDate)
-                    .orElseThrow(()-> new NotFoundException("prescription not found"));
-    }
+
 }

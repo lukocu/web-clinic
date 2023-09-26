@@ -21,6 +21,4 @@ public class Medications {
 
     String duration;
 
-
-
 }

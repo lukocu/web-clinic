@@ -57,7 +57,7 @@ public class AuthController {
         Patients patient = patientsMapper.mapFromDtoWithoutAppointment(patientsDTO);
 
         userService.registerNewPatientUser(patientUser,patient);
-        return "redirect:/login"; // Przekierowanie na stronę logowania po zarejestrowaniu użytkownika
+        return "redirect:/login";
     }
 
     @GetMapping("/users")

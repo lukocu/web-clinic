@@ -64,14 +64,6 @@ public class OfficeDoctorAvailabilityService {
                 .orElseThrow(() -> new NotFoundException("Slot not found"));
     }
 
-    @Transactional
-    public void updateAvailabilityStatus(Integer officeAvailabilityId, boolean newStatus) {
-        OfficeDoctorAvailability availability = officeDoctorAvailabilityRepository.findById(officeAvailabilityId)
-                .orElseThrow(() -> new NotFoundException("Slot not found"));
-
-        OfficeDoctorAvailability updatedAvailability = availability.withAvailabilityStatus(newStatus);
-        officeDoctorAvailabilityRepository.save(updatedAvailability);
-    }
 
     @Transactional
     public void removeAvailability(Integer officeAvailabilityId) {
@@ -105,7 +97,7 @@ public class OfficeDoctorAvailabilityService {
         return null;
     }
 
-
+    @Transactional
     public boolean exists(Integer officeId, LocalDate date, LocalTime startTime, LocalTime endTime) {
         List<OfficeDoctorAvailability> existingEntries =
                 officeDoctorAvailabilityRepository.findByDateAndTimeRange(date, startTime, endTime, officeId);
@@ -129,6 +121,7 @@ public class OfficeDoctorAvailabilityService {
         officeDoctorAvailabilityRepository.save(officeDoctorAvailability.withAvailabilityStatus(true));
     }
 
+    @Transactional
     public OfficeDoctorAvailability getOfficeAvailabilityByStartTimeAndEndTime(
             OffsetDateTime probableStartTime,
             Office office) {
@@ -139,7 +132,12 @@ public class OfficeDoctorAvailabilityService {
         LocalTime startTime = LocalTime.of(probableStartTime.getHour(), probableStartTime.getMinute());
 
 
-        return officeDoctorAvailabilityRepository.findByDateAndTime(date,startTime, office.getOfficeId())
+        return officeDoctorAvailabilityRepository.findByDateAndTime(date, startTime, office.getOfficeId())
                 .orElseThrow(() -> new NotFoundException("Office Availability no found"));
+    }
+
+    @Transactional
+    public void addAvailable(OfficeDoctorAvailability officeDoctorAvailability) {
+        officeDoctorAvailabilityRepository.newSave(officeDoctorAvailability);
     }
 }

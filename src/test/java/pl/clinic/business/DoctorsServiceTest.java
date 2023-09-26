@@ -27,7 +27,7 @@ public class DoctorsServiceTest {
 
 
     @Test
-    public void testGetDoctorsAndOffice() {
+    public void GetDoctorsAndOfficeTest() {
         // given
         Doctors doctor1 = DomainFixtures.doctor1()
                 .withOffices(Set.of(DomainFixtures.office1()));
@@ -49,7 +49,7 @@ public class DoctorsServiceTest {
     }
 
     @Test
-    public void testFindByUserId() {
+    public void FindByUserIdTest() {
         // given
         Doctors expectedDoctor = DomainFixtures.doctor1()
                 .withUser(DomainFixtures.doctorUser());
@@ -68,7 +68,7 @@ public class DoctorsServiceTest {
     }
 
     @Test
-    public void testFindByUserIdNotFound() {
+    public void FindByUserIdNotFoundTest() {
         //given
         Integer userId = 1;
 

@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface MedicationsJpaRepository extends JpaRepository<MedicationsEntity, Integer> {
-    Optional<MedicationsEntity> findByMedicationName(String medicationName);
+
 
     @Query("SELECT m FROM MedicationsEntity m WHERE m.medicationName = :medicationName")
-    MedicationsEntity findByMedicationNameNoOptional(String medicationName);
+    Optional<MedicationsEntity> findByMedicationName(String medicationName);
 }

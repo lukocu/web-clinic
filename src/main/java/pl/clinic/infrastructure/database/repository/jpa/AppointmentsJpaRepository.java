@@ -24,7 +24,6 @@ public interface AppointmentsJpaRepository extends JpaRepository<AppointmentsEnt
     Set<AppointmentsEntity> findByPatientIdWithAllFields(@Param("patientId") Integer patientId);
 
 
-    Optional<AppointmentsEntity> findByProbableStartTime(OffsetDateTime offsetDateTime);
 
     @Query("""
             select a from AppointmentsEntity a

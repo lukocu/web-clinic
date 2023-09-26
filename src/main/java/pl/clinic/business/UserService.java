@@ -22,7 +22,6 @@ public class UserService {
 
         userRepository.saveNewPatientUser(patientUser.withPatient(patient));
 
-
     }
 
     @Transactional

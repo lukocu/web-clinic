@@ -19,17 +19,6 @@ import java.util.Set;
 public class OfficeService {
 
     private OfficeRepository officeRepository;
-    private DoctorsRepository doctorsRepository;
-
-
-    @Transactional
-    public Set<Office> getDoctorOffices(String pesel) {
-        Doctors doctor = doctorsRepository.findByPesel(pesel)
-                .orElseThrow(() -> new NotFoundException("doctor not found"));
-
-        return doctor.getOffices();
-
-    }
 
     @Transactional
     public Office getOffice(Integer officeId) {
