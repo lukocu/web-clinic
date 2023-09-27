@@ -18,7 +18,8 @@ import java.time.LocalTime;
 public class OfficeDoctorAvailabilityEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "office_doctor_availability_sequence")
+    @SequenceGenerator(name = "office_doctor_availability_sequence", sequenceName = "office_doctor_availability_sequence", allocationSize = 1)
     @Column(name = "office_availability_id")
     private Integer officeAvailabilityId;
 

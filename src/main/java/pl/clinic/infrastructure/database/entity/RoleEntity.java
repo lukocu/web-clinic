@@ -14,8 +14,8 @@ import lombok.*;
 @Table(name = "clinic_role")
 public class RoleEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clinic_role_seq")
+    @SequenceGenerator(name = "clinic_role_seq", sequenceName = "clinic_role_seq",allocationSize = 1)
     @Column(name = "role_id")
     private Integer roleId;
 

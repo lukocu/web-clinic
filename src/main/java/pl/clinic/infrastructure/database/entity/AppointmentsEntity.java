@@ -18,7 +18,8 @@ import java.time.OffsetDateTime;
 @Table(name = "appointments")
 public class AppointmentsEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointments_seq")
+    @SequenceGenerator(name = "appointments_seq", sequenceName = "appointments_seq", allocationSize = 1)
     @Column(name = "appointment_id")
     private Integer appointmentId;
 

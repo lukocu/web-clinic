@@ -22,6 +22,19 @@ public interface PatientsEntityMapper {
                 .phone(entity.getPhone())
                 .build();
     }
+    default Patients mapFromEntityWithUser(PatientsEntity entity){
+        return Patients.builder()
+                .patientId(entity.getPatientId())
+                .name(entity.getName())
+                .surname(entity.getSurname())
+                .pesel(entity.getPesel())
+                .birthDate(entity.getBirthDate())
+                .address(entity.getAddress())
+                .phone(entity.getPhone())
+                .user(UserEntityMapper.INSTANCE.mapFromEntity(entity.getUser()))
+                .build();
+    }
+
 
     default PatientsEntity mapToEntity(Patients patient){
         return PatientsEntity.builder()
@@ -32,6 +45,17 @@ public interface PatientsEntityMapper {
                 .birthDate(patient.getBirthDate())
                 .address(patient.getAddress())
                 .phone(patient.getPhone())
+                .build();
+    }
+    default PatientsEntity mapToEntityWithUser(Patients patient){
+        return PatientsEntity.builder()
+                .name(patient.getName())
+                .surname(patient.getSurname())
+                .pesel(patient.getPesel())
+                .birthDate(patient.getBirthDate())
+                .address(patient.getAddress())
+                .phone(patient.getPhone())
+                .user(UserEntityMapper.INSTANCE.MapToEntityForPatient(patient.getUser()))
                 .build();
     }
 

@@ -1,5 +1,6 @@
+CREATE SEQUENCE patients_seq START 1;
 CREATE TABLE patients (
-                          patient_id serial PRIMARY KEY,
+                          patient_id INT PRIMARY KEY DEFAULT nextval('patients_seq'),
                           name VARCHAR(25) NOT NULL,
                           surname VARCHAR(50) NOT NULL,
                           pesel VARCHAR(11) NOT NULL UNIQUE,

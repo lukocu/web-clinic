@@ -17,7 +17,8 @@ import java.util.Set;
 @Table(name = "prescriptions")
 public class PrescriptionsEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "prescriptions_seq")
+    @SequenceGenerator(name = "prescriptions_seq", sequenceName = "prescriptions_seq", allocationSize = 1)
     @Column(name = "prescription_id")
     private Integer prescriptionId;
 

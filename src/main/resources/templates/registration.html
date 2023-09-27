@@ -13,7 +13,7 @@
 
     <a href="web-clinic/ " class="btn btn-secondary mb-3">Powrót do logowania</a>
 
-    <form th:action="@{/register}" method="post" th:object="${registrationUserDto}">
+    <form th:action="@{/registration/register}" method="post" th:object="${patientUserDTO}">
 
         <div class="form-group">
             <label for="username">Nazwa użytkownika:</label>
@@ -34,8 +34,7 @@
             <label for="confirmPassword">Potwierdź hasło:</label>
             <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
         </div>
-    </form>
-    <form th:action="@{/register}" method="post" th:object="${registrationPatientDto}">
+
 
         <div class="form-group">
             <label for="name">Imię:</label>
@@ -61,9 +60,11 @@
             <label for="phone">Numer telefonu:</label>
             <input type="tel" class="form-control" id="phone" th:field="*{phone}" required>
         </div>
+        <button type="submit" class="btn btn-primary" >Zarejestruj</button>
     </form>
 
-    <button type="submit" class="btn btn-primary">Zarejestruj</button>
+
+
 
 </div>
 </body>

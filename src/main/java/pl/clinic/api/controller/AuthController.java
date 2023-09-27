@@ -2,6 +2,9 @@ package pl.clinic.api.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,15 +15,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import pl.clinic.api.dto.PatientUserDTO;
 import pl.clinic.api.dto.PatientsDTO;
 import pl.clinic.api.dto.UserRegistrationDto;
 import pl.clinic.api.dto.mapper.PatientsMapper;
 import pl.clinic.business.UserService;
 import pl.clinic.api.dto.mapper.UserRegistrationMapper;
+import pl.clinic.domain.Doctors;
 import pl.clinic.domain.Patients;
+import pl.clinic.domain.Role;
 import pl.clinic.domain.User;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -28,40 +36,37 @@ public class AuthController {
 
     private UserService userService;
     private UserRegistrationMapper userRegistrationMapper;
-    private PatientsMapper patientsMapper;
+
+
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @GetMapping("/registration")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("registrationUserDto", new UserRegistrationDto());
-        model.addAttribute("registrationPatientDto", new PatientsDTO());
+
+        model.addAttribute("patientUserDTO", new PatientUserDTO());
+
         return "registration";
     }
 
-    @PostMapping("/register")
-    public String registerUserAccount(
-            @ModelAttribute("registrationUserDto") @Valid UserRegistrationDto registrationDto,
-            @ModelAttribute("registrationPatientDto") PatientsDTO patientsDTO,
-            BindingResult result) {
+    @PostMapping("/registration/register")
+    public String registerPatientAccount(
+    @Valid PatientUserDTO patientUserDTO,
+    BindingResult result){
 
         if (result.hasErrors()) {
             return "registration";
         }
-        registrationDto.setRole("PATIENT");
 
-        User patientUser = userRegistrationMapper.mapFromDto(registrationDto);
-        Patients patient = patientsMapper.mapFromDtoWithoutAppointment(patientsDTO);
-
-        userService.registerNewPatientUser(patientUser,patient);
+        userService.registerNewPatientUser(patientUserDTO);
         return "redirect:/login";
     }
 
     @GetMapping("/users")
-    public String users(Model model){
+    public String users(Model model) {
 
         List<UserRegistrationDto> users = userService.findAllUsers().stream()
                 .map(user -> userRegistrationMapper.mapToDto(user))
@@ -69,6 +74,7 @@ public class AuthController {
         model.addAttribute("users", users);
         return "users";
     }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
 

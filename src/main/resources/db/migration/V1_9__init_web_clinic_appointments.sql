@@ -1,5 +1,6 @@
+CREATE SEQUENCE appointments_seq START 1;
 CREATE TABLE appointments (
-                              appointment_id serial PRIMARY KEY,
+                              appointment_id INT PRIMARY KEY DEFAULT nextval('appointments_seq'),
                               patient_id int NOT NULL,
                               office_id int NOT NULL,
                               probable_start_time TIMESTAMP NOT NULL,

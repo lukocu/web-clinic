@@ -24,4 +24,8 @@ public class PatientsService {
         return patientsRepository.findById(patientId)
                 .orElseThrow(() -> new NotFoundException("Patient not found"));
     }
+
+    public Patients saveNewPatient(Patients newPatient) {
+        return patientsRepository.save(newPatient);
+    }
 }

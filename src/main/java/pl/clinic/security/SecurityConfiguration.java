@@ -48,7 +48,7 @@ public class SecurityConfiguration {
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
-                                authorize.requestMatchers("/", "/login", "/error", "/registration").permitAll()
+                                authorize.requestMatchers("/", "/login", "/error", "/registration/**").permitAll()
                                         .requestMatchers( "/appointment/**","/patient_dashboard/**").hasAnyAuthority("PATIENT")
                                         .requestMatchers("/doctor_dashboard/**","/visit/**").hasAnyAuthority("DOCTOR")
                                         .requestMatchers("/doctor_list/**","/patient_card").hasAnyAuthority("PATIENT", "DOCTOR")

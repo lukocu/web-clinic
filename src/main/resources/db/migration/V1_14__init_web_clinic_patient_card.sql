@@ -1,5 +1,6 @@
+CREATE SEQUENCE patient_card_seq START 1;
 CREATE TABLE patient_card (
-                              patient_card_id serial PRIMARY KEY,
+                              patient_card_id INT PRIMARY KEY DEFAULT nextval('patient_card_seq'),
                               diagnosis_date TIMESTAMP,
                               diagnosis_note TEXT,
                               patient_id int NOT NULL,

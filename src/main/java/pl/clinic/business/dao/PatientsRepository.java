@@ -3,6 +3,7 @@ package pl.clinic.business.dao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.clinic.domain.Patients;
+import pl.clinic.infrastructure.database.entity.PatientsEntity;
 import pl.clinic.infrastructure.database.repository.jpa.PatientsJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.PatientsEntityMapper;
 
@@ -20,9 +21,11 @@ public class PatientsRepository {
             .map(entity->patientsEntityMapper.mapFromEntity(entity));
 
     }
-    public void save(Patients pesel) {
-    patientsEntityMapper.mapToEntity(pesel);
+    public Patients save(Patients patient) {
+        PatientsEntity savedPatient =
+                patientsJpaRepository.save(patientsEntityMapper.mapToEntityWithUser(patient));
 
+        return patientsEntityMapper.mapFromEntityWithUser(savedPatient);
     }
 
     public Optional<Patients> findById(Integer patientId) {

@@ -16,7 +16,8 @@ import java.util.Set;
 @Table(name = "specialization")
 public class SpecializationEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "specialization_seq")
+    @SequenceGenerator(name = "specialization_seq", sequenceName = "specialization_seq", allocationSize = 1)
     @Column(name = "specialization_id")
     private Integer specializationId;
 

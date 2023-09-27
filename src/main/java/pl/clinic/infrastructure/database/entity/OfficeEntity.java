@@ -17,7 +17,8 @@ import java.util.Set;
 @Table(name = "office")
 public class OfficeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "office_seq")
+    @SequenceGenerator(name = "office_seq", sequenceName = "office_seq", allocationSize = 1)
     @Column(name = "office_id")
     private Integer officeId;
 
