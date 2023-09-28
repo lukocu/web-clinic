@@ -29,9 +29,9 @@ public class UserRepository {
                 .toList();
     }
 
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> findByUsernameForPatient(String username) {
         return userJpaRepository.findByUsername(username)
-                .map(userEntityMapper::mapFromEntity);
+                .map(userEntityMapper::mapFromEntityForPatient);
     }
 
     public Optional<User> findByUsernameDoctor(String username) {

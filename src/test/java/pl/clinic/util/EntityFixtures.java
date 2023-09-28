@@ -13,9 +13,9 @@ import java.util.Set;
 
 @UtilityClass
 public class EntityFixtures {
-    public static PatientsEntity patient1() {
+    public static PatientsEntity patientWithoutVisits() {
         return PatientsEntity.builder()
-                .patientId(1)
+                .patientId(100)
                 .name("John")
                 .surname("Mago")
                 .pesel("95011257943")
@@ -25,16 +25,20 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static PatientsEntity patient2() {
+    public static PatientsEntity patientWithOnlyCompletedApp() {
         return PatientsEntity.builder()
+                .patientId(50)
                 .name("Jane")
                 .surname("Doe")
                 .pesel("96052312345")
                 .birthDate(LocalDate.of(1996, 5, 23))
                 .address("456 Elm St")
                 .phone("444-555-666")
+                .appointments(Set.of(appointment2(),appointment3()))
                 .build();
     }
+
+
 
     public static AppointmentsEntity appointment1() {
         return AppointmentsEntity.builder()
@@ -44,6 +48,8 @@ public class EntityFixtures {
                 .appointmentStatus(AppointmentStatusEntity.builder()
                         .status(Status.Scheduled)
                         .build())
+                .office()
+                .
                 .build();
     }
 
@@ -53,7 +59,7 @@ public class EntityFixtures {
                 .actualEndTime(OffsetDateTime.now())
                 .appointmentTakenDate(LocalDate.now())
                 .appointmentStatus(AppointmentStatusEntity.builder()
-                        .status(Status.Scheduled)
+                        .status(Status.Completed)
                         .build())
                 .build();
     }
@@ -64,7 +70,7 @@ public class EntityFixtures {
                 .actualEndTime(OffsetDateTime.now())
                 .appointmentTakenDate(LocalDate.now())
                 .appointmentStatus(AppointmentStatusEntity.builder()
-                        .status(Status.Scheduled)
+                        .status(Status.Completed)
                         .build())
                 .build();
     }
@@ -90,30 +96,42 @@ public class EntityFixtures {
 
     public static OfficeEntity office1() {
         return OfficeEntity.builder()
+                .officeId(100)
                 .firstConsultationFee(new BigDecimal("100.00"))
                 .followupConsultationFee(new BigDecimal("80.00"))
-                .doctor(doctor1())
                 .officeDoctorAvailabilities(Set.of(availability1()))
-                .appointments(Set.of(appointment1(), appointment2()))
                 .build();
     }
 
-    public static OfficeEntity office2() {
+    public static OfficeEntity existingOffice() {
         return OfficeEntity.builder()
-                .firstConsultationFee(new BigDecimal("150.00"))
-                .followupConsultationFee(new BigDecimal("100.00"))
-                .doctor(doctor2())
-                .officeDoctorAvailabilities(Set.of(availability1()))
-                .appointments(Set.of(appointment3()))
+                .officeId(1)
+                .firstConsultationFee(new BigDecimal("100.00"))
+                .followupConsultationFee(new BigDecimal("50.00"))
+                .doctor(existingDoctor())
                 .build();
     }
 
-    public static DoctorsEntity doctor1() {
+    private static DoctorsEntity existingDoctor() {
         return DoctorsEntity.builder()
                 .name("John")
                 .surname("Smith")
-                .phone("123-456-789")
-                .pesel("84051212345")
+                .phone("123456789")
+                .pesel("88092556231")
+                .user(exisitngUser())
+                .build();
+    }
+
+    private static UserEntity exisitngUser() {
+        return UserEntity.builder()
+                .userId(3)
+                .username("doctor2")
+                .email("doctor2@example.com")
+                .password("$2a$12$FCAlDbUksXTRONN7F8R/nuItbH4EGIpiVrCYiWDW8Tp3WhDBl/rxO")
+                .active(true)
+                .roles(Set.of(RoleEntity.builder()
+                        .role("DOCTOR")
+                        .build()))
                 .build();
     }
 
@@ -128,7 +146,7 @@ public class EntityFixtures {
 
     public static UserEntity doctorUser() {
         return UserEntity.builder()
-                .username("doctor1")
+                .username("doctor100")
                 .email("doctor@example.com")
                 .password("test")
                 .active(true)
@@ -136,19 +154,29 @@ public class EntityFixtures {
                         .role("DOCTOR")
                         .build()))
                 .patient(null)
-                .doctors(doctor1())
                 .build();
     }
+    public static DoctorsEntity doctor1() {
+        return DoctorsEntity.builder()
+                .name("John")
+                .surname("Smith")
+                .phone("123-456-789")
+                .pesel("84051212345")
+                .offices(Set.of(office1()))
+                .user(doctorUser())
+                .offices(Set.of(office1()))
+                .build();
+    }
+
     public static UserEntity patientUser() {
         return UserEntity.builder()
-                .username("patient1")
-                .email("patient1@example.com")
+                .username("patient100")
+                .email("patient100@example.com")
                 .password("test")
                 .active(true)
                 .roles(Set.of(RoleEntity.builder()
                         .role("PATIENT")
                         .build()))
-                .patient(patient1())
                 .doctors(null)
                 .build();
     }
@@ -180,7 +208,7 @@ public class EntityFixtures {
         return PatientCardEntity.builder()
                 .diagnosisDate(offsetDateTime)
                 .diagnosisNote("Diagnosis note test")
-                .patient(patient1())
+                .patient(patientWithoutVisits())
                 .doctor(doctor1())
                 .diseases(Set.of(DiseasesEntity.builder()
                         .diseaseName("flu")
@@ -209,7 +237,7 @@ public class EntityFixtures {
         return PatientCardEntity.builder()
                 .diagnosisDate(offsetDateTime)
                 .diagnosisNote("Diagnosis note test")
-                .patient(patient1())
+                .patient(patientWithoutVisits())
                 .doctor(doctor1())
                 .diseases(Set.of(DiseasesEntity.builder()
                         .diseaseName("flu")
@@ -237,5 +265,4 @@ public class EntityFixtures {
                         .build()))
                 .build();
     }
-
 }

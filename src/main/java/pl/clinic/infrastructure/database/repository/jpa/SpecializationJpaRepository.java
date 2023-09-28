@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface SpecializationJpaRepository extends JpaRepository<SpecializationEntity, Integer> {
-    Optional<SpecializationEntity> findBySpecializationName(String specializationName);
+
 }

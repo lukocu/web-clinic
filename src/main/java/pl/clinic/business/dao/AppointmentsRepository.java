@@ -24,7 +24,7 @@ public class AppointmentsRepository {
 
 
     public List<Appointments> findAppointmentsByPatientIdWithAllFields(Integer patientId) {
-      return   appointmentsJpaRepository.findByPatientIdWithAllFields(patientId).stream()
+      return   appointmentsJpaRepository.findByPatientIdWithScheduled(patientId).stream()
               .map(appointmentsEntityMapper::mapFromEntity)
               .toList();
     }

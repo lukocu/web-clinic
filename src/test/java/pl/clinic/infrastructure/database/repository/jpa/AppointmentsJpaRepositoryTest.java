@@ -2,17 +2,24 @@ package pl.clinic.infrastructure.database.repository.jpa;
 
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
+import pl.clinic.business.PatientsService;
+import pl.clinic.domain.Patients;
 import pl.clinic.infrastructure.database.entity.AppointmentsEntity;
+import pl.clinic.infrastructure.database.entity.PatientsEntity;
 import pl.clinic.integration.configuration.PersistenceContainerTestConfiguration;
 import pl.clinic.util.EntityFixtures;
 
-import javax.swing.text.html.parser.Entity;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -27,47 +34,85 @@ public class AppointmentsJpaRepositoryTest {
     private AppointmentsJpaRepository appointmentsJpaRepository;
 
     @Test
-    void testFindByPatientIdWithAllFields() {
-        // Arrange
-        Integer patientId = 1;
-        AppointmentsEntity appointment1 = EntityFixtures.appointment1();
-        AppointmentsEntity appointment2 = EntityFixtures.appointment2();
-        appointment1.setPatient(EntityFixtures.patient1());
-        appointment1.setPatient(EntityFixtures.patient1());
-        appointmentsJpaRepository.save(appointment1);
-        appointmentsJpaRepository.save(appointment2);
-        // Act
-        Set<AppointmentsEntity> appointments = appointmentsJpaRepository.findByPatientIdWithAllFields(patientId);
+    @DisplayName("Only appointments that have a status of Scheduled should be returned")
+    void testFindByPatientIdWithScheduled() {
+        // given
+        Integer patientId = 2; // default 1 appointment scheduled
+        Integer nonExistentPatientId = 999;
 
-        // Assert
-        Assertions.assertEquals(2,appointments.size());
-        // Add your assertions here
-    }
+        Set<AppointmentsEntity> appointments = appointmentsJpaRepository.
+                findByPatientIdWithScheduled(patientId);
 
-  /*  @Test
-    void testFindByProbableStartTimeWithOffice() {
-        // Arrange
-        Integer officeId = 1;
-        OffsetDateTime offsetDateTime = OffsetDateTime.now();
+        Set<AppointmentsEntity> noAppointments = appointmentsJpaRepository.
+                findByPatientIdWithScheduled(nonExistentPatientId);
 
-        // Act
-        Optional<AppointmentsEntity> appointment = appointmentsJpaRepository.findByProbableStartTimeWithOffice(offsetDateTime, officeId);
+        // when, then
+        Assertions.assertEquals(1,appointments.size());
+        Assertions.assertTrue(noAppointments.isEmpty());
 
-        // Assert
-        assertThat(appointment).isPresent();
-        // Add your assertions here
     }
 
     @Test
+    void testFindByProbableStartTimeWithOffice() {
+        //given
+        Integer officeId = 2;
+        Integer nonExistentOfficeId = 999;
+
+        OffsetDateTime startTime =
+                OffsetDateTime.of(2023, 8, 22, 15, 0, 0, 0,
+                        ZoneOffset.UTC);
+
+        OffsetDateTime nonExistentStartTime =
+                OffsetDateTime.of(2023, 12, 1, 14, 30, 0, 0,
+                        ZoneOffset.UTC);
+
+
+        Optional<AppointmentsEntity> appointment =
+                appointmentsJpaRepository.findByProbableStartTimeWithOffice(startTime, officeId);
+
+        Optional<AppointmentsEntity> nonExistentAppointment =
+                appointmentsJpaRepository.findByProbableStartTimeWithOffice(startTime, nonExistentOfficeId);
+
+        Optional<AppointmentsEntity> nonExistentStartTimeAppointment =
+                appointmentsJpaRepository.findByProbableStartTimeWithOffice(nonExistentStartTime, officeId);
+
+        // when, then
+        Assertions.assertTrue(nonExistentAppointment.isEmpty());
+        Assertions.assertTrue(appointment.isPresent());
+        Assertions.assertTrue(nonExistentStartTimeAppointment.isEmpty());
+    }
+    @Test
     void testFindCompletedAndCanceledByPatientId() {
-        // Arrange
-        Integer patientId = 1;
 
-        // Act
-        List<AppointmentsEntity> appointments = appointmentsJpaRepository.findCompletedAndCanceledByPatientId(patientId);
+        Integer patientId = 2;
 
-        // Assert
-        assertThat(appointments).isNotEmpty();
-        // Add your assertions here
-    }*/
+        PatientsEntity patients= EntityFixtures.patientWithoutVisits();
+
+        Integer patientWithoutAppointmentsId = patients.getPatientId();
+
+
+        Integer patientWithCompletedAppointmentsId = 4;
+
+        Integer patientWithCanceledAppointmentsId = 3;
+
+        List<AppointmentsEntity> completedAndCanceledAppointments =
+                appointmentsJpaRepository.findCompletedAndCanceledByPatientId(patientId);
+
+        List<AppointmentsEntity> noCompletedAndCanceledAppointments =
+                appointmentsJpaRepository.findCompletedAndCanceledByPatientId(patientWithoutAppointmentsId);
+
+
+        List<AppointmentsEntity> completedAppointmentsOnly =
+                appointmentsJpaRepository.findCompletedAndCanceledByPatientId(patientWithCompletedAppointmentsId);
+
+
+        List<AppointmentsEntity> canceledAppointmentsOnly =
+                appointmentsJpaRepository.findCompletedAndCanceledByPatientId(patientWithCanceledAppointmentsId);
+
+        Assertions.assertFalse(completedAndCanceledAppointments.isEmpty());
+        Assertions.assertTrue(noCompletedAndCanceledAppointments.isEmpty());
+        Assertions.assertFalse(completedAppointmentsOnly.isEmpty());
+        Assertions.assertEquals(2,completedAppointmentsOnly.size());
+        Assertions.assertEquals(2,canceledAppointmentsOnly.size());
+    }
 }

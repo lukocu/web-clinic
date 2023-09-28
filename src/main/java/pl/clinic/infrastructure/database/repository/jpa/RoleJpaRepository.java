@@ -7,5 +7,4 @@ import pl.clinic.infrastructure.database.entity.RoleEntity;
 @Repository
 public interface RoleJpaRepository extends JpaRepository<RoleEntity, Long> {
 
-    RoleEntity findByRole(String role);
 }

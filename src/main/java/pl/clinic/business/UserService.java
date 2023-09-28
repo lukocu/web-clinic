@@ -1,6 +1,5 @@
 package pl.clinic.business;
 
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,8 +33,8 @@ public class UserService {
     }
 
     @Transactional
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
+    public User findByUsernameForPatient(String username) {
+        return userRepository.findByUsernameForPatient(username)
                 .orElseThrow(() -> new NotFoundException("user not found"));
     }
 

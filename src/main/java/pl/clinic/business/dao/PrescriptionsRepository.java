@@ -18,8 +18,4 @@ public class PrescriptionsRepository {
         prescriptionsJpaRepository.save(prescriptionsEntityMapper.mapToEntity(prescription));
     }
 
-    public Optional<Prescriptions> findByDate(OffsetDateTime prescriptionDate) {
-        return prescriptionsJpaRepository.findByPrescriptionDate(prescriptionDate)
-                .map(prescriptionsEntity -> prescriptionsEntityMapper.mapFromEntity(prescriptionsEntity));
-    }
 }

@@ -9,14 +9,11 @@ import pl.clinic.infrastructure.database.entity.OfficeDoctorAvailabilityEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<OfficeDoctorAvailabilityEntity, Integer> {
-
-
 
     @Query("SELECT oda " +
             "FROM DoctorsEntity doctors " +
@@ -29,10 +26,7 @@ public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<Off
 
     @Query("SELECT oda FROM OfficeDoctorAvailabilityEntity oda WHERE oda.office.officeId = :officeId AND oda.availabilityStatus = true")
     List<OfficeDoctorAvailabilityEntity> findByOfficeIdAndAvailabilityStatusIsTrue(Integer officeId);
-    @Query("SELECT oda FROM OfficeDoctorAvailabilityEntity oda WHERE oda.office.officeId = :officeId AND oda.availabilityStatus = false")
-    List<OfficeDoctorAvailabilityEntity> findByOfficeIdAndAvailabilityStatusIsFalse(Integer officeId);
 
-    List<OfficeDoctorAvailabilityEntity> findByAvailabilityStatusIsFalse();
     @Query("SELECT NEW pl.clinic.infrastructure.database.entity.OfficeDoctorAvailabilityEntity(ofa.officeAvailabilityId, ofa.date, ofa.startTime, ofa.endTime, ofa.availabilityStatus, ofa.office) " +
             "FROM OfficeDoctorAvailabilityEntity ofa " +
             "INNER JOIN ofa.office AS offi " +

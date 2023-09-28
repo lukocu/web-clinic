@@ -79,10 +79,10 @@ public class UserServiceTest {
         // Given
         String username = patientUser.getUsername();
 
-        when(userRepository.findByUsername(username)).thenReturn(Optional.of(patientUser));
+        when(userRepository.findByUsernameForPatient(username)).thenReturn(Optional.of(patientUser));
 
         // When
-        User result = userService.findByUsername(username);
+        User result = userService.findByUsernameForPatient(username);
 
         // Then
         assertNotNull(result);
@@ -94,9 +94,9 @@ public class UserServiceTest {
         // Given
         String username = "nonexistent_user";
 
-        when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
+        when(userRepository.findByUsernameForPatient(username)).thenReturn(Optional.empty());
 
         // When, Then
-        assertThrows(NotFoundException.class, () -> userService.findByUsername(username));
+        assertThrows(NotFoundException.class, () -> userService.findByUsernameForPatient(username));
     }
 }

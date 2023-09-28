@@ -10,5 +10,4 @@ import java.util.Optional;
 @Repository
 public interface PrescriptionsJpaRepository extends JpaRepository<PrescriptionsEntity, Integer> {
 
-    Optional<PrescriptionsEntity> findByPrescriptionDate(OffsetDateTime prescriptionDate);
 }

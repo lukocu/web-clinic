@@ -58,6 +58,24 @@ public interface UserEntityMapper {
                 .doctors(DoctorsEntityMapper.INSTANCE.mapFromEntity(entity.getDoctors()))
                 .build();
     }
+    default User mapFromEntityForPatient(UserEntity entity) {
+        Set<Role> roles = entity.getRoles().stream()
+                .map(role -> Role.builder()
+                        .roleId(role.getRoleId())
+                        .role(role.getRole())
+                        .build())
+                .collect(Collectors.toSet());
+
+        return User.builder()
+                .userId(entity.getUserId())
+                .username(entity.getUsername())
+                .email(entity.getEmail())
+                .password(entity.getPassword())
+                .active(entity.getActive())
+                .roles(roles)
+                .patient(PatientsEntityMapper.INSTANCE.mapFromEntity(entity.getPatient()))
+                .build();
+    }
 
 
     default UserEntity MapToEntityForPatient(User user) {

@@ -64,64 +64,11 @@ VALUES (1, 'Scheduled'),
 INSERT INTO office_doctor_availability (office_availability_id, office_id, date, start_time, end_time,
                                         availability_status)
 VALUES (1, 1, '2023-08-15', '08:00:00', '12:00:00', true),  -- Office 1 availability for Doctor 1
-       (2, 2, '2023-08-17', '14:00:00', '15:00:00', false), -- Office 2 availability for Doctor 2
+      -- Office 2 availability for Doctor 2
        (3, 2, '2023-08-17', '16:00:00', '17:00:00', true),  -- Office 2 availability for Doctor 2
-       (4, 2, '2023-08-17', '17:00:00', '18:00:00', true),  -- Office 2 availability for Doctor 2
-       (5, 2, '2023-08-22', '15:00:00', '16:00:00', false);
+       (4, 2, '2023-08-17', '17:00:00', '18:00:00', true);  -- Office 2 availability for Doctor 2
+
 -- Office 2 availability for Doctor 2
-
--- Przykładowe dane dla tabeli appointments
-INSERT INTO appointments (appointment_id, patient_id, office_id, probable_start_time, actual_end_time,
-                          appointment_status_id, appointment_taken_date)
-VALUES (1, 1, 2, '2023-08-17 14:00:00', NULL, 1, '2023-08-17'),
-       (2, 2, 2, '2023-08-22 15:00:00', NULL, 1, '2023-08-18'),
-       (3, 1, 2, '2023-08-17 14:00:00', NULL, 3, '2023-08-17'),
-       (4, 2, 2, '2023-08-17 17:00:00', NULL, 3, '2023-08-18'),
-       (5, 2, 2, '2023-06-15 10:00:00', '2023-06-15 11:00:00', 2, '2023-06-10'),
-       (6, 2, 2, '2023-06-16 10:00:00', '2023-06-16 11:00:00', 2, '2023-06-10');
-
--- Dane dla tabeli medications
-INSERT INTO medications (medication_id, medication_name, dosage, frequency, duration)
-VALUES (1, 'Aspirin', '500mg', 'Once a day', '7 days'),
-       (2, 'Ibuprofen', '200mg', 'Twice a day', '10 days'),
-       (3, 'Antibiotic', '250mg', 'Three times a day', '14 days');
-
--- Dane dla tabeli prescriptions
-INSERT INTO prescriptions (prescription_id, prescription_date, prescription_date_end, prescription_available)
-VALUES (1, '2023-09-26 08:00:00', '2023-10-05 08:00:00', true),
-       (2, '2023-09-27 10:30:00', '2023-10-10 10:30:00', true);
-
-
--- Dane dla tabeli prescription_medications (łączenie recept z lekami)
-INSERT INTO prescription_medications (prescription_id, medication_id)
-VALUES (1, 1), -- Przypisuje lek "Aspirin" do recepty 1
-       (1, 2), -- Przypisuje lek "Ibuprofen" do recepty 1
-       (2, 2), -- Przypisuje lek "Ibuprofen" do recepty 2
-       (2, 3);
--- Przypisuje lek "Antibiotic" do recepty 2
-
--- Dane dla tabeli diseases
-INSERT INTO diseases (disease_id, disease_name, disease_description)
-VALUES (1, 'Flu', 'Upper respiratory tract infection'),
-       (2, 'Headache', 'Frequent headaches and migraines'),
-       (3, 'Fever', 'Condition of fever due to infection');
-
-INSERT INTO patient_card (patient_card_id, diagnosis_date, diagnosis_note, patient_id, doctor_id, prescription_id)
-VALUES (1, '2023-06-15 10:00:00', 'Przykładowa diagnoza 1', 1, 2, 1),
-       (2, '2023-06-16 10:00:00', 'Przykładowa diagnoza 2', 2, 2, 2);
-
--- Dane dla tabeli patient_disease (łączenie pacjentów z chorobami)
-INSERT INTO patient_disease (patient_card_id, disease_id)
-VALUES (1, 1), -- Pacjent 1 ma flu
-       (1, 2), -- Pacjent 1 ma Headache
-       (2, 3); -- Pacjent 2 ma fever
-
-
-
-
-
-
-
 
 
 

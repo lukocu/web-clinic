@@ -15,7 +15,7 @@ public interface PatientCardJpaRepository extends JpaRepository<PatientCardEntit
 
     @Query("""
 
-            SELECT pc,doc,dis,pres,medi FROM PatientCardEntity pc
+            SELECT pc FROM PatientCardEntity pc
               inner JOIN  pc.patient pat
               inner JOIN  pc.doctor doc
               inner JOIN  pc.diseases dis

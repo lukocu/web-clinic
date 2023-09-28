@@ -59,7 +59,7 @@ public class AppointmentController {
 
         if (authentication.getPrincipal() instanceof UserDetails userDetails) {
 
-            var user = userService.findByUsername(userDetails.getUsername());
+            var user = userService.findByUsernameForPatient(userDetails.getUsername());
 
 
             officeDoctorAvailabilityService.reservedAppointment(officeAvailabilityId, user.getPatient());

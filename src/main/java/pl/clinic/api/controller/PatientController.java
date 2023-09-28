@@ -44,7 +44,7 @@ public class PatientController {
             String username = userDetails.getUsername();
 
 
-            User user = userService.findByUsername(username);
+            User user = userService.findByUsernameForPatient(username);
 
 
             if (user.getPatient() != null) {
@@ -91,7 +91,7 @@ public class PatientController {
             String username = userDetails.getUsername();
 
 
-            User user = userService.findByUsername(username);
+            User user = userService.findByUsernameForPatient(username);
 
 
             if (user.getPatient() != null) {
