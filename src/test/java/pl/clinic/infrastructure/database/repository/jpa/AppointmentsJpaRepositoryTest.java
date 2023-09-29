@@ -40,10 +40,10 @@ public class AppointmentsJpaRepositoryTest {
         Integer patientId = 2; // default 1 appointment scheduled
         Integer nonExistentPatientId = 999;
 
-        Set<AppointmentsEntity> appointments = appointmentsJpaRepository.
+        List<AppointmentsEntity> appointments = appointmentsJpaRepository.
                 findByPatientIdWithScheduled(patientId);
 
-        Set<AppointmentsEntity> noAppointments = appointmentsJpaRepository.
+        List<AppointmentsEntity> noAppointments = appointmentsJpaRepository.
                 findByPatientIdWithScheduled(nonExistentPatientId);
 
         // when, then

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.clinic.business.dao.AppointmentsRepository;
 import pl.clinic.domain.*;
@@ -123,6 +124,47 @@ public class AppointmentsServiceTest {
         Assertions.assertEquals(0, completedAndCanceledAppointments.size());
         Assertions.assertEquals(2, completedAndCanceledAppointments2.size());
 
+    }
+    @Test
+    public void testUpdateStatus() {
+        // Given
+        int appointmentId = 1;
+
+        OfficeDoctorAvailability availability = DomainFixtures.availability1();
+
+        OffsetDateTime startTime = OffsetDateTime.of(availability.getDate(),
+                availability.getStartTime(), ZoneOffset.UTC);
+
+        OffsetDateTime endTime = OffsetDateTime.of(availability.getDate(),
+                availability.getEndTime(),ZoneOffset.UTC);
+
+        Appointments existingAppointment = DomainFixtures.appointment1()
+                .withProbableStartTime(startTime)
+                .withActualEndTime(endTime)
+                .withAppointmentStatus(AppointmentStatus.builder()
+                        .status(Status.Completed)
+                        .build());
+
+
+        Mockito.when(appointmentsRepository.findById(appointmentId))
+                .thenReturn(Optional.of(existingAppointment));
+
+        Mockito.when(officeDoctorAvailabilityService.getOfficeAvailabilityByStartTimeAndEndTime(
+                        Mockito.any(OffsetDateTime.class), Mockito.any()))
+                .thenReturn(availability);
+
+        // When
+        officeDoctorAvailabilityService
+                .getOfficeAvailabilityByStartTimeAndEndTime(startTime,existingAppointment.getOffice());
+
+        appointmentsService.UpdateStatus(appointmentId, availability);
+
+        // Then
+
+        Mockito.verify(appointmentsRepository).save(any(Appointments.class));
+
+        // Sprawdzamy, czy actualEndTime został ustawiony
+        Assertions.assertEquals(availability.getEndTime(), existingAppointment.getActualEndTime().toLocalTime());
     }
 
     @Test

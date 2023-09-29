@@ -13,7 +13,7 @@ import pl.clinic.util.services.DomainFixtures;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PatientsServiceTest {
@@ -71,11 +71,29 @@ public class PatientsServiceTest {
     @Test
     public void testGetPatientNotFound() {
         // Given
-        int patientId = 3; // This patient ID doesn't exist in our test data
+        int patientId = 100;
 
         when(patientsRepository.findById(patientId)).thenReturn(Optional.empty());
 
         // When, Then
         assertThrows(NotFoundException.class, () -> patientsService.getPatient(patientId));
+    }
+
+    @Test
+    public void testSaveNewPatient() {
+        // Given
+        Patients newPatient = DomainFixtures.patient1();
+
+
+        when(patientsRepository.save(newPatient)).thenReturn(patient1);
+
+        // When
+        Patients savedPatient = patientsService.saveNewPatient(newPatient);
+
+        assertNotNull(savedPatient);
+        assertEquals(patient1, savedPatient);
+
+
+        verify(patientsRepository, times(1)).save(newPatient);
     }
 }

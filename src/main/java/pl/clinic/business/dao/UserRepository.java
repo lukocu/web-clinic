@@ -17,11 +17,7 @@ public class UserRepository {
     private UserEntityMapper userEntityMapper;
 
 
-    public User saveNewPatientUser(User user) {
-        UserEntity savedUser = userJpaRepository.save(userEntityMapper.mapToEntityWithNewPatient(user));
 
-        return userEntityMapper.mapFromEntity(savedUser);
-    }
 
     public List<User> findAll() {
         return userJpaRepository.findAll().stream()
@@ -39,9 +35,5 @@ public class UserRepository {
                 .map(userEntityMapper::mapFromEntityForDoctor);
     }
 
-    public User saveNewUser(User user) {
-        UserEntity savedUser = userJpaRepository.save(userEntityMapper.MapToEntityForPatient(user));
 
-        return userEntityMapper.mapFromEntity(savedUser);
-    }
 }

@@ -21,7 +21,7 @@ public interface AppointmentsJpaRepository extends JpaRepository<AppointmentsEnt
     where app.patient.patientId = :patientId
     and app.appointmentStatus.status = 'Scheduled'
     """)
-    Set<AppointmentsEntity> findByPatientIdWithScheduled(@Param("patientId") Integer patientId);
+    List<AppointmentsEntity> findByPatientIdWithScheduled(@Param("patientId") Integer patientId);
 
 
 

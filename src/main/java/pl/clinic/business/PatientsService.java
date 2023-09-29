@@ -25,6 +25,7 @@ public class PatientsService {
                 .orElseThrow(() -> new NotFoundException("Patient not found"));
     }
 
+    @Transactional
     public Patients saveNewPatient(Patients newPatient) {
         return patientsRepository.save(newPatient);
     }
