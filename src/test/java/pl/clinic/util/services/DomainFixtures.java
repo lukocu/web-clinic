@@ -1,4 +1,4 @@
-package pl.clinic.util;
+package pl.clinic.util.services;
 
 import lombok.experimental.UtilityClass;
 import pl.clinic.domain.*;

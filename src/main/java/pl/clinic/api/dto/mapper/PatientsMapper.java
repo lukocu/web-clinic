@@ -48,17 +48,5 @@ public interface PatientsMapper {
 
     }
 
-   default Patients mapFromDto(PatientsDTO patient){
-     return    Patients.builder()
-                .name(patient.getName())
-                .surname(patient.getSurname())
-                .pesel(patient.getPesel())
-                .birthDate(patient.getBirthDate())
-                .address(patient.getAddress())
-                .phone(patient.getPhone())
-                .appointments(patient.getAppointment().stream()
-                        .map(AppointmentsMapper.INSTANCE::mapFromDtoForPatient)
-                        .collect(Collectors.toSet()))
-                .build();
-    }
+
 }

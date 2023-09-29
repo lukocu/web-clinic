@@ -1,216 +1,156 @@
 package pl.clinic.util;
 
-import lombok.experimental.UtilityClass;
+import pl.clinic.api.dto.*;
 import pl.clinic.domain.*;
-import pl.clinic.infrastructure.database.entity.*;
 
 import java.math.BigDecimal;
 import java.time.*;
 import java.util.Set;
 
-@UtilityClass
-public class EntityFixtures {
-    ///JPA TEST
-    public static PatientsEntity patientWithoutVisits() {
-        return PatientsEntity.builder()
-                .patientId(100)
-                .name("John")
-                .surname("Mago")
-                .pesel("95011257943")
-                .birthDate(LocalDate.of(1990, 6, 15))
-                .address("123 Main St")
-                .phone(String.valueOf(111 - 222 - 333))
-                .build();
-    }
-
-
-    public static UserEntity doctorUser() {
-        return UserEntity.builder()
-                .username("doctor100")
-                .email("doctor@example.com")
-                .password("test")
-                .active(true)
-                .roles(Set.of(RoleEntity.builder()
-                        .role("DOCTOR")
-                        .build()))
-                .patient(null)
-                .build();
-    }
-
-
-    public static UserEntity patientUser() {
-        return UserEntity.builder()
-                .username("patient100")
-                .email("patient100@example.com")
-                .password("test")
-                .active(true)
-                .roles(Set.of(RoleEntity.builder()
-                        .role("PATIENT")
-                        .build()))
-                .doctors(null)
-                .build();
-    }
-
-    //UNIT TEST
-
-    ///////////////////////////////////////////////////////////////////////////
-
-    /////
-    public static UserEntity userEntity1() {
-        return UserEntity.builder()
+public class DTOFixtures {
+    public static UserRegistrationDto user1() {
+        return UserRegistrationDto.builder()
                 .username("admin123")
                 .email("admin@example.com")
                 .password("test")
-                .roles(Set.of(adminRoleEntity()))
                 .active(true)
                 .build();
     }
 
-    public static UserEntity userEntity2() {
-        return UserEntity.builder()
+    public static UserRegistrationDto user2() {
+        return UserRegistrationDto.builder()
                 .username("doctor1")
                 .email("doctor1@example.com")
                 .password("test")
-                .roles(Set.of(doctorRoleEntity()))
+                .role(doctorRole().getRole())
                 .active(true)
                 .build();
     }
 
-    public static UserEntity userEntity3() {
-        return UserEntity.builder()
+    public static UserRegistrationDto user3() {
+        return UserRegistrationDto.builder()
                 .username("doctor2")
                 .email("doctor2@example.com")
                 .password("test")
-                .roles(Set.of(doctorRoleEntity()))
+                .role(doctorRole().getRole())
                 .active(true)
                 .build();
     }
 
-    public static UserEntity userEntity4() {
-        return UserEntity.builder()
+    public static UserRegistrationDto user4() {
+        return UserRegistrationDto.builder()
                 .username("patient1")
                 .email("patient1@example.com")
                 .password("test")
-                .roles(Set.of(patientRoleEntity()))
+                .role(patientRole().getRole())
                 .active(true)
                 .build();
     }
 
-    public static UserEntity userEntity5() {
-        return UserEntity.builder()
+    public static UserRegistrationDto user5() {
+        return UserRegistrationDto.builder()
                 .username("patient2")
                 .email("patient2@example.com")
                 .password("test")
-                .roles(Set.of(patientRoleEntity()))
                 .active(true)
+                .role(patientRole().getRole())
                 .build();
     }
-
-    public static UserEntity userEntity6() {
-        return UserEntity.builder()
+    public static UserRegistrationDto user6() {
+        return UserRegistrationDto.builder()
                 .username("patient3")
                 .email("patient3@example.com")
                 .password("test")
-                .roles(Set.of(patientRoleEntity()))
+                .role(patientRole().getRole())
                 .active(true)
                 .build();
     }
-
-    public static UserEntity userEntity7() {
-        return UserEntity.builder()
+    public static UserRegistrationDto user7() {
+        return UserRegistrationDto.builder()
                 .username("patient4")
                 .email("patient4@example.com")
                 .password("test")
-                .roles(Set.of(patientRoleEntity()))
+                .role(patientRole().getRole())
                 .active(true)
                 .build();
     }
 
 
-    public static RoleEntity adminRoleEntity() {
-        return RoleEntity.builder()
+    public static Role adminRole() {
+        return Role.builder()
                 .role("ADMIN")
                 .build();
     }
 
-    public static RoleEntity doctorRoleEntity() {
-        return RoleEntity.builder()
+    public static Role doctorRole() {
+        return Role.builder()
                 .role("DOCTOR")
                 .build();
     }
 
-    public static RoleEntity patientRoleEntity() {
-        return RoleEntity.builder()
+    public static Role patientRole() {
+        return Role.builder()
                 .role("PATIENT")
                 .build();
     }
-
-    public static SpecializationEntity cardiologySpecializationEntity() {
-        return SpecializationEntity.builder()
+    public static SpecializationDTO cardiologySpecialization() {
+        return SpecializationDTO.builder()
                 .specializationId(1)
                 .specializationName("Cardiology")
                 .build();
     }
 
-    public static SpecializationEntity dermatologySpecializationEntity() {
-        return SpecializationEntity.builder()
+    public static SpecializationDTO dermatologySpecialization() {
+        return SpecializationDTO.builder()
                 .specializationId(2)
                 .specializationName("Dermatology")
                 .build();
     }
 
-    public static SpecializationEntity pediatricsSpecializationEntity() {
-        return SpecializationEntity.builder()
+    public static SpecializationDTO pediatricsSpecialization() {
+        return SpecializationDTO.builder()
                 .specializationId(3)
                 .specializationName("Pediatrics")
                 .build();
     }
-
-    public static DoctorsEntity doctor1() {
-        return DoctorsEntity.builder()
+    public static DoctorDTO doctor1() {
+        return DoctorDTO.builder()
                 .name("John")
                 .surname("Smith")
                 .pesel("88092556231")
                 .phone("123456789")
-                .user(userEntity2())
                 .offices(Set.of(officeForDoctor1()))
-                .specializations(Set.of(pediatricsSpecializationEntity()))
+                .specializationNames(Set.of(pediatricsSpecialization()))
                 .build();
     }
 
-    public static DoctorsEntity doctor2() {
-        return DoctorsEntity.builder()
+    public static DoctorDTO doctor2() {
+        return DoctorDTO.builder()
                 .name("Emily")
                 .surname("Johnson")
                 .pesel("78051523148")
                 .phone("987654321")
-                .user(userEntity3())
-
-                .specializations(Set.of(dermatologySpecializationEntity(), cardiologySpecializationEntity()))
+                .specializationNames(Set.of(dermatologySpecialization(),cardiologySpecialization()))
                 .build();
     }
-
-    public static OfficeEntity officeForDoctor1() {
-        return OfficeEntity.builder()
+    public static OfficeDTO officeForDoctor1() {
+        return OfficeDTO.builder()
+                .officeId(1)
                 .firstConsultationFee(BigDecimal.valueOf(100.00))
                 .followupConsultationFee(BigDecimal.valueOf(50.00))
-                .officeDoctorAvailabilities(Set.of(officeAvailabilityDoctor1()))
                 .build();
     }
 
-    public static OfficeEntity officeForDoctor2() {
-        return OfficeEntity.builder()
+    public static OfficeDTO officeForDoctor2() {
+        return OfficeDTO.builder()
+                .officeId(2)
+                .doctor(doctor2())
                 .firstConsultationFee(BigDecimal.valueOf(150.00))
                 .followupConsultationFee(BigDecimal.valueOf(75.00))
-                .officeDoctorAvailabilities(Set.of(officeAvailabilityDoctor2_1(),
-                        officeAvailabilityDoctor2_2(),
-                        officeAvailabilityDoctor2_3(),
-                        officeAvailabilityDoctor2_4()))
                 .build();
     }
-
-    public static PatientsEntity patient1() {
-        return PatientsEntity.builder()
+    public static PatientsDTO patient1() {
+        return PatientsDTO.builder()
                 .patientId(1)
                 .name("Alice")
                 .surname("Smith")
@@ -218,12 +158,11 @@ public class EntityFixtures {
                 .birthDate(LocalDate.of(1990, 5, 15))
                 .address("123 Main St")
                 .phone("555-1234")
-                .user(userEntity4())
                 .build();
     }
 
-    public static PatientsEntity patient2() {
-        return PatientsEntity.builder()
+    public static PatientsDTO patient2() {
+        return PatientsDTO.builder()
                 .patientId(2)
                 .name("Bob")
                 .surname("Johnson")
@@ -231,12 +170,11 @@ public class EntityFixtures {
                 .birthDate(LocalDate.of(1985, 10, 20))
                 .address("456 Elm St")
                 .phone("555-5678")
-                .user(userEntity5())
                 .build();
     }
 
-    public static PatientsEntity patient3() {
-        return PatientsEntity.builder()
+    public static PatientsDTO patient3() {
+        return PatientsDTO.builder()
                 .patientId(3)
                 .name("Jake")
                 .surname("John")
@@ -244,12 +182,11 @@ public class EntityFixtures {
                 .birthDate(LocalDate.of(1987, 12, 23))
                 .address("456 Dln St")
                 .phone("555-567-258")
-                .user(userEntity6())
                 .build();
     }
 
-    public static PatientsEntity patient4() {
-        return PatientsEntity.builder()
+    public static PatientsDTO patient4() {
+        return PatientsDTO.builder()
                 .patientId(4)
                 .name("Blake")
                 .surname("Mood")
@@ -257,13 +194,10 @@ public class EntityFixtures {
                 .birthDate(LocalDate.of(1995, 12, 24))
                 .address("456 Main St")
                 .phone("555-567-128")
-                .user(userEntity7())
                 .build();
     }
-
-    public static OfficeDoctorAvailabilityEntity officeAvailabilityDoctor1() {
-        return OfficeDoctorAvailabilityEntity.builder()
-                .officeAvailabilityId(1)
+    public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor1() {
+        return OfficeDoctorAvailabilityDTO.builder()
                 .date(LocalDate.of(2023, 8, 15))
                 .startTime(LocalTime.of(8, 0, 0))
                 .endTime(LocalTime.of(12, 0, 0))
@@ -271,9 +205,8 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static OfficeDoctorAvailabilityEntity officeAvailabilityDoctor2_1() {
-        return OfficeDoctorAvailabilityEntity.builder()
-                .officeAvailabilityId(2)
+    public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_1() {
+        return OfficeDoctorAvailabilityDTO.builder()
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(14, 0, 0))
                 .endTime(LocalTime.of(15, 0, 0))
@@ -281,9 +214,8 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static OfficeDoctorAvailabilityEntity officeAvailabilityDoctor2_2() {
-        return OfficeDoctorAvailabilityEntity.builder()
-                .officeAvailabilityId(3)
+    public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_2() {
+        return OfficeDoctorAvailabilityDTO.builder()
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(16, 0, 0))
                 .endTime(LocalTime.of(17, 0, 0))
@@ -291,9 +223,8 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static OfficeDoctorAvailabilityEntity officeAvailabilityDoctor2_3() {
-        return OfficeDoctorAvailabilityEntity.builder()
-                .officeAvailabilityId(4)
+    public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_3() {
+        return OfficeDoctorAvailabilityDTO.builder()
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(17, 0, 0))
                 .endTime(LocalTime.of(18, 0, 0))
@@ -301,9 +232,8 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static OfficeDoctorAvailabilityEntity officeAvailabilityDoctor2_4() {
-        return OfficeDoctorAvailabilityEntity.builder()
-                .officeAvailabilityId(5)
+    public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_4() {
+        return OfficeDoctorAvailabilityDTO.builder()
                 .date(LocalDate.of(2023, 8, 22))
                 .startTime(LocalTime.of(15, 0, 0))
                 .endTime(LocalTime.of(16, 0, 0))
@@ -311,133 +241,133 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static AppointmentStatusEntity scheduledStatusEntity() {
-        return AppointmentStatusEntity.builder()
-                .status(Status.Scheduled)
+    public static AppointmentStatusDTO scheduledStatus() {
+        return AppointmentStatusDTO.builder()
+                .appointmentStatusId(1)
+                .status("Scheduled")
                 .build();
     }
 
-    public static AppointmentStatusEntity completedStatusEntity() {
-        return AppointmentStatusEntity.builder()
-                .status(Status.Completed)
+    public static AppointmentStatusDTO completedStatus() {
+        return AppointmentStatusDTO.builder()
+                .appointmentStatusId(2)
+                .status("Completed")
                 .build();
     }
 
-    public static AppointmentStatusEntity canceledStatusEntity() {
-        return AppointmentStatusEntity.builder()
-                .status(Status.Canceled)
+    public static AppointmentStatusDTO canceledStatus() {
+        return AppointmentStatusDTO.builder()
+                .appointmentStatusId(3)
+                .status("Canceled")
                 .build();
     }
-
-    public static AppointmentsEntity appointment1() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment1() {
+        return AppointmentsDTO.builder()
                 .patient(patient1())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-08-17T14:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(scheduledStatusEntity())
+                .appointmentStatus(scheduledStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-08-17"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment2() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment2() {
+        return AppointmentsDTO.builder()
                 .patient(patient2())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-08-22T15:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(scheduledStatusEntity())
+                .appointmentStatus(scheduledStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-08-18"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment3() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment3() {
+        return AppointmentsDTO.builder()
                 .patient(patient1())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-08-17T14:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(canceledStatusEntity())
+                .appointmentStatus(canceledStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-08-17"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment4() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment4() {
+        return AppointmentsDTO.builder()
                 .patient(patient2())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-08-17T17:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(canceledStatusEntity())
+                .appointmentStatus(canceledStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-08-18"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment5() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment5() {
+        return AppointmentsDTO.builder()
                 .patient(patient2())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-15T10:00:00"), ZoneOffset.UTC))
                 .actualEndTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-15T11:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(completedStatusEntity())
+                .appointmentStatus(completedStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-06-10"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment6() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment6() {
+        return AppointmentsDTO.builder()
                 .patient(patient2())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T10:00:00"), ZoneOffset.UTC))
                 .actualEndTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T11:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(completedStatusEntity())
+                .appointmentStatus(completedStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-06-10"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment7() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment7() {
+        return AppointmentsDTO.builder()
                 .patient(patient3())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T10:00:00"), ZoneOffset.UTC))
                 .actualEndTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T11:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(canceledStatusEntity())
+                .appointmentStatus(canceledStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-06-11"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment8() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment8() {
+        return AppointmentsDTO.builder()
                 .patient(patient3())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-17T10:00:00"), ZoneOffset.UTC))
                 .actualEndTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T11:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(canceledStatusEntity())
+                .appointmentStatus(canceledStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-06-12"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment9() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment9() {
+        return AppointmentsDTO.builder()
                 .patient(patient4())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T11:00:00"), ZoneOffset.UTC))
                 .actualEndTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T11:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(completedStatusEntity())
+                .appointmentStatus(completedStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-06-13"))
                 .build();
     }
 
-    public static AppointmentsEntity appointment10() {
-        return AppointmentsEntity.builder()
+    public static AppointmentsDTO appointment10() {
+        return AppointmentsDTO.builder()
                 .patient(patient4())
                 .office(officeForDoctor2())
                 .probableStartTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-24T12:00:00"), ZoneOffset.UTC))
                 .actualEndTime(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T11:00:00"), ZoneOffset.UTC))
-                .appointmentStatus(completedStatusEntity())
+                .appointmentStatus(completedStatus())
                 .appointmentTakenDate(LocalDate.parse("2023-06-23"))
                 .build();
     }
-
-    public static MedicationsEntity aspirinMedicationsEntity() {
-        return MedicationsEntity.builder()
-                .medicationId(1)
+    public static MedicationsDTO aspirinMedications() {
+        return MedicationsDTO.builder()
                 .medicationName("Aspirin")
                 .dosage("500mg")
                 .frequency("Once a day")
@@ -445,9 +375,8 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static MedicationsEntity ibuprofenMedicationsEntity() {
-        return MedicationsEntity.builder()
-                .medicationId(2)
+    public static MedicationsDTO ibuprofenMedications() {
+        return MedicationsDTO.builder()
                 .medicationName("Ibuprofen")
                 .dosage("200mg")
                 .frequency("Twice a day")
@@ -455,114 +384,108 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static MedicationsEntity antibioticMedicationsEntity() {
-        return MedicationsEntity.builder()
-                .medicationId(3)
+    public static MedicationsDTO antibioticMedications() {
+        return MedicationsDTO.builder()
                 .medicationName("Antibiotic")
                 .dosage("250mg")
                 .frequency("Three times a day")
                 .duration("14 days")
                 .build();
     }
-
-    public static PrescriptionsEntity prescription1() {
-        return PrescriptionsEntity.builder()
-                .prescriptionDate(OffsetDateTime.of(LocalDateTime.of(
-                        2023, 9, 26, 8, 0), ZoneOffset.UTC))
-                .prescriptionDateEnd(OffsetDateTime.of(LocalDateTime.of(
-                        2023, 10, 5, 8, 0), ZoneOffset.UTC))
+    public static PrescriptionsDTO prescription1() {
+        return PrescriptionsDTO.builder()
+                .prescriptionDate(OffsetDateTime.of(
+                        LocalDateTime.of(2023, 9, 26, 8, 0), ZoneOffset.UTC))
+                .prescriptionDateEnd(OffsetDateTime.of(
+                        LocalDateTime.of(2023, 10, 5, 8, 0), ZoneOffset.UTC))
                 .prescriptionAvailable(true)
-                .medications(Set.of(aspirinMedicationsEntity()))
+                .medications(Set.of(aspirinMedications()))
                 .build();
     }
 
-    public static PrescriptionsEntity prescription2() {
-        return PrescriptionsEntity.builder()
-                .prescriptionDate(OffsetDateTime.of(LocalDateTime.of(
-                        2023, 9, 27, 10, 30), ZoneOffset.UTC))
-                .prescriptionDateEnd(OffsetDateTime.of(LocalDateTime.of(
-                        2023, 10, 10, 10, 30), ZoneOffset.UTC))
+    public static PrescriptionsDTO prescription2() {
+        return PrescriptionsDTO.builder()
+                .prescriptionDate(OffsetDateTime.of(
+                        LocalDateTime.of(2023, 9, 27, 10, 30), ZoneOffset.UTC))
+                .prescriptionDateEnd(OffsetDateTime.of(
+                        LocalDateTime.of(2023, 10, 10, 10, 30), ZoneOffset.UTC))
                 .prescriptionAvailable(true)
-                .medications(Set.of(ibuprofenMedicationsEntity(),antibioticMedicationsEntity()))
+                .medications(Set.of(ibuprofenMedications(),antibioticMedications()))
                 .build();
     }
 
-    public static PrescriptionsEntity prescription3() {
-        return PrescriptionsEntity.builder()
+    public static PrescriptionsDTO prescription3() {
+        return PrescriptionsDTO.builder()
                 .prescriptionDate(OffsetDateTime.of(LocalDateTime.of(
                         2023, 6, 16, 11, 0), ZoneOffset.UTC))
                 .prescriptionDateEnd(OffsetDateTime.of(LocalDateTime.of(
                         2023, 8, 16, 11, 0), ZoneOffset.UTC))
                 .prescriptionAvailable(true)
-                .medications(Set.of(antibioticMedicationsEntity()))
+                .medications(Set.of(antibioticMedications()))
                 .build();
     }
 
-    public static PrescriptionsEntity prescription4() {
-        return PrescriptionsEntity.builder()
+    public static PrescriptionsDTO prescription4() {
+        return PrescriptionsDTO.builder()
                 .prescriptionDate(OffsetDateTime.of(LocalDateTime.of(
                         2023, 6, 24, 12, 0), ZoneOffset.UTC))
                 .prescriptionDateEnd(OffsetDateTime.of(LocalDateTime.of(
                         2023, 8, 24, 12, 0), ZoneOffset.UTC))
                 .prescriptionAvailable(true)
-                .medications(Set.of(antibioticMedicationsEntity()))
+                .medications(Set.of(antibioticMedications()))
                 .build();
     }
-
-    public static DiseasesEntity fluDiseaseEntity() {
-        return DiseasesEntity.builder()
-                .diseaseId(1)
+    public static DiseasesDTO fluDisease() {
+        return DiseasesDTO.builder()
                 .diseaseName("Flu")
                 .diseaseDescription("Upper respiratory tract infection")
                 .build();
     }
 
-    public static DiseasesEntity headacheDiseaseEntity() {
-        return DiseasesEntity.builder()
-                .diseaseId(2)
+    public static DiseasesDTO headacheDisease() {
+        return DiseasesDTO.builder()
                 .diseaseName("Headache")
                 .diseaseDescription("Frequent headaches and migraines")
                 .build();
     }
 
-    public static DiseasesEntity feverDiseaseEntity() {
-        return DiseasesEntity.builder()
-                .diseaseId(3)
+    public static DiseasesDTO feverDisease() {
+        return DiseasesDTO.builder()
                 .diseaseName("Fever")
                 .diseaseDescription("Condition of fever due to infection")
                 .build();
     }
 
-    public static DiseasesEntity tonsillitisDiseaseEntity() {
-        return DiseasesEntity.builder()
+    public static DiseasesDTO tonsillitisDisease() {
+        return DiseasesDTO.builder()
                 .diseaseName("Tonsillitis")
                 .diseaseDescription("In the most common sense, acute inflammation of the palatine tonsils")
                 .build();
     }
-
-    public static PatientCardEntity patientCardEntity1() {
-        return PatientCardEntity.builder()
+    public static PatientCardDTO patientCard1() {
+        return PatientCardDTO.builder()
+                .diseases(Set.of(fluDisease(),headacheDisease()))
                 .diagnosisDate(OffsetDateTime.of(LocalDateTime.parse("2023-06-15T10:00:00"), ZoneOffset.UTC))
                 .diagnosisNote("Przykładowa diagnoza 1")
                 .patient(patient1())
                 .doctor(doctor1())
                 .prescription(prescription1())
-                .diseases(Set.of(fluDiseaseEntity(), headacheDiseaseEntity()))
                 .build();
     }
 
-    public static PatientCardEntity patientCardEntity2() {
-        return PatientCardEntity.builder()
+    public static PatientCardDTO patientCard2() {
+        return PatientCardDTO.builder()
                 .diagnosisDate(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T10:00:00"), ZoneOffset.UTC))
                 .diagnosisNote("Przykładowa diagnoza 2")
                 .patient(patient2())
                 .doctor(doctor1())
                 .prescription(prescription2())
+                .diseases(Set.of(feverDisease()))
                 .build();
     }
 
-    public static PatientCardEntity patientCardEntity3() {
-        return PatientCardEntity.builder()
+    public static PatientCardDTO patientCard3() {
+        return PatientCardDTO.builder()
                 .diagnosisDate(OffsetDateTime.of(LocalDateTime.parse("2023-06-16T11:00:00"), ZoneOffset.UTC))
                 .diagnosisNote("Przykładowa diagnoza 3")
                 .patient(patient4())
@@ -571,15 +494,13 @@ public class EntityFixtures {
                 .build();
     }
 
-    public static PatientCardEntity patientCardEntity4() {
-        return PatientCardEntity.builder()
+    public static PatientCardDTO patientCard4() {
+        return PatientCardDTO.builder()
                 .diagnosisDate(OffsetDateTime.of(LocalDateTime.parse("2023-06-24T12:00:00"), ZoneOffset.UTC))
                 .diagnosisNote("Przykładowa diagnoza 4")
                 .patient(patient4())
                 .doctor(doctor1())
                 .prescription(prescription4())
-                .diseases(Set.of(tonsillitisDiseaseEntity()))
                 .build();
     }
-
 }

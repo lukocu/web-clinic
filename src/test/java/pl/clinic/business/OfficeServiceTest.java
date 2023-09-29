@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.clinic.business.dao.OfficeRepository;
 import pl.clinic.domain.Office;
 import pl.clinic.domain.exception.NotFoundException;
-import pl.clinic.util.DomainFixtures;
+import pl.clinic.util.services.DomainFixtures;
 
 import java.util.Optional;
 

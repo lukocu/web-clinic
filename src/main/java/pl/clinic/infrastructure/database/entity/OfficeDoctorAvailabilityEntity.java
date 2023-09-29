@@ -35,7 +35,7 @@ public class OfficeDoctorAvailabilityEntity {
     @Column(name = "availability_status")
     private Boolean availabilityStatus;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "office_id")
     private OfficeEntity office;
 }

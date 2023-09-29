@@ -6,7 +6,7 @@ import java.util.Set;
 
 @With
 @Value
-@EqualsAndHashCode(of = {"diseaseId"})
+@EqualsAndHashCode(of = {"diseaseName","diseaseDescription"})
 @ToString(of = {"diseaseId", "diseaseName", "diseaseDescription"})
 @Builder
 public class Diseases {

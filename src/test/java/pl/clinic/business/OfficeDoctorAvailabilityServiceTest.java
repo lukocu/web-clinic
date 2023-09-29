@@ -9,7 +9,7 @@ import pl.clinic.business.dao.OfficeDoctorAvailabilityRepository;
 import pl.clinic.domain.Office;
 import pl.clinic.domain.OfficeDoctorAvailability;
 import pl.clinic.domain.exception.NotFoundException;
-import pl.clinic.util.DomainFixtures;
+import pl.clinic.util.services.DomainFixtures;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

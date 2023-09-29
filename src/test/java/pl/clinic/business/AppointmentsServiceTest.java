@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.clinic.business.dao.AppointmentsRepository;
 import pl.clinic.domain.*;
-import pl.clinic.util.DomainFixtures;
+import pl.clinic.util.services.DomainFixtures;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

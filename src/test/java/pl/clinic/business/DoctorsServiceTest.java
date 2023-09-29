@@ -8,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.clinic.business.dao.DoctorsRepository;
 import pl.clinic.domain.Doctors;
 import pl.clinic.domain.exception.NotFoundException;
-import pl.clinic.util.DomainFixtures;
+import pl.clinic.util.services.DomainFixtures;
 
 import java.util.List;
 import java.util.Optional;

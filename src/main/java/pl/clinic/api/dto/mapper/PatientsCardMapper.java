@@ -1,6 +1,8 @@
 package pl.clinic.api.dto.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.PatientCardDTO;
 import pl.clinic.domain.PatientCard;
 
@@ -9,6 +11,8 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface PatientsCardMapper {
 
+
+    PatientsCardMapper INSTANCE = Mappers.getMapper(PatientsCardMapper.class);
 
     default PatientCard mapFromDto(PatientCardDTO patientCardDTO) {
         return PatientCard.builder()

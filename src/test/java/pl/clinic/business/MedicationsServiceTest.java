@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.clinic.business.dao.MedicationsRepository;
 import pl.clinic.domain.Medications;
-import pl.clinic.util.DomainFixtures;
+import pl.clinic.util.services.DomainFixtures;
 
 import java.util.HashSet;
 import java.util.Optional;

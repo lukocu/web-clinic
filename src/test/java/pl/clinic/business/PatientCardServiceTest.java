@@ -3,17 +3,13 @@ package pl.clinic.business;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.clinic.business.PatientCardService;
 import pl.clinic.business.dao.PatientCardRepository;
 import pl.clinic.domain.PatientCard;
-import pl.clinic.domain.Prescriptions;
-import pl.clinic.util.DomainFixtures;
+import pl.clinic.util.services.DomainFixtures;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

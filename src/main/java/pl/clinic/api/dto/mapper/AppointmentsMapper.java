@@ -35,17 +35,7 @@ public interface AppointmentsMapper {
                 .build();
     }
 
-   default Appointments mapFromDtoForPatient(AppointmentsDTO appointmentsDTO) {
-       return Appointments.builder()
-               .appointmentId(appointmentsDTO.getAppointmentId())
-               .probableStartTime(appointmentsDTO.getProbableStartTime())
-               .actualEndTime(appointmentsDTO.getActualEndTime())
-               .appointmentTakenDate(appointmentsDTO.getAppointmentTakenDate())
-               .office(OfficeMapper.INSTANCE.mapFromDtoWithoutAppointment(appointmentsDTO.getOffice()))
-               .appointmentStatus(AppointmentStatusMapper.INSTANCE.mapFromDto(appointmentsDTO.getAppointmentStatus()))
-               .build();
 
-   }
 
     default Appointments mapFromDtoWithoutOffice(AppointmentsDTO appointmentsDTO){
         return Appointments.builder()

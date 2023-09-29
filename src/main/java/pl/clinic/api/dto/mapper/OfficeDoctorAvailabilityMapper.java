@@ -33,15 +33,7 @@ public interface OfficeDoctorAvailabilityMapper {
                 .build();
     }
 
-    default OfficeDoctorAvailability mapFromDtoWithoutOffice(OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO) {
-        return OfficeDoctorAvailability.builder()
-                .officeAvailabilityId(officeDoctorAvailabilityDTO.getOfficeAvailabilityId())
-                .date(officeDoctorAvailabilityDTO.getDate())
-                .startTime(officeDoctorAvailabilityDTO.getStartTime())
-                .endTime(officeDoctorAvailabilityDTO.getEndTime())
-                .availabilityStatus(officeDoctorAvailabilityDTO.getAvailabilityStatus())
-                .build();
-    }
+
 
     default OfficeDoctorAvailability mapFromDtoWithOffice(OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO) {
         return OfficeDoctorAvailability.builder()
@@ -56,11 +48,3 @@ public interface OfficeDoctorAvailabilityMapper {
 
     }
 }
-/*
-.office(Office.builder()
-        .officeId(officeDoctorAvailabilityDTO.getOfficeId())
-        .firstConsultationFee(null)
-        .followupConsultationFee(null)
-        .doctor(null)
-        .appointments())
-        .build();*/

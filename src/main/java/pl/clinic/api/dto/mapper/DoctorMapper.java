@@ -47,7 +47,7 @@ public interface DoctorMapper {
 
     }
 
-   default Doctors mapFromDtoSpecAndOffices(DoctorDTO doctor){
+   default Doctors mapFromDtoSpec(DoctorDTO doctor){
         return Doctors.builder().name(doctor.getName())
                 .surname(doctor.getSurname())
                 .phone(doctor.getPhone())
@@ -55,11 +55,9 @@ public interface DoctorMapper {
                 .specializations(doctor.getSpecializationNames().stream()
                         .map(SpecializationMapper.INSTANCE::mapFromDto)
                         .collect(Collectors.toSet()))
-                .offices(doctor.getOffices().stream()
-                        .map(OfficeMapper.INSTANCE::mapFromDtoForDoctor)
-                        .collect(Collectors.toSet()))
                 .build();
     }
+
 
 
 }
