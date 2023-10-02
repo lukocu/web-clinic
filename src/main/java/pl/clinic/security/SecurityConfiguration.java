@@ -52,6 +52,8 @@ public class SecurityConfiguration {
                                         .requestMatchers( "/appointment/**","/patient_dashboard/**").hasAnyAuthority("PATIENT")
                                         .requestMatchers("/doctor_dashboard/**","/visit/**").hasAnyAuthority("DOCTOR")
                                         .requestMatchers("/doctor_list/**","/patient_card").hasAnyAuthority("PATIENT", "DOCTOR")
+                                        .requestMatchers("/appointment/{officeId}/book").hasRole("PATIENT")
+                                        .requestMatchers("/users").hasRole("ADMIN")
                         // .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 ).formLogin(
                         form -> form

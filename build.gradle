@@ -57,12 +57,12 @@ dependencies {
 }
 jacoco {
     toolVersion = "0.8.7"
-    reportsDir = file("$buildDir/reports/jacoco") // Katalog z raportami JaCoCo
+    reportsDir = file("$buildDir/reports/jacoco")
 }
 tasks.named('test') {
     useJUnitPlatform()
 }
 tasks.named("jacocoTestReport") {
     dependsOn(test)
-    dependsOn(jacocoTestCoverageVerification) // Jeśli chcesz też weryfikować pokrycie
+    dependsOn(jacocoTestCoverageVerification)
 }

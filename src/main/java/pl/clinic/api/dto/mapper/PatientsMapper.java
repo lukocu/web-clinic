@@ -2,6 +2,7 @@ package pl.clinic.api.dto.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 import pl.clinic.api.dto.PatientsDTO;
 import pl.clinic.domain.Patients;
 
