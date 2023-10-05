@@ -35,7 +35,7 @@ public class UserEntity {
     private Boolean active;
 
 
-    @ManyToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(
             name = "clinic_user_role",
             joinColumns = @JoinColumn(name = "user_id"),

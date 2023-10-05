@@ -157,7 +157,7 @@ public class AppointmentsServiceTest {
         officeDoctorAvailabilityService
                 .getOfficeAvailabilityByStartTimeAndEndTime(startTime,existingAppointment.getOffice());
 
-        appointmentsService.UpdateStatus(appointmentId, availability);
+        appointmentsService.updateStatus(appointmentId, availability);
 
         // Then
 

@@ -24,7 +24,7 @@ public class ClinicUserDetailsService  implements UserDetailsService{
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(userName)
-                .orElseThrow();
+                .orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika o nazwie: " + userName));
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
     }

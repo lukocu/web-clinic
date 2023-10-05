@@ -20,13 +20,30 @@ public interface OfficeEntityMapper {
     Office mapFromEntity(OfficeEntity entity);
 
 
-  default   OfficeEntity mapToEntity(Office office){
-   return    OfficeEntity.builder()
-              .officeId(office.getOfficeId())
-              .firstConsultationFee(office.getFirstConsultationFee())
-              .followupConsultationFee(office.getFollowupConsultationFee())
-              .build();
-  }
+    default OfficeEntity mapToEntity(Office office) {
+        return OfficeEntity.builder()
+                .officeId(office.getOfficeId())
+                .firstConsultationFee(office.getFirstConsultationFee())
+                .followupConsultationFee(office.getFollowupConsultationFee())
+                .build();
+    }
+
+    default OfficeEntity mapToEntityWithDoctor(Office office) {
+        return OfficeEntity.builder()
+                .officeId(office.getOfficeId())
+                .firstConsultationFee(office.getFirstConsultationFee())
+                .followupConsultationFee(office.getFollowupConsultationFee())
+                .doctor(DoctorsEntityMapper.INSTANCE.mapToEntity(office.getDoctor()))
+                .build();
+    }
+    default Office mapFromEntityWithDoctor(OfficeEntity entity) {
+        return Office.builder()
+                .officeId(entity.getOfficeId())
+                .firstConsultationFee(entity.getFirstConsultationFee())
+                .followupConsultationFee(entity.getFollowupConsultationFee())
+                .doctor(DoctorsEntityMapper.INSTANCE.mapFromEntity(entity.getDoctor()))
+                .build();
+    }
 
     default Office mapFromEntityWithoutAppointments(OfficeEntity entity) {
         return Office.builder()
@@ -40,6 +57,17 @@ public interface OfficeEntityMapper {
                 .build();
 
     }
+
+    default OfficeEntity mapToEntityWithoutAppointments(Office office) {
+        return OfficeEntity.builder()
+                .officeId(office.getOfficeId())
+                .firstConsultationFee(office.getFirstConsultationFee())
+                .followupConsultationFee(office.getFollowupConsultationFee())
+                .doctor(DoctorsEntityMapper.INSTANCE.mapToEntity(office.getDoctor()))
+                .build();
+
+    }
+
     default Office mapFromEntityWithoutDoctor(OfficeEntity entity) {
         return Office.builder()
                 .officeId(entity.getOfficeId())

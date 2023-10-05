@@ -30,7 +30,7 @@ public interface OfficeDoctorAvailabilityEntityMapper {
                 .startTime(availability.getStartTime())
                 .endTime(availability.getEndTime())
                 .availabilityStatus(availability.getAvailabilityStatus())
-                .office(OfficeEntityMapper.INSTANCE.mapToEntity(availability.getOffice()))
+                .office(OfficeEntityMapper.INSTANCE.mapToEntityWithDoctor(availability.getOffice()))
                 .build();
 
     }
@@ -44,4 +44,10 @@ public interface OfficeDoctorAvailabilityEntityMapper {
                 .office(OfficeEntityMapper.INSTANCE.mapToEntity(availability.getOffice()))
                 .build();
     }
+
+ default    OfficeDoctorAvailability mapFromEntityWithOfficeFields(OfficeDoctorAvailabilityEntity entity){
+     return mapFromEntity(entity)
+             .withOffice(OfficeEntityMapper.INSTANCE.mapFromEntityWithDoctor(entity.getOffice()));
+ }
+
 }

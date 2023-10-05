@@ -3,8 +3,11 @@ package pl.clinic.business;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import pl.clinic.business.dao.PatientCardRepository;
+import pl.clinic.domain.Doctors;
 import pl.clinic.domain.PatientCard;
+import pl.clinic.domain.Patients;
 import pl.clinic.domain.Prescriptions;
 
 import java.time.OffsetDateTime;
@@ -15,7 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class PatientCardService {
 
-
+    private  PatientsService patientService;
+    private DoctorsService doctorsService;
     private PatientCardRepository patientCardRepository;
     private PrescriptionsService prescriptionsService;
 
@@ -42,7 +46,29 @@ public class PatientCardService {
 
         return patientCardRepository.findPatientCardByPatientId(patientId);
     }
+    @Transactional
+    public PatientCard savePatientCard(PatientCard patientCard) {
 
+        Patients patients =patientService.getPatient(patientCard.getPatient().getPatientId());
+        Doctors doctor=doctorsService.getDoctor(patientCard.getDoctor().getDoctorId());
+
+        PatientCard newPatientCard =
+                PatientCard.builder()
+                        .patient(patients)
+                        .doctor(doctor)
+                        .diagnosisDate(patientCard.getDiagnosisDate())
+                        .diagnosisNote(patientCard.getDiagnosisNote())
+                        .prescription(patientCard.getPrescription())
+                        .diseases(patientCard.getDiseases())
+                        .build();
+
+       return   patientCardRepository.save(newPatientCard);
+    }
+
+    @Transactional
+    public void deletePatientCard(Integer patientCardId) {
+        patientCardRepository.deleteById(patientCardId);
+    }
 
 }
 

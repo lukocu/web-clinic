@@ -175,7 +175,7 @@ public class VisitController {
         Appointments currentAppointement = appointmentsService
                 .getCurrentAppointmentWithOffice(visit.getDate(), visit.getStartTime(), office);
 
-         appointmentsService.UpdateStatus(currentAppointement.getAppointmentId(),visit);
+         appointmentsService.updateStatus(currentAppointement.getAppointmentId(),visit);
 
         officeDoctorAvailabilityService.removeAvailability(officeAvailabilityId);
 

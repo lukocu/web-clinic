@@ -2,8 +2,6 @@ package pl.clinic.infrastructure.database.repository.mapper;
 
 import org.junit.jupiter.api.Test;
 import pl.clinic.domain.Doctors;
-import pl.clinic.domain.Office;
-import pl.clinic.domain.Specialization;
 import pl.clinic.infrastructure.database.entity.DoctorsEntity;
 import pl.clinic.infrastructure.database.entity.OfficeEntity;
 import pl.clinic.infrastructure.database.entity.SpecializationEntity;
@@ -11,8 +9,6 @@ import pl.clinic.util.DomainData;
 import pl.clinic.util.EntityFixtures;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,7 +43,7 @@ public class DoctorsEntityMapperTest {
 
         Doctors doctor = DomainData.doctor1();
 
-        DoctorsEntity entity = mapper.mapToEntity(doctor);
+        DoctorsEntity entity = mapper.mapToEntityWithSpecializationAndOffices(doctor);
 
 
         boolean allSpecializationsAreInstanceOfSpecializationEntity = entity.getSpecializations()

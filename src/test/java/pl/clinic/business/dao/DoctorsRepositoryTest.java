@@ -12,10 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.clinic.business.dao.DoctorsRepository;
 import pl.clinic.domain.Doctors;
 import pl.clinic.infrastructure.database.entity.DoctorsEntity;
 import pl.clinic.infrastructure.database.repository.jpa.DoctorsJpaRepository;
@@ -66,7 +64,7 @@ public class DoctorsRepositoryTest {
         when(doctorsJpaRepository.findByUserId(userId)).thenReturn(Optional.of(doctorsEntity));
 
 
-        when(doctorsEntityMapper.mapFromEntityWithAllFields(any(DoctorsEntity.class))).thenReturn(doctors);
+        when(doctorsEntityMapper.mapFromEntityWithFields(any(DoctorsEntity.class))).thenReturn(doctors);
 
         // when
         Optional<Doctors> result = doctorsRepository.findByUserId(userId);
@@ -74,6 +72,6 @@ public class DoctorsRepositoryTest {
         // then
         assertTrue(result.isPresent());
         assertEquals(doctors, result.get());
-        Mockito.verify(doctorsEntityMapper).mapFromEntityWithAllFields(doctorsEntity);
+        Mockito.verify(doctorsEntityMapper).mapFromEntityWithFields(doctorsEntity);
     }
 }

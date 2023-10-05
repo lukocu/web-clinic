@@ -35,6 +35,26 @@ public interface UserEntityMapper {
                 .doctors(null)
                 .build();
     }
+    default UserEntity mapToEntityWith(User user) {
+        Set<RoleEntity> roleEntities = user.getRoles().stream()
+                .map(role -> RoleEntity.builder()
+                        .roleId(role.getRoleId())
+                        .role(role.getRole())
+                        .build())
+                .collect(Collectors.toSet());
+
+        return UserEntity.builder()
+                .userId(user.getUserId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .active(user.getActive())
+                .roles(roleEntities)
+                .patient(null)
+                .doctors(null)
+                .build();
+    }
+
 
     @Mapping(target = "doctors", ignore = true)
     @Mapping(target = "patient", ignore = true)

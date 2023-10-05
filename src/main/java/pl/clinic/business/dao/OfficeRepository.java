@@ -3,6 +3,7 @@ package pl.clinic.business.dao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import pl.clinic.domain.Office;
+import pl.clinic.infrastructure.database.entity.OfficeEntity;
 import pl.clinic.infrastructure.database.repository.jpa.OfficeJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.OfficeEntityMapper;
 
@@ -25,6 +26,7 @@ public class OfficeRepository {
                 .map(officeEntity -> officeEntityMapper.mapFromEntityWithoutDoctor(officeEntity))
                 .toList();
     }
+
 
 
 }

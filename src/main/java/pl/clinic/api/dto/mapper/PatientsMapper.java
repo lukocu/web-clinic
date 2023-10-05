@@ -14,6 +14,7 @@ public interface PatientsMapper {
     PatientsMapper INSTANCE = Mappers.getMapper(PatientsMapper.class);
     default Patients mapFromDtoWithoutAppointment(PatientsDTO patientsDTO) {
         return Patients.builder()
+                .patientId(patientsDTO.getPatientId())
                 .name(patientsDTO.getName())
                 .surname(patientsDTO.getSurname())
                 .pesel(patientsDTO.getPesel())
@@ -38,6 +39,7 @@ public interface PatientsMapper {
     }
     default PatientsDTO mapToDto(Patients patient) {
         return PatientsDTO.builder()
+                .patientId(patient.getPatientId())
                 .name(patient.getName())
                 .surname(patient.getSurname())
                 .pesel(patient.getPesel())
@@ -50,4 +52,14 @@ public interface PatientsMapper {
     }
 
 
+    default Patients mapFromDto(PatientsDTO patientsDTO){
+        return Patients.builder()
+                .name(patientsDTO.getName())
+                .surname(patientsDTO.getSurname())
+                .pesel(patientsDTO.getPesel())
+                .birthDate(patientsDTO.getBirthDate())
+                .address(patientsDTO.getAddress())
+                .phone(patientsDTO.getPhone())
+                .build();
+    }
 }

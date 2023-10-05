@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class DoctorDTO {
 
+    Integer doctorId;
 
     String name;
 
@@ -28,5 +29,5 @@ public class DoctorDTO {
 
     Set<OfficeDTO> offices;
 
-     Set<PatientCardDTO> patientCards;
+    Set<PatientCardDTO> patientCards;
 }

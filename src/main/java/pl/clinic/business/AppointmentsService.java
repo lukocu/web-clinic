@@ -54,7 +54,7 @@ public class AppointmentsService {
     }
 
     @Transactional
-    public void UpdateStatus(Integer appointmentId, OfficeDoctorAvailability visit) {
+    public void updateStatus(Integer appointmentId, OfficeDoctorAvailability visit) {
         Appointments currentAppointment = appointmentsRepository.findById(appointmentId)
                 .orElseThrow(() -> new NotFoundException("Appointment not found"));
 

@@ -1,11 +1,19 @@
 package pl.clinic.api.dto.mapper;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.OfficeDTO;
+import pl.clinic.api.dto.OfficeDoctorAvailabilityDTO;
 import pl.clinic.domain.Office;
+import pl.clinic.domain.OfficeDoctorAvailability;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.stream.Collectors;
 
 
@@ -19,7 +27,7 @@ public interface OfficeMapper {
     @Mapping(target = "doctor", ignore = true)
     OfficeDTO mapToDto(Office office);
 
-    
+
     default OfficeDTO mapToDtoForDoctor(Office office) {
         return OfficeDTO.builder()
                 .officeId(office.getOfficeId())
@@ -35,6 +43,15 @@ public interface OfficeMapper {
                 .firstConsultationFee(office.getFirstConsultationFee())
                 .followupConsultationFee(office.getFollowupConsultationFee())
                 .doctor(DoctorMapper.INSTANCE.mapToDto(office.getDoctor()))
+                .build();
+    }
+
+
+    default Office mapFromDto(OfficeDTO officeDTO){
+        return Office.builder()
+                .officeId(officeDTO.getOfficeId())
+                .firstConsultationFee(officeDTO.getFirstConsultationFee())
+                .followupConsultationFee(officeDTO.getFollowupConsultationFee())
                 .build();
     }
 }

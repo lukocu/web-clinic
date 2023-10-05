@@ -28,6 +28,8 @@ public class OfficeDoctorAvailabilityService {
     @Lazy
     private AppointmentsService appointmentsService;
 
+    @Autowired
+    private OfficeService officeService;
 
     @Transactional
     public List<OfficeDoctorAvailability> getAvailableHoursForOffice(Integer officeId) {
@@ -118,7 +120,14 @@ public class OfficeDoctorAvailabilityService {
 
     @Transactional
     public void setAvailable(OfficeDoctorAvailability officeDoctorAvailability) {
-        officeDoctorAvailabilityRepository.save(officeDoctorAvailability.withAvailabilityStatus(true));
+
+        Office office = officeService.getOffice(officeDoctorAvailability.getOffice().getOfficeId());
+
+
+
+        OfficeDoctorAvailability availability = officeDoctorAvailability.withAvailabilityStatus(true)
+                .withOffice(office);
+        officeDoctorAvailabilityRepository.save(availability);
     }
 
     @Transactional
@@ -136,8 +145,7 @@ public class OfficeDoctorAvailabilityService {
                 .orElseThrow(() -> new NotFoundException("Office Availability no found"));
     }
 
-    @Transactional
-    public void addAvailable(OfficeDoctorAvailability officeDoctorAvailability) {
-        officeDoctorAvailabilityRepository.newSave(officeDoctorAvailability);
-    }
+
+
+
 }

@@ -23,6 +23,7 @@ import static org.junit.Assert.*;
 public class UserJpaRepositoryTest {
 
     private UserJpaRepository userJpaRepository;
+    private RoleJpaRepository roleJpaRepository;
 
     @Test
     public void testFindByUsername() {
@@ -30,6 +31,7 @@ public class UserJpaRepositoryTest {
         UserEntity userEntity = EntityFixtures.doctorUser();
         String username = userEntity.getUsername();
 
+        roleJpaRepository.saveAll(userEntity.getRoles());
         userJpaRepository.save(userEntity);
 
 

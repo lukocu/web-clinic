@@ -4,7 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import pl.clinic.api.dto.DoctorDTO;
 import pl.clinic.domain.Doctors;
+import pl.clinic.domain.Specialization;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -27,8 +29,33 @@ public interface DoctorMapper {
                 .build();
 
     }
+    default Doctors mapFromDtoSpecAndOffices(final DoctorDTO doctorDTO) {
+        return Doctors.builder()
+                .name(doctorDTO.getName())
+                .surname(doctorDTO.getSurname())
+                .phone(doctorDTO.getPhone())
+                .pesel(doctorDTO.getPesel())
+                .specializations(doctorDTO.getSpecializationNames().stream()
+                        .map(SpecializationMapper.INSTANCE::mapFromDto)
+                        .collect(Collectors.toSet()))
+                .offices(doctorDTO.getOffices().stream()
+                        .map(OfficeMapper.INSTANCE::mapFromDto)
+                        .collect(Collectors.toSet()))
+                .build();
+
+    }
  default DoctorDTO mapToDto(final Doctors doctor) {
         return DoctorDTO.builder()
+                .doctorId(doctor.getDoctorId())
+                .name(doctor.getName())
+                .surname(doctor.getSurname())
+                .phone(doctor.getPhone())
+                .pesel(doctor.getPesel())
+                .build();
+
+    } default Doctors mapFromDto(final DoctorDTO doctor) {
+        return Doctors.builder()
+                .doctorId(doctor.getDoctorId())
                 .name(doctor.getName())
                 .surname(doctor.getSurname())
                 .phone(doctor.getPhone())
@@ -39,6 +66,7 @@ public interface DoctorMapper {
 
     default Doctors mapFromDtoForPatientCard(DoctorDTO doctor) {
        return Doctors.builder()
+               .doctorId(doctor.getDoctorId())
                 .name(doctor.getName())
                 .surname(doctor.getSurname())
                 .phone(doctor.getPhone())

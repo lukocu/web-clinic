@@ -16,13 +16,19 @@ public class PatientCardRepository {
     private PatientCardEntityMapper patientCardEntityMapper;
 
 
-    public void save(PatientCard existingPatientCard) {
-        patientCardJpaRepository.save(patientCardEntityMapper.mapToEntityWithFields(existingPatientCard));
+    public PatientCard save(PatientCard existingPatientCard) {
+     return patientCardEntityMapper.mapFromEntityWithFields(
+             patientCardJpaRepository.save(
+                     patientCardEntityMapper.mapToEntityWithFields(existingPatientCard)));
     }
 
     public List<PatientCard> findPatientCardByPatientId(Integer patientId) {
         return patientCardJpaRepository.findByPatientIdWithDetails(patientId).stream()
                 .map(entity->patientCardEntityMapper.mapFromEntityWithFields(entity))
                 .toList();
+    }
+
+    public void deleteById(Integer patientCardId) {
+        patientCardJpaRepository.deleteById(patientCardId);
     }
 }

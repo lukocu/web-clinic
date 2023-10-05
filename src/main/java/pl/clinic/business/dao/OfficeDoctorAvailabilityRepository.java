@@ -38,8 +38,8 @@ public class OfficeDoctorAvailabilityRepository {
 
 
     public Optional<OfficeDoctorAvailability> findById(Integer officeAvailabilityId) {
-        return officeDoctorAvailabilityJpaRepository.findById(officeAvailabilityId)
-                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
+        return officeDoctorAvailabilityJpaRepository.findByIdAndOffice(officeAvailabilityId)
+                .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOfficeFields(entity));
     }
 
     public void deleteById(Integer officeAvailabilityId) {
@@ -75,7 +75,5 @@ public class OfficeDoctorAvailabilityRepository {
                 .map(entity -> officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(entity));
     }
 
-    public void newSave(OfficeDoctorAvailability officeDoctorAvailability) {
-        officeDoctorAvailabilityJpaRepository.save(officeDoctorAvailabilityEntityMapper.mapToEntityWithOfficeNoId(officeDoctorAvailability));
-    }
+
 }

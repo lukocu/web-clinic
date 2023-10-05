@@ -2,23 +2,22 @@ package pl.clinic.domain;
 
 import lombok.*;
 
-import java.time.Duration;
-
 @With
 @Value
 @EqualsAndHashCode(of = "medicationId")
 @ToString(of = {"medicationName", "dosage", "frequency", "duration"})
 @Builder
-public class Medications {
+public final class Medications {
 
-    Integer medicationId;
+    private final Integer medicationId;
 
-    String medicationName;
+    private final String medicationName;
 
-    String dosage;
+    private final String dosage;
 
-    String frequency;
+    private final String frequency;
 
-    String duration;
+    private final String duration;
+
 
 }

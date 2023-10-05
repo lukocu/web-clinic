@@ -206,6 +206,7 @@ public class DomainData {
     }
     public static OfficeDoctorAvailability officeAvailabilityDoctor1() {
         return OfficeDoctorAvailability.builder()
+                .officeAvailabilityId(1)
                 .office(officeForDoctor1())
                 .date(LocalDate.of(2023, 8, 15))
                 .startTime(LocalTime.of(8, 0, 0))
@@ -216,6 +217,7 @@ public class DomainData {
 
     public static OfficeDoctorAvailability officeAvailabilityDoctor2_1() {
         return OfficeDoctorAvailability.builder()
+                .officeAvailabilityId(2)
                 .office(officeForDoctor2())
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(14, 0, 0))
@@ -226,6 +228,7 @@ public class DomainData {
 
     public static OfficeDoctorAvailability officeAvailabilityDoctor2_2() {
         return OfficeDoctorAvailability.builder()
+                .officeAvailabilityId(3)
                 .office(officeForDoctor2())
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(16, 0, 0))
@@ -236,6 +239,7 @@ public class DomainData {
 
     public static OfficeDoctorAvailability officeAvailabilityDoctor2_3() {
         return OfficeDoctorAvailability.builder()
+                .officeAvailabilityId(4)
                 .office(officeForDoctor2())
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(17, 0, 0))
@@ -246,6 +250,7 @@ public class DomainData {
 
     public static OfficeDoctorAvailability officeAvailabilityDoctor2_4() {
         return OfficeDoctorAvailability.builder()
+                .officeAvailabilityId(5)
                 .office(officeForDoctor2())
                 .date(LocalDate.of(2023, 8, 22))
                 .startTime(LocalTime.of(15, 0, 0))

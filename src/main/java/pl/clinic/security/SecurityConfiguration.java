@@ -1,8 +1,10 @@
+/*
 package pl.clinic.security;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,10 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-@Configuration
 @EnableWebSecurity
+@Configuration
 public class SecurityConfiguration {
+
+
     @Bean
     public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
         return new MySimpleUrlAuthenticationSuccessHandler();
@@ -48,13 +51,13 @@ public class SecurityConfiguration {
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
-                                authorize.requestMatchers("/", "/login", "/error", "/registration/**").permitAll()
-                                        .requestMatchers( "/appointment/**","/patient_dashboard/**").hasAnyAuthority("PATIENT")
-                                        .requestMatchers("/doctor_dashboard/**","/visit/**").hasAnyAuthority("DOCTOR")
-                                        .requestMatchers("/doctor_list/**","/patient_card").hasAnyAuthority("PATIENT", "DOCTOR")
-                                        .requestMatchers("/appointment/{officeId}/book").hasRole("PATIENT")
-                                        .requestMatchers("/users").hasRole("ADMIN")
-                        // .requestMatchers("/api/**").hasAnyAuthority("REST_API")
+                        authorize.requestMatchers("/", "/login", "/error", "/registration/**").permitAll()
+                                .requestMatchers("/appointment/**", "/patient_dashboard/**").hasAnyAuthority("PATIENT")
+                                .requestMatchers("/doctor_dashboard/**", "/visit/**").hasAnyAuthority("DOCTOR")
+                                .requestMatchers("/doctor_list/**", "/patient_card").hasAnyAuthority("PATIENT", "DOCTOR")
+                                .requestMatchers("/appointment/{officeId}/book").hasRole("PATIENT")
+                                .requestMatchers("/users").hasRole("ADMIN")
+                             //   .requestMatchers("/api/**").hasAnyAuthority("REST_API")
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
@@ -77,9 +80,13 @@ public class SecurityConfiguration {
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
     SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.configure(http))
-                .authorizeHttpRequests((authorize)->authorize.anyRequest().permitAll());
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll());
 
         return http.build();
     }
 
+
+
+
 }
+*/

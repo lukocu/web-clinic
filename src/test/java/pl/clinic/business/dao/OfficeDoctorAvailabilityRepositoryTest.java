@@ -108,21 +108,24 @@ public class OfficeDoctorAvailabilityRepositoryTest {
         OfficeDoctorAvailability availability = DomainData.officeAvailabilityDoctor2_4();
         OfficeDoctorAvailabilityEntity availabilityEntity = EntityFixtures.officeAvailabilityDoctor2_4();
 
-        when(officeDoctorAvailabilityJpaRepository.findById(availability.getOfficeAvailabilityId()))
+
+        when(officeDoctorAvailabilityJpaRepository.findByIdAndOffice(availability.getOfficeAvailabilityId()))
                 .thenReturn(Optional.of(availabilityEntity));
 
 
-        when(officeDoctorAvailabilityEntityMapper.mapFromEntityWithOffice(any(OfficeDoctorAvailabilityEntity.class)))
+        when(officeDoctorAvailabilityEntityMapper.mapFromEntityWithOfficeFields(availabilityEntity))
                 .thenReturn(availability);
 
-        // when
-        Optional<OfficeDoctorAvailability> result
-                = officeDoctorAvailabilityRepository.findById(availability.getOfficeAvailabilityId());
 
-        // then
+        Optional<OfficeDoctorAvailability> result = officeDoctorAvailabilityRepository.findById(availability.getOfficeAvailabilityId());
+
+
         assertTrue(result.isPresent());
         assertEquals(availability, result.get());
-        Mockito.verify(officeDoctorAvailabilityEntityMapper).mapFromEntityWithOffice(availabilityEntity);
+        verify(officeDoctorAvailabilityJpaRepository, times(1))
+                .findByIdAndOffice(availability.getOfficeAvailabilityId());
+        verify(officeDoctorAvailabilityEntityMapper, times(1))
+                .mapFromEntityWithOfficeFields(availabilityEntity);
     }
 
     @Test
@@ -248,15 +251,5 @@ public class OfficeDoctorAvailabilityRepositoryTest {
         Mockito.verify(officeDoctorAvailabilityEntityMapper).mapFromEntityWithOffice(availabilityEntity);
     }
 
-    @Test
-    public void testNewSave() {
-        // given
-        OfficeDoctorAvailability availability = DomainData.officeAvailabilityDoctor1();
 
-        // when
-        officeDoctorAvailabilityRepository.newSave(availability);
-
-        // then
-        verify(officeDoctorAvailabilityJpaRepository).save(officeDoctorAvailabilityEntityMapper.mapToEntityWithOfficeNoId(availability));
-    }
 }

@@ -28,3 +28,8 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+
+  clinic:
+    app:
+      jwtSecret: ======================SecMessg=Spring===========================
+      jwtExpirationMs: 86400000

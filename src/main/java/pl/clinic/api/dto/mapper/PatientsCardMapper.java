@@ -29,6 +29,7 @@ public interface PatientsCardMapper {
 
     default PatientCardDTO mapToDtoWithDoc(PatientCard patientCard) {
         return PatientCardDTO.builder()
+                .patientCardId(patientCard.getPatientCardId())
                 .diagnosisDate(patientCard.getDiagnosisDate())
                 .diagnosisNote(patientCard.getDiagnosisNote())
                 .doctor(DoctorMapper.INSTANCE.mapToDto(patientCard.getDoctor()))

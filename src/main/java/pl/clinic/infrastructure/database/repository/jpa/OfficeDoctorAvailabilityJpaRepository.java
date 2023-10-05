@@ -1,5 +1,6 @@
 package pl.clinic.infrastructure.database.repository.jpa;
 
+import io.micrometer.observation.ObservationFilter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -60,14 +61,22 @@ public interface OfficeDoctorAvailabilityJpaRepository extends JpaRepository<Off
                                                                      @Param("endTime") LocalTime endTime,
                                                                      @Param("officeId") Integer officeId);
 
-@Query("""
-        SELECT oda
-        FROM OfficeDoctorAvailabilityEntity oda
-        WHERE oda.date = :date
-          AND oda.startTime = :startTime
-          AND oda.office.officeId = :officeId
-        """)
-    Optional<OfficeDoctorAvailabilityEntity> findByDateAndTime(@Param("date")LocalDate date,
-                                                               @Param("startTime")LocalTime startTime,
+    @Query("""
+            SELECT oda
+            FROM OfficeDoctorAvailabilityEntity oda
+            WHERE oda.date = :date
+              AND oda.startTime = :startTime
+              AND oda.office.officeId = :officeId
+            """)
+    Optional<OfficeDoctorAvailabilityEntity> findByDateAndTime(@Param("date") LocalDate date,
+                                                               @Param("startTime") LocalTime startTime,
                                                                @Param("officeId") Integer officeId);
+
+    @Query("""
+            select oda from OfficeDoctorAvailabilityEntity oda
+            inner join oda.office o
+            inner join o.doctor doc
+            where oda.officeAvailabilityId = :officeAvailabilityId
+            """)
+    Optional<OfficeDoctorAvailabilityEntity> findByIdAndOffice(Integer officeAvailabilityId);
 }

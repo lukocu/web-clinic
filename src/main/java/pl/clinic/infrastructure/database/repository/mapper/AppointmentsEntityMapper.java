@@ -30,7 +30,7 @@ public interface AppointmentsEntityMapper {
                 .actualEndTime(appointment.getActualEndTime())
                 .appointmentTakenDate(appointment.getAppointmentTakenDate())
                 .patient(PatientsEntityMapper.INSTANCE.mapToEntity(appointment.getPatient()))
-                .office(OfficeEntityMapper.INSTANCE.mapToEntity(appointment.getOffice()))
+                .office(OfficeEntityMapper.INSTANCE.mapToEntityWithoutAppointments(appointment.getOffice()))
                 .appointmentStatus(AppointmentStatusEntityMapper.INSTANCE.mapToEntity(appointment.getAppointmentStatus()))
                 .build();
     }

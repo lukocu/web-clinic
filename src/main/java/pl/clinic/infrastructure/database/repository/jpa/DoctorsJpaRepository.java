@@ -1,5 +1,6 @@
 package pl.clinic.infrastructure.database.repository.jpa;
 
+import io.micrometer.observation.ObservationFilter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,10 @@ public interface DoctorsJpaRepository extends JpaRepository<DoctorsEntity, Integ
             "LEFT JOIN FETCH d.offices o " +
             "ORDER BY d.doctorId")
     List<DoctorsEntity> findDoctorsAndOffice();
+
     @Query("SELECT d FROM DoctorsEntity d WHERE d.user.userId= :userId")
     Optional<DoctorsEntity> findByUserId(Integer userId);
+
+    @Query("SELECT d FROM DoctorsEntity d LEFT JOIN FETCH d.user LEFT JOIN FETCH d.offices WHERE d.doctorId = :doctorId")
+    Optional<DoctorsEntity> findByIdWithUser(Integer doctorId);
 }

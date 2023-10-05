@@ -17,8 +17,6 @@ public class UserRepository {
     private UserEntityMapper userEntityMapper;
 
 
-
-
     public List<User> findAll() {
         return userJpaRepository.findAll().stream()
                 .map(entity -> userEntityMapper.mapFromEntity(entity))
@@ -36,4 +34,22 @@ public class UserRepository {
     }
 
 
+    public boolean existsByUsername(String username) {
+        Optional<UserEntity> byUsername = userJpaRepository.findByUsername(username);
+        return byUsername.isPresent();
+    }
+
+    public boolean existsByEmail(String email) {
+        Optional<UserEntity> byUsername = userJpaRepository.findByEmail(email);
+        return byUsername.isPresent();
+    }
+
+    public void save(User user) {
+        userJpaRepository.save(userEntityMapper.mapToEntityWith(user));
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userJpaRepository.findByUsername(username)
+                .map(userEntityMapper::mapFromEntity);
+    }
 }
