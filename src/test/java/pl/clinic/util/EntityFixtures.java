@@ -192,6 +192,7 @@ public class EntityFixtures {
 
     public static OfficeEntity officeForDoctor1() {
         return OfficeEntity.builder()
+                .officeId(1)
                 .firstConsultationFee(BigDecimal.valueOf(100.00))
                 .followupConsultationFee(BigDecimal.valueOf(50.00))
                 .officeDoctorAvailabilities(Set.of(officeAvailabilityDoctor1()))

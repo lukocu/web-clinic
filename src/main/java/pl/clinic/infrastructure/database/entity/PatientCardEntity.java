@@ -46,7 +46,7 @@ public class PatientCardEntity {
     private Set<DiseasesEntity> diseases;
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "prescription_id")
     private PrescriptionsEntity prescription;
 

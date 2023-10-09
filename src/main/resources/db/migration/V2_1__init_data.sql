@@ -17,6 +17,8 @@ VALUES (nextval('clinic_user_seq'), 'admin123', 'admin@example.com', '$2a$12$FCA
 -- Przykładowe dane dla tabeli clinic_user_role
 INSERT INTO clinic_user_role (user_id, role_id)
 VALUES (1, 1), -- admin ma rolę ADMIN
+       (1, 2), -- admin ma rolę PATIENT
+       (1, 3), -- admin ma rolę DOCTOR
        (2, 2), -- doctor ma rolę DOCTOR
        (3, 2), -- doctor ma rolę DOCTOR
        (4, 3), -- patient ma rolę PATIENT
@@ -78,7 +80,6 @@ INSERT INTO appointments (appointment_id, patient_id, office_id, probable_start_
                           appointment_status_id, appointment_taken_date)
 VALUES (nextval('appointments_seq'), 1, 2, '2023-08-17 14:00:00', NULL, 1, '2023-08-17'),
        (nextval('appointments_seq'), 2, 2, '2023-08-22 15:00:00', NULL, 1, '2023-08-18'),
-       (nextval('appointments_seq'), 1, 2, '2023-08-17 14:00:00', NULL, 3, '2023-08-17'),
        (nextval('appointments_seq'), 2, 2, '2023-08-17 17:00:00', NULL, 3, '2023-08-18'),
        (nextval('appointments_seq'), 2, 2, '2023-06-15 10:00:00', '2023-06-15 11:00:00', 2, '2023-06-10'),
        (nextval('appointments_seq'), 2, 2, '2023-06-16 10:00:00', '2023-06-16 11:00:00', 2, '2023-06-10'),

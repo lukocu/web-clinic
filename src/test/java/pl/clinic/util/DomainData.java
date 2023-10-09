@@ -14,6 +14,7 @@ public class DomainData {
                 .userId(1)
                 .username("admin123")
                 .email("admin@example.com")
+                .roles(Set.of(adminRole(),doctorRole(),patientRole()))
                 .password("test")
                 .active(true)
                 .build();
@@ -81,18 +82,21 @@ public class DomainData {
 
     public static Role adminRole() {
         return Role.builder()
+                .roleId(1)
                 .role("ADMIN")
                 .build();
     }
 
     public static Role doctorRole() {
         return Role.builder()
+                .roleId(2)
                 .role("DOCTOR")
                 .build();
     }
 
     public static Role patientRole() {
         return Role.builder()
+                .roleId(3)
                 .role("PATIENT")
                 .build();
     }
@@ -130,17 +134,18 @@ public class DomainData {
 
     public static Doctors doctor2() {
         return Doctors.builder()
+                .doctorId(2)
                 .name("Emily")
                 .surname("Johnson")
                 .pesel("78051523148")
                 .phone("987654321")
                 .user(user3())
-
                 .specializations(Set.of(dermatologySpecialization(),cardiologySpecialization()))
                 .build();
     }
     public static Office officeForDoctor1() {
         return Office.builder()
+                .officeId(1)
                 .firstConsultationFee(BigDecimal.valueOf(100.00))
                 .followupConsultationFee(BigDecimal.valueOf(50.00))
                 .build();
@@ -148,6 +153,7 @@ public class DomainData {
 
     public static Office officeForDoctor2() {
         return Office.builder()
+                .officeId(2)
                 .doctor(doctor2())
                 .firstConsultationFee(BigDecimal.valueOf(150.00))
                 .followupConsultationFee(BigDecimal.valueOf(75.00))

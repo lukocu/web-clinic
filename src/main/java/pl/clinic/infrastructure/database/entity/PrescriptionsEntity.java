@@ -32,11 +32,15 @@ public class PrescriptionsEntity {
     private Boolean prescriptionAvailable;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "prescription_medications",
             joinColumns = @JoinColumn(name = "prescription_id"),
             inverseJoinColumns = @JoinColumn(name = "medication_id")
     )
     private Set<MedicationsEntity> medications;
+
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "prescription")
+    private PatientCardEntity patientCard;
 }

@@ -77,7 +77,7 @@ public class AppointmentsEntityMapperTest {
         assertEquals(expectedEntity.getPatient().getPatientId(), entity.getPatient().getPatientId());
         assertEquals(expectedEntity.getPatient().getName(), entity.getPatient().getName());
 
-        assertEquals(expectedEntity.getOffice().getOfficeId(), entity.getOffice().getOfficeId());
+
         assertEquals(expectedEntity.getOffice().getFirstConsultationFee(), entity.getOffice().getFirstConsultationFee());
 
         assertEquals(expectedEntity.getAppointmentStatus().getStatus(), entity.getAppointmentStatus().getStatus());

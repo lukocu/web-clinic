@@ -49,6 +49,7 @@ public interface PatientsEntityMapper {
     }
     default PatientsEntity mapToEntityWithUser(Patients patient){
         return PatientsEntity.builder()
+                .patientId(patient.getPatientId())
                 .name(patient.getName())
                 .surname(patient.getSurname())
                 .pesel(patient.getPesel())

@@ -36,7 +36,7 @@ public class AppointmentsEntity {
     @JoinColumn(name = "patient_id")
     private PatientsEntity patient;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "office_id")
     private OfficeEntity office;
 

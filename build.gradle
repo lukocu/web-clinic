@@ -64,6 +64,7 @@ dependencies {
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     implementation 'org.jacoco:org.jacoco.core:0.8.7'
+    testImplementation 'io.rest-assured:rest-assured:5.3.0'
 
 
 }

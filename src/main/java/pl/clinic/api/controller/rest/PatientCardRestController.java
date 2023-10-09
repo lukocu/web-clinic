@@ -1,6 +1,8 @@
 package pl.clinic.api.controller.rest;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +16,7 @@ import pl.clinic.api.dto.mapper.PatientsMapper;
 import pl.clinic.business.DoctorsService;
 import pl.clinic.business.PatientCardService;
 import pl.clinic.business.PatientsService;
+import pl.clinic.business.PrescriptionsService;
 import pl.clinic.domain.PatientCard;
 import pl.clinic.domain.exception.NotFoundException;
 
@@ -30,6 +33,8 @@ public class PatientCardRestController {
     private final PatientsService patientService;
     private final PatientsCardMapper patientsCardMapper;
     private final PatientsMapper patientsMapper;
+    private final PrescriptionsService prescriptionService;
+    private static final Logger logger = LoggerFactory.getLogger(PatientCardRestController.class);
 
     @GetMapping("/{patientId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'PATIENT','DOCTOR')")
@@ -54,8 +59,6 @@ public class PatientCardRestController {
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR')")
     public ResponseEntity<?> createPatientCard( @RequestBody PatientCardDTO request) {
         try {
-
-
             PatientCard savedPatientCard =
                     patientCardService.savePatientCard(patientsCardMapper.mapFromDto(request));
 
@@ -72,7 +75,14 @@ public class PatientCardRestController {
     @PreAuthorize("hasAnyRole('ADMIN', 'DOCTOR')")
     public ResponseEntity<?> deletePatientCard(@PathVariable Integer patientCardId) {
         try {
-            patientCardService.deletePatientCard(patientCardId);
+            PatientCard patientCard
+                    = patientCardService.findPatientCard(patientCardId);
+            prescriptionService.deletePrescription(patientCard.getPrescription());
+
+            logger.info("Przed usunięciem recepty");
+            prescriptionService.deletePrescription(patientCard.getPrescription());
+            logger.info("Po usunięciu recepty");
+
             return ResponseEntity.noContent().build();
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();

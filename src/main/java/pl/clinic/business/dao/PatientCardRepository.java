@@ -7,6 +7,7 @@ import pl.clinic.infrastructure.database.repository.jpa.PatientCardJpaRepository
 import pl.clinic.infrastructure.database.repository.mapper.PatientCardEntityMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -23,6 +24,7 @@ public class PatientCardRepository {
     }
 
     public List<PatientCard> findPatientCardByPatientId(Integer patientId) {
+
         return patientCardJpaRepository.findByPatientIdWithDetails(patientId).stream()
                 .map(entity->patientCardEntityMapper.mapFromEntityWithFields(entity))
                 .toList();
@@ -30,5 +32,10 @@ public class PatientCardRepository {
 
     public void deleteById(Integer patientCardId) {
         patientCardJpaRepository.deleteById(patientCardId);
+    }
+
+    public Optional<PatientCard> findPatientCard(Integer patientCardId) {
+        return patientCardJpaRepository.findById(patientCardId)
+                .map(a->patientCardEntityMapper.mapFromEntityWithFields(a));
     }
 }

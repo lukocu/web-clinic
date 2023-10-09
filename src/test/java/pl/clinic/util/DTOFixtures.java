@@ -1,5 +1,12 @@
 package pl.clinic.util;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.clinic.api.dto.*;
 import pl.clinic.domain.*;
 
@@ -13,6 +20,7 @@ public class DTOFixtures {
                 .username("admin123")
                 .email("admin@example.com")
                 .password("test")
+                .role("ADMIN")
                 .active(true)
                 .build();
     }
@@ -56,6 +64,7 @@ public class DTOFixtures {
                 .role(patientRole().getRole())
                 .build();
     }
+
     public static UserRegistrationDto user6() {
         return UserRegistrationDto.builder()
                 .username("patient3")
@@ -65,6 +74,7 @@ public class DTOFixtures {
                 .active(true)
                 .build();
     }
+
     public static UserRegistrationDto user7() {
         return UserRegistrationDto.builder()
                 .username("patient4")
@@ -93,6 +103,7 @@ public class DTOFixtures {
                 .role("PATIENT")
                 .build();
     }
+
     public static SpecializationDTO cardiologySpecialization() {
         return SpecializationDTO.builder()
                 .specializationId(1)
@@ -113,13 +124,27 @@ public class DTOFixtures {
                 .specializationName("Pediatrics")
                 .build();
     }
+
     public static DoctorDTO doctor1() {
         return DoctorDTO.builder()
+                .doctorId(1)
                 .name("John")
                 .surname("Smith")
                 .pesel("88092556231")
                 .phone("123456789")
                 .offices(Set.of(officeForDoctor1()))
+                .specializationNames(Set.of(pediatricsSpecialization()))
+                .build();
+    }
+
+    public static DoctorDTO newDoctor() {
+        return DoctorDTO.builder()
+                .doctorId(10)
+                .name("Wick")
+                .surname("Lazy")
+                .pesel("88095555231")
+                .phone("122226789")
+                .offices(Set.of(newOfficeForDoctor3()))
                 .specializationNames(Set.of(pediatricsSpecialization()))
                 .build();
     }
@@ -130,12 +155,21 @@ public class DTOFixtures {
                 .surname("Johnson")
                 .pesel("78051523148")
                 .phone("987654321")
-                .specializationNames(Set.of(dermatologySpecialization(),cardiologySpecialization()))
+                .specializationNames(Set.of(dermatologySpecialization(), cardiologySpecialization()))
                 .build();
     }
+
     public static OfficeDTO officeForDoctor1() {
         return OfficeDTO.builder()
                 .officeId(1)
+                .firstConsultationFee(BigDecimal.valueOf(100.00))
+                .followupConsultationFee(BigDecimal.valueOf(50.00))
+                .build();
+    }
+
+    public static OfficeDTO newOfficeForDoctor3() {
+        return OfficeDTO.builder()
+                .officeId(3)
                 .firstConsultationFee(BigDecimal.valueOf(100.00))
                 .followupConsultationFee(BigDecimal.valueOf(50.00))
                 .build();
@@ -149,6 +183,7 @@ public class DTOFixtures {
                 .followupConsultationFee(BigDecimal.valueOf(75.00))
                 .build();
     }
+
     public static PatientsDTO patient1() {
         return PatientsDTO.builder()
                 .patientId(1)
@@ -196,8 +231,27 @@ public class DTOFixtures {
                 .phone("555-567-128")
                 .build();
     }
+
+    public static PatientUserDTO newPatient() {
+        return PatientUserDTO.builder()
+                .username("newPatient2")
+                .email("newPatient2@example.pl")
+                .password("test")
+                .confirmPassword("test")
+                .role("PATIENT")
+                .active(true)
+                .name("newName2")
+                .surname("newSurname2")
+                .pesel("88773355226")
+                .birthDate(LocalDate.of(1999, 8, 21))
+                .address("newPatient2")
+                .phone("000999888")
+                .build();
+    }
+
     public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor1() {
         return OfficeDoctorAvailabilityDTO.builder()
+                .officeAvailabilityId(1)
                 .date(LocalDate.of(2023, 8, 15))
                 .startTime(LocalTime.of(8, 0, 0))
                 .endTime(LocalTime.of(12, 0, 0))
@@ -207,6 +261,7 @@ public class DTOFixtures {
 
     public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_1() {
         return OfficeDoctorAvailabilityDTO.builder()
+                .officeAvailabilityId(2)
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(14, 0, 0))
                 .endTime(LocalTime.of(15, 0, 0))
@@ -216,6 +271,7 @@ public class DTOFixtures {
 
     public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_2() {
         return OfficeDoctorAvailabilityDTO.builder()
+                .officeAvailabilityId(3)
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(16, 0, 0))
                 .endTime(LocalTime.of(17, 0, 0))
@@ -225,6 +281,7 @@ public class DTOFixtures {
 
     public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_3() {
         return OfficeDoctorAvailabilityDTO.builder()
+                .officeAvailabilityId(4)
                 .date(LocalDate.of(2023, 8, 17))
                 .startTime(LocalTime.of(17, 0, 0))
                 .endTime(LocalTime.of(18, 0, 0))
@@ -234,6 +291,8 @@ public class DTOFixtures {
 
     public static OfficeDoctorAvailabilityDTO officeAvailabilityDoctor2_4() {
         return OfficeDoctorAvailabilityDTO.builder()
+                .officeAvailabilityId(5)
+                .officeId(2)
                 .date(LocalDate.of(2023, 8, 22))
                 .startTime(LocalTime.of(15, 0, 0))
                 .endTime(LocalTime.of(16, 0, 0))
@@ -261,6 +320,7 @@ public class DTOFixtures {
                 .status("Canceled")
                 .build();
     }
+
     public static AppointmentsDTO appointment1() {
         return AppointmentsDTO.builder()
                 .patient(patient1())
@@ -366,6 +426,7 @@ public class DTOFixtures {
                 .appointmentTakenDate(LocalDate.parse("2023-06-23"))
                 .build();
     }
+
     public static MedicationsDTO aspirinMedications() {
         return MedicationsDTO.builder()
                 .medicationName("Aspirin")
@@ -392,6 +453,7 @@ public class DTOFixtures {
                 .duration("14 days")
                 .build();
     }
+
     public static PrescriptionsDTO prescription1() {
         return PrescriptionsDTO.builder()
                 .prescriptionDate(OffsetDateTime.of(
@@ -410,7 +472,7 @@ public class DTOFixtures {
                 .prescriptionDateEnd(OffsetDateTime.of(
                         LocalDateTime.of(2023, 10, 10, 10, 30), ZoneOffset.UTC))
                 .prescriptionAvailable(true)
-                .medications(Set.of(ibuprofenMedications(),antibioticMedications()))
+                .medications(Set.of(ibuprofenMedications(), antibioticMedications()))
                 .build();
     }
 
@@ -435,6 +497,7 @@ public class DTOFixtures {
                 .medications(Set.of(antibioticMedications()))
                 .build();
     }
+
     public static DiseasesDTO fluDisease() {
         return DiseasesDTO.builder()
                 .diseaseName("Flu")
@@ -462,9 +525,10 @@ public class DTOFixtures {
                 .diseaseDescription("In the most common sense, acute inflammation of the palatine tonsils")
                 .build();
     }
+
     public static PatientCardDTO patientCard1() {
         return PatientCardDTO.builder()
-                .diseases(Set.of(fluDisease(),headacheDisease()))
+                .diseases(Set.of(fluDisease(), headacheDisease()))
                 .diagnosisDate(OffsetDateTime.of(LocalDateTime.parse("2023-06-15T10:00:00"), ZoneOffset.UTC))
                 .diagnosisNote("Przykładowa diagnoza 1")
                 .patient(patient1())
@@ -503,4 +567,21 @@ public class DTOFixtures {
                 .prescription(prescription4())
                 .build();
     }
+
+    public static DoctorUserDTO doctorUserDTO() {
+        return DoctorUserDTO.builder()
+                .username("exampleDoctor")
+                .email("example.doctor@example.com")
+                .password("examplePassword")
+                .confirmPassword("examplePassword")
+                .role("DOCTOR")
+                .active(true)
+                .name("John")
+                .surname("Doe")
+                .phone("12341189")
+                .pesel("12341118901")
+                .build();
+
+    }
+
 }

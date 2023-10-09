@@ -1,9 +1,11 @@
 package pl.clinic.business;
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.PatientsRepository;
+import pl.clinic.domain.PatientCard;
 import pl.clinic.domain.Patients;
 import pl.clinic.domain.exception.NotFoundException;
 
@@ -14,6 +16,8 @@ import java.util.List;
 public class PatientsService {
 
     private PatientsRepository patientsRepository;
+
+
 
     @Transactional
     public Patients searchPatient(String patientPesel) {
@@ -39,11 +43,11 @@ public class PatientsService {
 
     @Transactional
     public Patients updatePatient(Integer patientId, Patients patients) {
-        Patients existingDoctor = patientsRepository.findById(patientId)
-                .orElseThrow(() -> new NotFoundException("Doctor not found"));
+        Patients existingPatient = patientsRepository.findById(patientId)
+                .orElseThrow(() -> new NotFoundException("Patient not found"));
 
 
-        Patients updatedPatient = existingDoctor
+        Patients updatedPatient = existingPatient
                 .withName(patients.getName())
                 .withSurname(patients.getSurname());
 
@@ -53,6 +57,10 @@ public class PatientsService {
 
     @Transactional
     public void deletePatient(Integer patientId) {
+
+
         patientsRepository.delete(patientId);
     }
+
+
 }

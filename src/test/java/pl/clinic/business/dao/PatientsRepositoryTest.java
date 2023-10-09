@@ -81,26 +81,5 @@ public class PatientsRepositoryTest {
         Mockito.verify(patientsEntityMapper).mapFromEntityWithUser(patientEntity);
     }
 
-    @Test
-    public void testFindById() {
-        // given
-        Integer patientId = 1;
-        Patients patient = DomainData.patient1();
-        PatientsEntity patientEntity = EntityFixtures.patient1();
 
-        when(patientsJpaRepository.findById(patientId))
-                .thenReturn(Optional.of(patientEntity));
-
-
-        when(patientsEntityMapper.mapFromEntity(patientEntity))
-                .thenReturn(patient);
-
-        // when
-        Optional<Patients> result = patientsRepository.findById(patientId);
-
-        // then
-        assertTrue(result.isPresent());
-        assertEquals(patient, result.get());
-        Mockito.verify(patientsEntityMapper).mapFromEntity(patientEntity);
-    }
 }

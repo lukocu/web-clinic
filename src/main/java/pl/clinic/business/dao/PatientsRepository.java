@@ -31,7 +31,7 @@ public class PatientsRepository {
 
     public Optional<Patients> findById(Integer patientId) {
         return patientsJpaRepository.findById(patientId)
-                .map(entity->patientsEntityMapper.mapFromEntity(entity));
+                .map(entity->patientsEntityMapper.mapFromEntityWithUser(entity));
     }
 
 

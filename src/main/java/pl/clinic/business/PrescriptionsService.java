@@ -5,9 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.clinic.business.dao.PrescriptionsRepository;
 import pl.clinic.domain.Prescriptions;
-import pl.clinic.domain.exception.NotFoundException;
-
-import java.time.OffsetDateTime;
 
 @Service
 @AllArgsConstructor
@@ -21,5 +18,8 @@ public class PrescriptionsService {
         prescriptionsRepository.save(prescription);
     }
 
-
+@Transactional
+    public void deletePrescription(Prescriptions prescription) {
+    prescriptionsRepository.delete(prescription);
+    }
 }

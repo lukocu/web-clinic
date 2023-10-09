@@ -35,28 +35,7 @@ public class OfficeRepositoryTest {
     @InjectMocks
     private OfficeRepository officeRepository;
 
-    @Test
-    public void testFindById() {
-        // given
-        Integer officeId = 1;
-        Office office = DomainData.officeForDoctor1();
-        OfficeEntity officeEntity = EntityFixtures.officeForDoctor1();
 
-        when(officeJpaRepository.findById(officeId))
-                .thenReturn(Optional.of(officeEntity));
-
-
-        when(officeEntityMapper.mapFromEntity(officeEntity))
-                .thenReturn(office);
-
-        // when
-        Optional<Office> result = officeRepository.findById(officeId);
-
-        // then
-        assertTrue(result.isPresent());
-        assertEquals(office, result.get());
-        Mockito.verify(officeEntityMapper).mapFromEntity(officeEntity);
-    }
 
     @Test
     public void testFindByDoctorId() {

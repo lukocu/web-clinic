@@ -26,14 +26,7 @@ public class MultiSecurityConfig {
     public MultiSecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
-  /*  @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("pl.clinic.controller"))
-                .paths(PathSelectors.any())
-                .build();
-    }*/
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) throws Exception {
         return authConfiguration.getAuthenticationManager();
@@ -114,7 +107,7 @@ public class MultiSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(authorize ->
                         authorize
-                                .requestMatchers("/api/", "/api/auth/**", "/api/error","/api/**","/v2/**","/v3/**" ,"/swagger-resources/**","/configuration/**","/webjars/**","/swager-ui.html","/swagger-resources")
+                                .requestMatchers("/api/","/api/auth/**", "/api/error","/v2/**","/v3/**" ,"/swagger-resources/**","/configuration/**","/webjars/**","/swager-ui.html","/swagger-resources")
                                 .permitAll()
                                 .requestMatchers("/api/appointments/schedule/{patientId}",
                                         "/api/appointments/patient/{patientId}", "/api/appointments/date/{officeId}")
@@ -128,7 +121,7 @@ public class MultiSecurityConfig {
                                 .hasAnyAuthority("ADMIN", "DOCTOR")
                                 .requestMatchers("/api/patient-card/{patientId}", "/api/doctors")
                                 .hasAnyAuthority("PATIENT", "DOCTOR", "ADMIN")
-                                .requestMatchers("/api/doctors/add", "/api/doctors/delete/**")
+                                .requestMatchers("/api/doctors/add")
                                 .hasRole("ADMIN")
                 )
                 .authenticationProvider(authenticationProvider())

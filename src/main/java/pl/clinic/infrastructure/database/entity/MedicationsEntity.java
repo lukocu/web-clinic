@@ -35,6 +35,6 @@ public class MedicationsEntity {
     @Column(name = "duration")
     private String duration;
 
-    @ManyToMany(mappedBy = "medications")
+    @ManyToMany(mappedBy = "medications",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<PrescriptionsEntity> prescriptions;
 }

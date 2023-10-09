@@ -82,6 +82,7 @@ public class PatientRestController {
     @DeleteMapping("/{patientId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Void> deletePatient(@PathVariable Integer patientId) {
+
         patientService.deletePatient(patientId);
         return ResponseEntity.noContent().build();
     }

@@ -46,8 +46,8 @@ public class AppointmentRestController {
     @GetMapping("/date/{officeId}")
     @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<AppointmentsDTO> getCurrentAppointment(
-            @RequestBody String date,
-            @RequestBody String startTime,
+            @RequestParam("date") String date,
+            @RequestParam("startTime") String startTime,
             @PathVariable Integer officeId) {
 
         LocalDate parseDate = LocalDate.parse(date);
@@ -63,8 +63,15 @@ public class AppointmentRestController {
     @PostMapping("/schedule/{patientId}")
     @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<String> scheduleAppointment(
-            @RequestBody OfficeDoctorAvailability officeDoctorAvailability,
+            @RequestBody OfficeDoctorAvailabilityDTO officeDoctorAvailabilityDTO,
             @PathVariable Integer patientId) {
+
+        Office office = officeService.getOffice(officeDoctorAvailabilityDTO.getOfficeId());
+        OfficeDoctorAvailability officeDoctorAvailability
+                = officeDoctorAvailabilityMapper.mapFromDtoWithOffice(officeDoctorAvailabilityDTO)
+                .withOffice(office);
+
+
         Patients patient = patientsService.getPatient(patientId);
 
         appointmentsService.createScheduledAppointment(officeDoctorAvailability, patient);

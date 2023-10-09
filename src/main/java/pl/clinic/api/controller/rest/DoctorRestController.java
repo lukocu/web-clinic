@@ -11,7 +11,6 @@ import pl.clinic.api.dto.DoctorUserDTO;
 import pl.clinic.api.dto.mapper.DoctorMapper;
 import pl.clinic.business.DoctorsService;
 import pl.clinic.business.UserService;
-import pl.clinic.domain.Doctors;
 
 import java.util.List;
 
@@ -70,11 +69,6 @@ public class DoctorRestController {
         return ResponseEntity.ok("Updated success");
     }
 
-    @DeleteMapping("/delete/{doctorId}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteDoctor(@PathVariable Integer doctorId) {
-        doctorService.deleteDoctor(doctorId);
-        return ResponseEntity.noContent().build();
-    }
+
 
 }

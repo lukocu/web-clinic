@@ -6,9 +6,6 @@ import pl.clinic.domain.Prescriptions;
 import pl.clinic.infrastructure.database.repository.jpa.PrescriptionsJpaRepository;
 import pl.clinic.infrastructure.database.repository.mapper.PrescriptionsEntityMapper;
 
-import java.time.OffsetDateTime;
-import java.util.Optional;
-
 @Repository
 @AllArgsConstructor
 public class PrescriptionsRepository {
@@ -18,4 +15,7 @@ public class PrescriptionsRepository {
         prescriptionsJpaRepository.save(prescriptionsEntityMapper.mapToEntity(prescription));
     }
 
+    public void delete(Prescriptions prescription) {
+        prescriptionsJpaRepository.delete(prescriptionsEntityMapper.mapToEntity(prescription));
+    }
 }

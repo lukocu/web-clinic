@@ -33,6 +33,8 @@ public class OfficeService {
         return officeRepository.findByDoctorId(doctorId);
     }
 
-
-
+    @Transactional
+    public Office save(Office office) {
+        return officeRepository.save(office);
+    }
 }

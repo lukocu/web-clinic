@@ -1,5 +1,6 @@
 package pl.clinic.business;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,16 @@ public class AppointmentsService {
     @Lazy
     private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
 
+    @Autowired
+    private OfficeService officeService;
+
 
     @Transactional
     public void createScheduledAppointment(OfficeDoctorAvailability officeDoctorAvailability, Patients patient) {
+
+      //  Office savedOffice = officeService.save(officeDoctorAvailability.getOffice());
+
+
         Appointments appointment = Appointments.builder()
                 .probableStartTime(OffsetDateTime.of(
                         officeDoctorAvailability.getDate(),
@@ -36,7 +44,6 @@ public class AppointmentsService {
                         .build())
                 .patient(patient)
                 .build();
-
         appointmentsRepository.save(appointment);
     }
 

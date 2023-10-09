@@ -59,7 +59,7 @@ public class PatientCardServiceTest {
         List<PatientCard> result = patientCardService.getPatientCards(patientId);
 
         // Then
-        verify(patientCardRepository, times(2)).findPatientCardByPatientId(patientId);
+        verify(patientCardRepository, times(1)).findPatientCardByPatientId(patientId);
 
 
         Assertions.assertEquals(2, result.size());

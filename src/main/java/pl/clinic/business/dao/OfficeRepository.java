@@ -18,7 +18,7 @@ public class OfficeRepository {
 
     public Optional<Office> findById(Integer officeId) {
         return officeJpaRepository.findById(officeId)
-                .map(entity -> officeEntityMapper.mapFromEntity(entity));
+                .map(entity -> officeEntityMapper.mapFromEntityWithDoctor(entity));
     }
 
     public List<Office> findByDoctorId(Integer doctorId) {
@@ -28,5 +28,9 @@ public class OfficeRepository {
     }
 
 
+    public Office save(Office office) {
+        OfficeEntity savedOffice = officeJpaRepository.save(officeEntityMapper.mapToEntityWithDoctor(office));
 
+        return officeEntityMapper.mapFromEntityWithDoctor(savedOffice);
+    }
 }

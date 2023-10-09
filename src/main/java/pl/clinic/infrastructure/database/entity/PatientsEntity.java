@@ -40,7 +40,7 @@ public class PatientsEntity {
     @Column(name = "phone")
     private String phone;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "patient",cascade = CascadeType.ALL)
     Set<PatientCardEntity> patientCard;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
