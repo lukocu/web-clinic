@@ -5,7 +5,6 @@ import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import pl.clinic.api.dto.PatientUserDTO;
 import pl.clinic.api.dto.PatientsDTO;
-import pl.clinic.business.PatientsService;
 import pl.clinic.domain.User;
 import pl.clinic.integration.configuration.AbstractIT;
 import pl.clinic.security.rest.JwtUtils;
@@ -21,12 +19,10 @@ import pl.clinic.util.DTOFixtures;
 import pl.clinic.util.DomainData;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 
-public class PatientRestControllerTest extends AbstractIT {
+public class PatientRestControllerIT extends AbstractIT {
 
     @LocalServerPort
     private int port;

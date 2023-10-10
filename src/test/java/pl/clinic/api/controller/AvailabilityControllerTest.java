@@ -132,7 +132,7 @@ public class AvailabilityControllerTest {
         when(officeDoctorAvailabilityService.getAvailableHoursForDoctor(doctor.getName(), doctor.getSurname())).thenReturn(availabilities);
         when(officeDoctorAvailabilityMapper.mapToDtoWithOfficeId(any(OfficeDoctorAvailability.class))).thenReturn(new OfficeDoctorAvailabilityDTO());
 
-        // Wykonanie żądania
+
         mockMvc.perform(MockMvcRequestBuilders.get(AvailabilityController.REMOVE))
                 .andExpect(status().isOk())
                 .andDo(print());

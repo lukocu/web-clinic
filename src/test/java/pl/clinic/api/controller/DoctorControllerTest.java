@@ -39,22 +39,17 @@ public class DoctorControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private DoctorsService doctorsService;
-
+    private  DoctorsService doctorsService;
     @MockBean
-    private DoctorMapper doctorMapper;
-
+    private  DoctorMapper doctorMapper;
     @MockBean
-    private IAuthenticationFacade authenticationFacade;
-
+    private  IAuthenticationFacade authenticationFacade;
     @MockBean
-    private UserService userService;
-
+    private  UserService userService;
     @MockBean
-    private OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
-
+    private  OfficeDoctorAvailabilityMapper officeDoctorAvailabilityMapper;
     @MockBean
-    private OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
+    private  OfficeDoctorAvailabilityService officeDoctorAvailabilityService;
 
     @Test
     @WithMockUser(username = "testUser", roles = "DOCTOR")

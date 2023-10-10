@@ -20,7 +20,7 @@ import pl.clinic.util.DomainData;
 import static io.restassured.RestAssured.given;
 
 
-public class AppointmentRestControllerTest extends AbstractIT {
+public class AppointmentRestControllerIT extends AbstractIT {
 
     @LocalServerPort
     private int port;
