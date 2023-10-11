@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rejestracja</title>
+    <title>Registration</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Formularz Rejestracji</h2>
+    <h2>Registration Form</h2>
 
     <a href="web-clinic/ " class="btn btn-secondary mb-3">Powrót do logowania</a>
 
     <form th:action="@{/registration/register}" method="post" th:object="${patientUserDTO}">
 
         <div class="form-group">
-            <label for="username">Nazwa użytkownika:</label>
+            <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" th:field="*{username}" required>
         </div>
         <!-- Email -->
@@ -26,22 +26,22 @@
         </div>
 
         <div class="form-group">
-            <label for="password">Hasło:</label>
+            <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" th:field="*{password}" required>
         </div>
 
         <div class="form-group">
-            <label for="confirmPassword">Potwierdź hasło:</label>
+            <label for="confirmPassword">Confirm password:</label>
             <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" required>
         </div>
 
 
         <div class="form-group">
-            <label for="name">Imię:</label>
+            <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" th:field="*{name}" required>
         </div>
         <div class="form-group">
-            <label for="surname">Nazwisko:</label>
+            <label for="surname">Surname:</label>
             <input type="text" class="form-control" id="surname" th:field="*{surname}" required>
         </div>
         <div class="form-group">
@@ -49,18 +49,18 @@
             <input type="text" class="form-control" id="pesel" th:field="*{pesel}" required>
         </div>
         <div class="form-group">
-            <label for="birthDate">Data urodzenia:</label>
+            <label for="birthDate">Birthdate:</label>
             <input type="date" class="form-control" id="birthDate" th:field="*{birthDate}" required>
         </div>
         <div class="form-group">
-            <label for="address">Adres:</label>
+            <label for="address">Address:</label>
             <input type="text" class="form-control" id="address" th:field="*{address}" required>
         </div>
         <div class="form-group">
-            <label for="phone">Numer telefonu:</label>
+            <label for="phone">Phone number:</label>
             <input type="tel" class="form-control" id="phone" th:field="*{phone}" required>
         </div>
-        <button type="submit" class="btn btn-primary" >Zarejestruj</button>
+        <button type="submit" class="btn btn-primary" >Register</button>
     </form>
 
 

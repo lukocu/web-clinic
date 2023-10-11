@@ -2,19 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Strona z Dostępnością</title>
+    <title>Office Availability Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5 mb-4">Strona z Dostępnością Biura</h1>
+    <h1 class="mt-5 mb-4">Office Availability Page</h1>
 
     <form th:action="@{'/appointment/' + officeId}" method="get" class="mb-4">
         <div class="form-group">
-            <label for="officeId">Podaj numer biura:</label>
+            <label for="officeId">Enter the office number:</label>
             <input type="number" id="officeId" name="officeId" required class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">Zobacz dostępność</button>
+        <button type="submit" class="btn btn-primary">See availability</button>
     </form>
 
     <div th:if="${availableList != null}">
@@ -23,10 +23,10 @@
             <thead>
             <tr>
                 <th>Data</th>
-                <th>Godzina rozpoczęcia</th>
-                <th>Godzina zakończenia</th>
-                <th>Status dostępności</th>
-                <th>Zarezerwuj</th>
+                <th>Start time</th>
+                <th>End time</th>
+                <th>Availability status</th>
+                <th>Reserve</th>
             </tr>
             </thead>
             <tbody>

@@ -67,7 +67,7 @@
         </div>
 
 
-        <button type="button" id="addMedicationButton" class="btn btn-primary">Dodaj lek</button>
+        <button type="button" id="addMedicationButton" class="btn btn-primary">Add medications</button>
 
 
         <div id="medicationsContainer">
@@ -78,7 +78,7 @@
         <input type="hidden" id="medicationsData" name="medicationsData">
 
 
-        <button type="button" id="addDiseaseButton" class="btn btn-primary">Dodaj chorobę</button>
+        <button type="button" id="addDiseaseButton" class="btn btn-primary">Add disease</button>
         <div id="diseasesContainer">
 
         </div>
@@ -86,7 +86,7 @@
         <input type="hidden" id="diseaseData" name="diseaseData">
 
 
-        <button type="submit" class="btn btn-primary">Dodaj do karty pacjenta</button>
+        <button type="submit" class="btn btn-primary">Add to patient's chart</button>
 
         <div th:if="${successMessage}" class="alert alert-success">
             <p th:text="${successMessage}"></p>
@@ -96,7 +96,7 @@
 
     <form th:action="@{'/doctor_dashboard/visit/' + ${officeAvailabilityId} + '/finish_visit'}" th:method="DELETE">
         <input type="hidden" name="officeAvailabilityId" value="${officeDoctorAvailability.officeAvailabilityId}">
-        <button type="submit" class="btn btn-danger">Zakończ wizytę</button>
+        <button type="submit" class="btn btn-danger">End your visit</button>
     </form>
 
     <script>
@@ -188,7 +188,7 @@
                 });
 
 
-                console.log("Zawartość medicationsData po dodaniu leku:", medicationsData);
+                console.log("The contents  medicationsData a after adding the drug:", medicationsData);
 
                 medicationsDataInput.value = JSON.stringify(filteredMedicationsData);
             }
@@ -268,7 +268,7 @@
                 });
 
 
-                console.log("Zawartość diseasesData po dodaniu leku:", diseasesData);
+                console.log("The contents of diseasesData after adding the disease:", diseasesData);
 
                 diseasesDataInput.value = JSON.stringify(filteredDiseasesData);
 

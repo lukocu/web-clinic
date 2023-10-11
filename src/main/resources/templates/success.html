@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Sukces</title>
+    <title>Success</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -10,23 +10,23 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col">
-            <h1 class="display-4">Gratulacje! Rezerwacja się udała!</h1>
+            <h1 class="display-4">Congratulations! The booking was successful!</h1>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col">
-            <p class="lead">Oto dane Twojej rezerwacji:</p>
+            <p class="lead">Here are the details of your reservation:</p>
             <ul class="list-group">
-                <li class="list-group-item">Data: <span th:text="${availability.date}"></span></li>
-                <li class="list-group-item">Godzina rozpoczęcia: <span th:text="${availability.startTime}"></span></li>
-                <li class="list-group-item">Godzina zakończenia: <span th:text="${availability.endTime}"></span></li>
-                <li class="list-group-item">Numer biura: <span th:text="${availability.officeId}"></span></li>
+                <li class="list-group-item">Date: <span th:text="${availability.date}"></span></li>
+                <li class="list-group-item">Start time: <span th:text="${availability.startTime}"></span></li>
+                <li class="list-group-item">End Time: <span th:text="${availability.endTime}"></span></li>
+                <li class="list-group-item">Office number: <span th:text="${availability.officeId}"></span></li>
             </ul>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col">
-            <a href="/web-clinic/" class="btn btn-primary">Wróć do menu głównego</a>
+            <a href="/web-clinic/" class="btn btn-primary">Return to main menu</a>
         </div>
     </div>
 </div>

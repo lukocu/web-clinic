@@ -61,7 +61,7 @@
         </div>
     </form>
     <div th:fragment="availability-table" class="mt-4">
-        <h2 class="display-5">Lista dodanych wizyt w tej sesji:</h2>
+        <h2 class="display-5">List of added visits in this session:</h2>
         <ul th:if="${addedAvailabilities != null}" class="list-group">
             <li th:each="availability : ${addedAvailabilities}" class="list-group-item">
                 Wizyta dnia <span th:text="${availability.date}"></span> od <span
