@@ -3,7 +3,7 @@ services:
   API:
     image: 'web-clinic.jar'
     ports:
-      - "8200:8200"
+      - "8080:8080"
     depends_on:
       PostgreSQL:
         condition: service_healthy
