@@ -79,8 +79,7 @@ The Web Clinic application offers a variety of features, including:
 
 🐳 To run tests, [install Docker](https://docs.docker.com/engine/install/)  is required.
 
-Jeśli chcesz uruchomić tę aplikację lokalnie na swoim komputerze, wykonaj następujące kroki:
-
+If you want to run this application locally on your computer, follow these steps:
 1. Download the source code from this repository:
 
    ```shell
