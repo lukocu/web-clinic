@@ -58,6 +58,7 @@ The Web Clinic application offers a variety of features, including:
 - Spring MVC and REST Controller
 - Spring Boot 3.1
     -  Spring Data JPA, Thymeleaf, Validation, Web, Security (session, jwt)
+-  Hibernate 
 -  SpringDoc OpenAPI (Swagger)
 - Java JSON Web Token (JWT)
 -  Project Lombok
