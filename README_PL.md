@@ -16,7 +16,9 @@ Aplikacja jest przetestowany pod kątem jakości kodu i funkcjonalności za pomo
 
 ## Demo
 
-Aby wypróbować aplikację, odwiedź [Demo Web Clinic](http://13.53.197.245:8080/web-clinic/) (aplikacja korzysta z http).
+Aby wypróbować aplikację, odwiedź [Demo Web Clinic](http://ec2-35-156-99-173.eu-central-1.compute.amazonaws.com:8080/web-clinic/) (aplikacja korzysta z http).
+DOkumentacja Api http://ec2-35-156-99-173.eu-central-1.compute.amazonaws.com:8080/web-clinic/clinic-api-docs
+
 
 Przykładowi użytkownicy do logowania:
 - Dla pacjenta:
