@@ -12,7 +12,7 @@ Unit tests make use of well-known tools such as JUnit and Mockito. For more info
 Integration tests employ technologies like Testcontainers, allowing for the running of Docker containers during testing, and Rest Assured for testing the integration of components.
 ## Demo
 
-To try out the application, visit the [Demo Web Clinic](http://13.53.197.245:8080/web-clinic/) ((the application uses HTTP).
+To try out the application, visit the [Demo Web Clinic](http://ec2-35-156-99-173.eu-central-1.compute.amazonaws.com:8080/web-clinic/) ((the application uses HTTP).
 
 Sample login credentials are as follows:
 
