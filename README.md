@@ -13,6 +13,7 @@ Integration tests employ technologies like Testcontainers, allowing for the runn
 ## Demo
 
 To try out the application, visit the [Demo Web Clinic](http://ec2-35-156-99-173.eu-central-1.compute.amazonaws.com:8080/web-clinic/) ((the application uses HTTP).
+Api Documentation http://ec2-35-156-99-173.eu-central-1.compute.amazonaws.com:8080/web-clinic/clinic-api-docs
 
 Sample login credentials are as follows:
 
